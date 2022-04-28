@@ -1,12 +1,12 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
-const functions = require('firebase-functions');
-require('dotenv').config();
+const functions = require("firebase-functions");
+require("dotenv").config();
 
 // The Firebase Admin SDK to access Firestore.
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 admin.initializeApp();
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 // Configure the email transport using the default SMTP transport and a GMail account.
 // For Gmail, enable these:
 // 1. https://www.google.com/settings/security/lesssecureapps
@@ -16,7 +16,7 @@ const nodemailer = require('nodemailer');
 const gmailEmail = process.env.EMAIL;
 const gmailPassword = process.env.PASSWORD;
 const mailTransport = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: gmailEmail,
     pass: gmailPassword,
@@ -25,7 +25,7 @@ const mailTransport = nodemailer.createTransport({
 
 // Your company name to include in the emails
 // TODO: Change this to your app or company name to customize the email sent.
-const APP_NAME = 'enlight';
+const APP_NAME = "enlight";
 
 // [START sendWelcomeEmail]
 /**
@@ -66,10 +66,10 @@ async function sendWelcomeEmail(email, displayName) {
 
   // The user subscribed to the newsletter.
   mailOptions.subject = `Welcome to ${APP_NAME}!`;
-  mailOptions.text = `Hey ${displayName || ''}! Welcome to ${APP_NAME}. I hope you will enjoy our service.`;
+  mailOptions.text = `Hey ${displayName || ""}! Welcome to ${APP_NAME}. I hope you will enjoy our service.`;
   await mailTransport.sendMail(mailOptions);
   functions.logger.log(`New welcome email sent to: ${email}`);
-  //console.log(`New welcome email sent to: ${email}`);
+  // console.log(`New welcome email sent to: ${email}`);
   return null;
 }
 
@@ -81,10 +81,10 @@ async function sendGoodbyeEmail(email, displayName) {
   };
 
   // The user unsubscribed to the newsletter.
-  mailOptions.subject = `Bye!`;
-  mailOptions.text = `Hey ${displayName || ''}!, We confirm that we have deleted your ${APP_NAME} account.`;
+  mailOptions.subject = "Bye!";
+  mailOptions.text = `Hey ${displayName || ""}!, We confirm that we have deleted your ${APP_NAME} account.`;
   await mailTransport.sendMail(mailOptions);
   functions.logger.log(`Account deletion confirmation email sent to: ${email}`);
-  //console.log(`Account deletion confirmation email sent to: ${email}`);
+  // console.log(`Account deletion confirmation email sent to: ${email}`);
   return null;
 }

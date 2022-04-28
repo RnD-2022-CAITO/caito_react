@@ -9,10 +9,12 @@ module.exports = {
     "google",
   ],
   parserOptions: {
-    ecmaVersion: 8
+    ecmaVersion: 8,
   },
   rules: {
-    semi: ["error", "always"],
-    quotes: ["error", "double"],
+    "max-len": 0,
+    "require-jsdoc": 0,
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
   },
 };
