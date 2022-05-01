@@ -1,8 +1,10 @@
 //authenticate a user
 import React, {useContext, useState, useEffect} from 'react'
-import {auth, db} from '../../../utils/firebase'
+import app, {func, auth} from '../../../utils/firebase'
+import 'firebase/compat/app-check';
 
 const Authenciation = React.createContext();
+const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 export const useAuth = () => {
     return useContext(Authenciation);
@@ -13,21 +15,38 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     //call the auth function from firebase
-    async function signUp(user){
-        try{
-            const res = await auth.createUserWithEmailAndPassword(user.email,user.password);
-            const newUser = res.user;
-            console.log(user);
-            return await db.collection("teacher-info").doc(newUser.uid).set({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                role: 'teacher'
-            });
-        }catch(e){
-            console.log(e);
-        }
+    function signUp(user){
+        auth.createUserWithEmailAndPassword(user.email,user.password)
+        .then(u => {
+            console.log(u);
+            // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
+            // key is the counterpart to the secret key you set in the Firebase console.
+            app.appCheck().activate(site_key, true);
+            const addTeacher = func.httpsCallable('teacher-addTeacher');
+            try {
+                const response = addTeacher({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    role: 'teacher',
+                });
+                console.log(response);
+            } catch (e) {
+                console.error(e);
+            }
+        });
 
+        // .then(async res => {           
+        //    await updateTeacherDatabase(res.user.uid, user)
+            // const data = {
+            //     uid: res.user.uid,
+            //     firstName: user.firstName,
+            //     lastName: user.lastName,
+            //     email: res.user.email
+            // }
+            // const updateDb = func.httpsCallable('addTeacher');
+            // updateDb(data).then(res => console.log(res));
+        // })
+        // .catch(error => console.log('error found: ',error))
     }
 
     function signIn(email, password){
@@ -49,6 +68,15 @@ export const AuthProvider = ({children}) => {
     function updatePassword(email){
         return auth.currentUser.updatePassword(email);
     }
+
+    /*async function updateTeacherDatabase(userID, user){
+        return await db.collection('teacher-info').doc(userID).set({
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: 'teacher'
+        }).catch(error => console.log(error))
+    }*/
 
     //only runs when the component mounts
     useEffect(() => {

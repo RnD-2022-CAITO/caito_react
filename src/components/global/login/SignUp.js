@@ -2,8 +2,6 @@
 import {React, useRef, useState} from 'react' 
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
-import {db} from '../../../utils/firebase'
-
 
 const SignUp = () => {
   const emailRef = useRef();
