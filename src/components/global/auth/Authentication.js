@@ -50,15 +50,6 @@ export const AuthProvider = ({children}) => {
         return auth.currentUser.updatePassword(email);
     }
 
-    async function updateTeacherDatabase(userID, user){
-        return await db.collection('teacher-info').doc(userID).set({
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: 'teacher'
-        })
-    }
-
     //only runs when the component mounts
     useEffect(() => {
         //Firebase notify if a user is created
