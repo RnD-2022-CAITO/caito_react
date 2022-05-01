@@ -27,7 +27,6 @@ export const AuthProvider = ({children}) => {
                 const response = addTeacher({
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    role: 'teacher',
                 });
                 console.log(response);
             } catch (e) {
