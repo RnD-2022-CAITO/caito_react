@@ -1,6 +1,6 @@
 //authenticate a user
 import React, {useContext, useState, useEffect} from 'react'
-import {auth, db, func} from '../../../utils/firebase'
+import {auth, db} from '../../../utils/firebase'
 
 const Authenciation = React.createContext();
 
@@ -13,20 +13,21 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     //call the auth function from firebase
-    function signUp(user){
-        return auth.createUserWithEmailAndPassword(user.email,user.password)
-        // .then(async res => {           
-        //    await updateTeacherDatabase(res.user.uid, user)
-            // const data = {
-            //     uid: res.user.uid,
-            //     firstName: user.firstName,
-            //     lastName: user.lastName,
-            //     email: res.user.email
-            // }
-            // const updateDb = func.httpsCallable('addTeacher');
-            // updateDb(data).then(res => console.log(res));
-        // })
-        // .catch(error => console.log('error found: ',error))
+    async function signUp(user){
+        try{
+            const res = await auth.createUserWithEmailAndPassword(user.email,user.password);
+            const newUser = res.user;
+            console.log(user);
+            return await db.collection("teacher-info").doc(newUser.uid).set({
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                role: 'teacher'
+            });
+        }catch(e){
+            console.log(e);
+        }
+
     }
 
     function signIn(email, password){
@@ -55,7 +56,7 @@ export const AuthProvider = ({children}) => {
             firstName: user.firstName,
             lastName: user.lastName,
             role: 'teacher'
-        }).catch(error => console.log(error))
+        })
     }
 
     //only runs when the component mounts
