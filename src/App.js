@@ -12,19 +12,19 @@ const App = () => {
   return (
         <BrowserRouter>
           <AuthProvider>
-            <UserDataProvider>
             <Routes>
              {/* Private routes for teacher/officer should be like this: */}
               <Route exact path="/" element={    
                     <PrivateRoute>
-                      <Landing />
+                      <UserDataProvider>
+                        <Landing />
+                      </UserDataProvider>
                     </PrivateRoute>}
               />
 
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/login" element={<LogIn/>}/>
             </Routes>
-            </UserDataProvider>
           </AuthProvider>
         </BrowserRouter>
   )
