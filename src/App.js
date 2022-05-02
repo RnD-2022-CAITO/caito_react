@@ -6,6 +6,7 @@ import Landing from './components/global/Landing'
 import { AuthProvider } from './components/global/auth/Authentication'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { PrivateRoute } from './components/global/routes/PrivateRoute'
+import { UserDataProvider } from './components/global/auth/UserData'
 
 const App = () => {
   return (
@@ -15,7 +16,9 @@ const App = () => {
              {/* Private routes for teacher/officer should be like this: */}
               <Route exact path="/" element={    
                     <PrivateRoute>
-                      <Landing />
+                      <UserDataProvider>
+                        <Landing />
+                      </UserDataProvider>
                     </PrivateRoute>}
               />
 
