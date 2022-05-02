@@ -2,6 +2,7 @@
 import {React, useRef, useState} from 'react' 
 import { useAuth } from '../auth/Authentication'
 import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
 
 
 const LogIn = () => {
@@ -38,7 +39,7 @@ const LogIn = () => {
               setError('Email has not been used yet');
               break;
             default:
-              setError('Email or password are incorrect.');
+              setError('Incorrect password');
           }
           console.log(e.code);
       }
@@ -47,31 +48,33 @@ const LogIn = () => {
   }
       
   return (
-    <div>
-      <h1>enlight</h1>
-      <h2>log in</h2>
-
-      <div>{error}</div>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          Email
-          <input type = 'email' ref={emailRef} required/>
+    <div className='container'>
+      <form className='sign-in-form' onSubmit={handleSubmit}>
+        <h1 className='logo'>enlight</h1>
+        <h2>log in</h2>
+        <div className='input-field'>
+          <input id='email' type = 'email' ref={emailRef} required autoComplete='off'/>
+          <label className='control-label' for='email'>Email</label>
         </div>
 
-        <div>
-          Password
-          <input type = 'password' ref={passwordRef} required/>
+        <div className='input-field'>
+          <input id='password' type = 'password' ref={passwordRef} required autoComplete='off'/>
+           <label for='password'>Password</label>
         </div>
+        <div className='error'>{error}</div>
 
-        <button disabled = {loading} type="submit">Log in</button>
+        <div className='btn-position'>
+          <button disabled = {loading} type="submit">Log in</button>
+        </div>
       </form>
 
       <div>
-                Don't have an account?
+        <p>
+                Don't have an account? &nbsp;
                 <Link to="/signup">
                      Sign Up
                 </Link>
+        </p>
       </div>
     </div>
   )

@@ -8,6 +8,9 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 
+//styling
+import './global.css'
+
 const App = () => {
   return (
         <BrowserRouter>

@@ -1,0 +1,16 @@
+.sign-up-form{
+    min-width: 30vw;
+    padding: 20px;
+    border: 0.1px solid black;
+    border-radius: 5px;
+}
+
+.sign-up-form h2{
+    text-align: center;
+    margin: 10px;
+}
+
+
+.sign-up-form button{
+    width: 100%;
+}

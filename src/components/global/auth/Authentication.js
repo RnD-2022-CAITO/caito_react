@@ -14,20 +14,15 @@ export const AuthProvider = ({children}) => {
 
     //call the auth function from firebase
     async function signUp(user){
-        try{
-            const res = await auth.createUserWithEmailAndPassword(user.email,user.password);
-            const newUser = res.user;
-            console.log(user);
-            return await db.collection("teacher-info").doc(newUser.uid).set({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                role: 'teacher'
-            });
-        }catch(e){
-            console.log(e);
-        }
-
+        const res = await auth.createUserWithEmailAndPassword(user.email,user.password);
+        const newUser = res.user;
+        console.log(user);
+        return await db.collection("teacher-info").doc(newUser.uid).set({
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: 'teacher'
+        });
     }
 
     function signIn(email, password){
