@@ -3,6 +3,7 @@ import React, {useContext, useState, useEffect} from 'react'
 import { db, auth} from '../../../utils/firebase'
 import { useAuth } from './Authentication';
 
+//Retrieve the  user data from the firestore database
 const UserData = React.createContext();
 
 export const useUserData = () => {

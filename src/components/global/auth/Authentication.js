@@ -6,6 +6,8 @@ import 'firebase/compat/app-check';
 const Authenciation = React.createContext();
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
+
+//Authenticate a user: get their current info, sign in, sign up, sign out
 export const useAuth = () => {
     return useContext(Authenciation);
 }

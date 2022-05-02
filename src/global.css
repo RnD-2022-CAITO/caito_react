@@ -1,0 +1,83 @@
+:root {
+    --primary-color: #119DA4;
+    --primary-dark: #272635;
+    font-family: 'Inconsolata', monospace;
+}
+
+*{
+    font-family: 'Inconsolata', monospace;
+}
+
+button, input, label{
+    font-size: 1.25em;
+}
+
+button{
+    text-transform: uppercase;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 0;
+    border: none;
+    border-radius: 3px;
+    transition: 0.5s;
+    font-family: 'Inconsolata', monospace;
+}
+
+button:hover{
+    background-color: var(--primary-dark);
+    cursor: pointer;
+    letter-spacing: 10px;
+}
+
+button:disabled{
+    background-color: rgb(211, 211, 211);
+}
+
+.logo{
+    font-family: 'Orelega One', cursive;
+    font-size: 3em;
+    color: var(--primary-color);
+    cursor: none;
+}
+
+a{
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: 0.5s;
+}
+
+a:hover{
+    color: var(--primary-dark);
+    letter-spacing: 2px;
+}
+
+.active{
+    text-decoration: underline;
+}
+
+
+input{
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    border-right: 2px solid var(--primary-color);
+    transition: 0.5s;
+}
+
+input:focus{
+    outline: none;
+    border: 2px solid var(--primary-color);
+}
+
+label{
+    transition: 0.5s;
+}
+
+input:focus + label{
+    color: var(--primary-color);
+}
+
+.error{
+    text-align: center;
+    padding: 5px 0;
+    color: rgb(255, 101, 101);
+}
