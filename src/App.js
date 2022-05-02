@@ -15,6 +15,7 @@ import './global.css'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
 import ErrorRoute from './components/global/routes/ErrorRoute'
+import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 
 // const currentPath = (location) => {
 //   switch(location){
@@ -41,11 +42,11 @@ const App = () => {
             <Routes>
              {/* Private routes for teacher/officer should be like this: */}
               <Route exact path="/" element={
-                    <UserDataProvider>
-                    <PrivateRoute role={role.A}>
+                    <PrivateLandingRoute>
+                      <UserDataProvider>
                         <Landing />
-                    </PrivateRoute>
-                    </UserDataProvider>
+                      </UserDataProvider>
+                    </PrivateLandingRoute>
                     }
               />
 
