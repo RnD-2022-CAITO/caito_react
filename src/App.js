@@ -14,6 +14,7 @@ import TeacherProfile from './components/teacher/profile'
 import './global.css'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
+import ErrorRoute from './components/global/routes/ErrorRoute'
 
 // const currentPath = (location) => {
 //   switch(location){
@@ -24,6 +25,13 @@ import OfficerSummary from './components/officer/analysis'
 //   }
 // }
 
+//Roles to access paths
+const role = {
+  T: 'teacher',
+  O: 'officer',
+  A: 'all'
+}
+
 const App = () => {
 
   return (
@@ -32,17 +40,18 @@ const App = () => {
             <NavBar/>
             <Routes>
              {/* Private routes for teacher/officer should be like this: */}
-              <Route exact path="/" element={    
-                    <PrivateRoute>
-                      <UserDataProvider>
+              <Route exact path="/" element={
+                    <UserDataProvider>
+                    <PrivateRoute role={role.A}>
                         <Landing />
-                      </UserDataProvider>
-                    </PrivateRoute>}
+                    </PrivateRoute>
+                    </UserDataProvider>
+                    }
               />
 
               <Route exact path="/profile" element={    
                     <UserDataProvider>
-                      <PrivateRoute>
+                      <PrivateRoute role={role.T}>
                           <TeacherProfile />
                       </PrivateRoute>
                     </UserDataProvider>
@@ -52,7 +61,7 @@ const App = () => {
 
               <Route exact path="/summary" element={    
                     <UserDataProvider>
-                      <PrivateRoute>
+                      <PrivateRoute role={role.O}>
                           <OfficerSummary />
                       </PrivateRoute>
                     </UserDataProvider>
@@ -62,6 +71,7 @@ const App = () => {
 
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/login" element={<LogIn/>}/>
+              <Route path="/error" element={<ErrorRoute/>}/>
             </Routes>
           </AuthProvider>
         </Router>
