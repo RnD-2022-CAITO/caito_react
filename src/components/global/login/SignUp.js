@@ -79,28 +79,28 @@ const SignUp = () => {
         <h2>Sign Up</h2>
         <div className='input-field'>
           <input id="email" type="email" ref={emailRef} required autoComplete='off'/>
-          <label className='control-label' for='email'>Email</label>
+          <label className='control-label' htmlFor='email'>Email</label>
 
         </div>
 
         <div className='input-field'>
           <input id='password' type="password" ref={passwordRef} required autoComplete='off'/>
-          <label className='control-label' for='password'>Password</label>
+          <label className='control-label' htmlFor='password'>Password</label>
         </div>
 
         <div className='input-field'>
           <input id='confirm-pass' type="password" ref={passwordConfirmRef} required autoComplete='off'/>
-          <label className='control-label' for='confirm-pass'> Confirm Password</label>
+          <label className='control-label' htmlFor='confirm-pass'> Confirm Password</label>
         </div>
 
         <div className='input-field'>
           <input id='first-name' type="text" ref={firstNameRef} required autoComplete='off'/>
-          <label className='control-label' for='first-name'>First name</label>
+          <label className='control-label' htmlFor='first-name'>First name</label>
         </div>
 
         <div className='input-field'>
           <input id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
-          <label className='control-label' for='last-name'>Last name</label>
+          <label className='control-label' htmlFor='last-name'>Last name</label>
         </div>
 
         {error && <p className='error'>{error}</p>}

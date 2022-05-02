@@ -29,9 +29,9 @@ const TeacherLanding = () => {
             <p>Name: {userData.firstName} {userData.lastName}</p>
             <p>Role: {userData.role}</p>
             <p>{currentUser.email}</p>
-            <button onClick={handleLogOut}>
+            {/* <button onClick={handleLogOut}>
                 Log out
-            </button>
+            </button> */}
         </div>
 
     )

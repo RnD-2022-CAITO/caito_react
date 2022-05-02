@@ -54,12 +54,12 @@ const LogIn = () => {
         <h2>log in</h2>
         <div className='input-field'>
           <input id='email' type = 'email' ref={emailRef} required autoComplete='off'/>
-          <label className='control-label' for='email'>Email</label>
+          <label className='control-label' htmlFor='email'>Email</label>
         </div>
 
         <div className='input-field'>
           <input id='password' type = 'password' ref={passwordRef} required autoComplete='off'/>
-           <label for='password'>Password</label>
+           <label htmlFor='password'>Password</label>
         </div>
         <div className='error'>{error}</div>
 
