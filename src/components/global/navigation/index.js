@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../auth/Authentication'
 import { db } from '../../../utils/firebase';
 import './Nav.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
@@ -13,11 +13,15 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
+
+
     const handleLogOut = async () => {
 
         try {
-            await signOut();
-            navigate('/login');
+            if(!error){
+                await signOut();
+                navigate('/login');
+            }
         }catch{
             setError('Something went wrong..');
         }
@@ -52,14 +56,14 @@ const NavBar = () => {
         <div className='nav'>
             <ul>
                 <li>
-                    <Link to="/">
+                    <NavLink activeClassName='active' to="/">
                     home
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to="/profile">
+                    <NavLink activeClassName='active' to="/profile">
                     profile
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
                     <button className='logout-btn-nav' onClick={handleLogOut}>
@@ -73,16 +77,16 @@ const NavBar = () => {
     const OfficerNav = () => (
         <div className='nav'>
             <ul>
-                    <Link to="/">
+                    <NavLink activeClassName='active' to="/">
                     home
-                    </Link>
+                    </NavLink>
                 <li>
                     survey
                 </li>
                 <li>
-                    <Link to="/summary">
+                    <NavLink activeClassName='active' to="/summary">
                     summary
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
                     <button className='logout-btn-nav' onClick={handleLogOut}>
@@ -94,7 +98,7 @@ const NavBar = () => {
     )
 
     return (
-        currentUser ? role=='teacher'? <TeacherNav />: <OfficerNav/> : null
+        currentUser ? role==='teacher'? <TeacherNav />: <OfficerNav/> : null
     )
 }
 

@@ -51,6 +51,10 @@ a:hover{
     letter-spacing: 2px;
 }
 
+.active{
+    text-decoration: underline;
+}
+
 
 input{
     border: none;
