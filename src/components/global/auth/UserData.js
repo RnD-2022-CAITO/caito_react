@@ -1,6 +1,6 @@
 //Fetch user info from the database Firestore
 import React, {useContext, useState, useEffect} from 'react'
-import { db, auth} from '../../../utils/firebase'
+import { db } from '../../../utils/firebase'
 import { useAuth } from './Authentication';
 
 //Retrieve the  user data from the firestore database

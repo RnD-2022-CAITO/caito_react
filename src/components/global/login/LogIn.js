@@ -2,6 +2,7 @@
 import {React, useRef, useState} from 'react' 
 import { useAuth } from '../auth/Authentication'
 import { Link, useNavigate } from 'react-router-dom';
+import ErrorRoute from '../routes/ErrorRoute';
 
 import './Login.css'
 
@@ -11,7 +12,7 @@ const LogIn = () => {
   const passwordRef = useRef();
 
   //Retrive the sign up from context
-  const { signIn } = useAuth();
+  const { signIn, currentUser } = useAuth();
 
   //Input validation
   const [error, setError] = useState('');
@@ -49,6 +50,7 @@ const LogIn = () => {
   }
       
   return (
+  !currentUser ?
   <div className='container'>
       <form className='sign-in-form' onSubmit={handleSubmit}>
         <h1 className='logo'>enlight</h1>
@@ -77,7 +79,8 @@ const LogIn = () => {
                 </Link>
         </p>
       </div>
-    </div>
+    </div> 
+    : <ErrorRoute err='already-login'/>
   )
 }
 

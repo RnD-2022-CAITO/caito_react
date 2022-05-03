@@ -2,6 +2,7 @@
 import {React, useRef, useState} from 'react' 
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
+import ErrorRoute from '../routes/ErrorRoute';
 
 import './SignUp.css'
 
@@ -13,7 +14,7 @@ const SignUp = () => {
   const lastNameRef = useRef();
 
   //Retrive the sign up from context
-  const { signUp } = useAuth();
+  const { signUp, currentUser } = useAuth();
 
   //Input validation
   const [error, setError] = useState('');
@@ -71,6 +72,7 @@ const SignUp = () => {
   }
 
   return (
+  !currentUser ?
   <div className='container'>
       <form className='sign-up-form' onSubmit={handleSubmit}>
         <h1 className='logo'>enlight</h1>
@@ -119,6 +121,7 @@ const SignUp = () => {
         </p>
       </div>
     </div>
+    : <ErrorRoute err='already-login'/>
   )
 }
 
