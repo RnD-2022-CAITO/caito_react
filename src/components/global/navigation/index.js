@@ -81,7 +81,9 @@ const NavBar = () => {
                     home
                     </NavLink>
                 <li>
-                    survey
+                    <NavLink activeClassName='active' to="/survey">
+                    create a new survey
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink activeClassName='active' to="/summary">

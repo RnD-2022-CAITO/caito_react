@@ -14,6 +14,7 @@ import TeacherProfile from './components/teacher/profile'
 import './global.css'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
+import OfficerSurvey from './components/officer/survey'
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 
@@ -64,6 +65,15 @@ const App = () => {
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSummary />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
+              <Route exact path="/survey" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <OfficerSurvey />
                       </PrivateRoute>
                     </UserDataProvider>
                     }
