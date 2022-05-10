@@ -52,7 +52,7 @@ const EditAccount = () => {
                     setError('Please log in and try again');
                     break;
                 case 'auth/wrong-password':
-                    setError('Wrong password.');
+                    setError('Wrong old password.');
                     break;
                 default:
                     setError('Unable to update password')
@@ -82,7 +82,7 @@ const EditAccount = () => {
 
                 <div className='input-field'>
                     <input type='password' ref={passwordConfirmRef} required/>
-                    <label>Confirm password</label>
+                    <label>Confirm new password</label>
                 </div>
 
                 <div>
