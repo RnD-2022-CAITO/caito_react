@@ -35,7 +35,6 @@ export const AuthProvider = ({children}) => {
                 console.error(e);
             }
         });
-
     }
 
     function signIn(email, password){
@@ -59,21 +58,25 @@ export const AuthProvider = ({children}) => {
         return auth.currentUser.updatePassword(newPass);
     }
 
+    async function addSurvey(survey){
+        app.appCheck().activate(site_key, true);
+        const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
+        try {
+            const response = await addSurvey({
+                questions: survey,
+            });
+            console.log(response);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     //reauthenticate the user to update details
     const reauthenticate = currentPassword => {
         const cred = firebase.auth.EmailAuthProvider.credential(
             auth.currentUser.email, currentPassword);
         return auth.currentUser.reauthenticateWithCredential(cred);
     }
-
-    /*async function updateTeacherDatabase(userID, user){
-        return await db.collection('teacher-info').doc(userID).set({
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: 'teacher'
-        }).catch(error => console.log(error))
-    }*/
 
     //only runs when the component mounts
     useEffect(() => {
@@ -93,7 +96,8 @@ export const AuthProvider = ({children}) => {
         signOut,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        addSurvey
     }
 
     return (
