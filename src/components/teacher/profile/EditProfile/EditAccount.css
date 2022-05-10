@@ -1,0 +1,10 @@
+.edit-acc-form{
+    min-width: 25vw;
+    padding: 20px;
+    border: 0.1px solid black;
+    border-radius: 5px;
+}
+
+.edit-submit{
+    width: 100%;
+}

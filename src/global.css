@@ -81,3 +81,11 @@ input:focus + label{
     padding: 5px 0;
     color: rgb(255, 101, 101);
 }
+
+.edit-btn{
+    min-width: 200px;
+}
+
+.edit-btn:hover{
+    letter-spacing: normal;
+}

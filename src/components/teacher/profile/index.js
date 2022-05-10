@@ -1,9 +1,18 @@
 import React from 'react'
+import { useUserData } from '../../global/auth/UserData'
+import { useAuth } from '../../global/auth/Authentication'
+import AccountInfo from './AccountInfo'
+import "./Profile.css"
+
 
 const TeacherProfile = () => {
+  const {currentUser} = useAuth();
+  const {userData} = useUserData();
+
   return (
     <div>
-        <h1>Profile Page - Teacher</h1>
+        <h1 className='profile-title'>My Profile</h1>
+        <AccountInfo user = {currentUser} data={userData} />
     </div>
   )
 }
