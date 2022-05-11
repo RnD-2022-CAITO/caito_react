@@ -13,6 +13,14 @@ const AccountInfo = (props) => {
             <button className='edit-btn'> 
                 Change password
             </button>
+            <br></br>
+           
+           {/* button for more information */}
+            </Link>
+            <Link to='/profile/more'>
+            <button className='more-btn'> 
+                More
+            </button>
             </Link>
 
         </div>

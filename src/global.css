@@ -89,3 +89,11 @@ input:focus + label{
 .edit-btn:hover{
     letter-spacing: normal;
 }
+.more-btn{
+    margin-top: 5px;
+    min-width: 200px;
+}
+
+.more-btn:hover{
+    letter-spacing: normal;
+}

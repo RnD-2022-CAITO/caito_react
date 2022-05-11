@@ -17,6 +17,7 @@ import OfficerSummary from './components/officer/analysis'
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
+import AddProfileSection from './components/teacher/profile/AddProfileSection/AddProfileSection'
 
 // const currentPath = (location) => {
 //   switch(location){
@@ -66,6 +67,15 @@ const App = () => {
                     <UserDataProvider>
                       <PrivateRoute role={role.T}>
                           <EditAccount />
+                      </PrivateRoute>   
+                    </UserDataProvider>                     
+                    }
+              />
+              
+              <Route exact path="/profile/more" element={   
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <AddProfileSection />
                       </PrivateRoute>   
                     </UserDataProvider>                     
                     }
