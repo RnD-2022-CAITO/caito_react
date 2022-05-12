@@ -57,20 +57,6 @@ export const AuthProvider = ({children}) => {
         await reauthenticate(oldPass)
         return auth.currentUser.updatePassword(newPass);
     }
-
-    async function addSurvey(survey){
-        app.appCheck().activate(site_key, true);
-        const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
-        try {
-            const response = await addSurvey({
-                questions: survey,
-            });
-            console.log(response);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
     //reauthenticate the user to update details
     const reauthenticate = currentPassword => {
         const cred = firebase.auth.EmailAuthProvider.credential(
@@ -97,7 +83,6 @@ export const AuthProvider = ({children}) => {
         resetPassword,
         updateEmail,
         updatePassword,
-        addSurvey
     }
 
     return (

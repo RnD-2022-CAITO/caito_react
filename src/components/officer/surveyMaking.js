@@ -1,10 +1,16 @@
 //put survey making process here
 import React, { useState, useEffect } from 'react';
 import {useAuth} from '../global/auth/Authentication';
+import { Link, useNavigate } from 'react-router-dom';
+import app, {func} from '../../utils/firebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/app-check';
+const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
-const OfficerSurvey = () => {
-  //Retrive the addSurvey func from Authentication.js (connects to firebase)
-  const { addSurvey } = useAuth();
+const OfficerSurveyMaking = () => {
+  //Retrieve the addSurvey func from Authentication.js (connects to firebase)
+  //const { addSurvey } = useAuth();
+  //const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [question_type, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -13,7 +19,36 @@ const OfficerSurvey = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
+  const [questionID, setQuestionID] = useState("");
+  const [teacherID, setTeacherID] = useState("");
 
+  async function addSurvey(survey){
+    app.appCheck().activate(site_key, true);
+    const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
+    try {
+        await addSurvey({
+            questions: survey,
+        }).then((res) => {
+            setQuestionID(res.data);
+            alert("new survey id made: " + res.data);
+        });
+    } catch (e) {
+        console.error(e);
+    }
+  }
+
+  async function assignTeacher(){
+    app.appCheck().activate(site_key, true);
+    const distributeSurvey = func.httpsCallable('officer-distributeSurvey');
+    try {
+        await distributeSurvey({
+            questionID: questionID,
+            teacherID: teacherID,
+        });
+    } catch (e) {
+        console.error(e);
+    }
+  }
   useEffect(() => {
     if (optionVisible){
       var i = [];
@@ -79,6 +114,16 @@ const OfficerSurvey = () => {
   const addCurrentSurvey = () => {
     //add questionsConfirmed into firebase 
     addSurvey(questionsConfirmed);
+    //navigate('/'); //navigate to confirmation page with links to 1. create a new survey and to 2. distribute the survey
+  };
+
+  const assignInputTeacher = () => {
+    //add questionsConfirmed into firebase 
+    if (questionID && teacherID){
+      assignTeacher();
+      alert("assigned questionID: " + questionID + "to teacherID: " + teacherID);
+    }
+    //navigate('/'); //navigate to confirmation page with links to 1. create a new survey and to 2. distribute the survey
   };
 
   return (
@@ -134,10 +179,16 @@ const OfficerSurvey = () => {
           {options}
           <br></br><br></br>
         </label>
+        <label>
+          Add Teacher ID (optional; only one teacher):
+          <input type="text" onInput={e => setTeacherID(e.target.value)} />
+          <br></br>
+        </label>
         <button onClick={() => addQuestion()}>Add Question</button><br></br>
         <button onClick={() => addCurrentSurvey()}>Submit Survey</button><br></br>
+        <button onClick={() => assignInputTeacher()}>Assign Teacher ID</button><br></br>
       </body>
     </div>
   )
 }
-export default OfficerSurvey;
+export default OfficerSurveyMaking;
