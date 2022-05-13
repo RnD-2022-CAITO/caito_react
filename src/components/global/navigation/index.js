@@ -29,17 +29,20 @@ const NavBar = () => {
       useEffect(() => {
             const data = async () => {
 
-                const  docExists = (await db.collection("teacher-info").doc(currentUser.uid).get()).exists
+                if(currentUser){
+                    const  docExists = (await db.collection("teacher-info").doc(currentUser.uid).get()).exists
 
-                if(docExists){
-                    await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                        setRole(querySnapshot.data().role)
-                    })
-                } else {
-                    await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                        setRole(querySnapshot.data().role)
-                    })
+                    if(docExists){
+                        await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                            setRole(querySnapshot.data().role)
+                        })
+                    } else {
+                        await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                            setRole(querySnapshot.data().role)
+                        })
+                    }
                 }
+
             }
 
             data();
