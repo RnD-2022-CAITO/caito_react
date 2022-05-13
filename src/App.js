@@ -35,9 +35,7 @@ const App = () => {
   return (
         <Router>
           <AuthProvider>
-            <UserDataProvider>
             <NavBar/>
-            </UserDataProvider>
             <Routes>
              {/* Private routes for teacher/officer should be like this: */}
               <Route exact path="/" element={
