@@ -67,7 +67,7 @@ const LogIn = () => {
         <div className='error'>{error}</div>
 
         <div className='btn-position'>
-          <button disabled = {loading} type="submit">Log in</button>
+          <button className='auth-btn' disabled = {loading} type="submit">Log in</button>
         </div>
       </form>
 

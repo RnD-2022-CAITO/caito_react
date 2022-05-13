@@ -8,7 +8,7 @@ import ErrorRoute from './ErrorRoute'
 export const PrivateRoute = ({children, role}) => {
     const {currentUser} = useAuth();
     const {userData} = useUserData();
-    console.log(userData);
+    // console.log(userData);
     if(role != "all" && role != userData.role){
         return <ErrorRoute/>
     }

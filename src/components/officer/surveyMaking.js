@@ -1,16 +1,21 @@
 //put survey making process here
 import React, { useState, useEffect } from 'react';
-import {useAuth} from '../global/auth/Authentication';
-import { Link, useNavigate } from 'react-router-dom';
 import app, {func} from '../../utils/firebase';
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/app-check';
+
+import "./surveyMaking.css"
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
   //const { addSurvey } = useAuth();
-  //const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+
+  //Set dates
+  const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
+  const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
+
   const [question, setQuestion] = useState("");
   const [question_type, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -22,12 +27,23 @@ const OfficerSurveyMaking = () => {
   const [questionID, setQuestionID] = useState("");
   const [teacherID, setTeacherID] = useState("");
 
-  async function addSurvey(survey){
+  //Validate inputs
+  const [error, setError] = useState("");
+
+  //Confirm the survey has been sent
+  const [complete, setComplete] = useState(false);
+
+  //loading state for the buttons
+  const [loading, setLoading] = useState(false);
+
+  async function addSurvey(survey, title, scheduledDate){
     app.appCheck().activate(site_key, true);
     const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
     try {
         await addSurvey({
             questions: survey,
+            title: title,
+            scheduledDate: scheduledDate,
         }).then((res) => {
             setQuestionID(res.data);
             alert("new survey id made: " + res.data);
@@ -95,6 +111,11 @@ const OfficerSurveyMaking = () => {
       alert("Question cannot be blank.");
       pass = false;
     }
+
+    if(question_type === ''){
+      return setError('Type of answer for the question cannot be blank.');
+    }
+
     if (pass === true && question.length > 0){
       var obj = {
         question: question,
@@ -102,19 +123,42 @@ const OfficerSurveyMaking = () => {
         options: optionsConfirmed,
       }
       setQuestionsConfirmed(oldArray => [...oldArray, obj]);
-      //setQuestion("");
+      setQuestion("");
       setQuestionType("");
       setOptionVisible(false);
       setOptions("");
       setCurrentOption("");
       setOptionsConfirmed([]);
+      setError("");
     }
   };
 
-  const addCurrentSurvey = () => {
+  const addCurrentSurvey = async () => {
+    setError('');
+
+    //empty title
+    if(title === ''){
+        return setError('Please enter a title for the survey');
+    }
+
+    if(scheduledDate < today.substring(0,10)){
+        return setError('Scheduled survey date should not be in the past.')
+    }
+
+    if(question !== ''){
+      return setError('You have unsaved question. Save it before submitting!')
+    }
+
+    if(questionsConfirmed.length < 1){
+        return setError('There should be at least 1 question in your survey.')
+    }
+
+    setLoading(true);
     //add questionsConfirmed into firebase 
-    addSurvey(questionsConfirmed);
-    //navigate('/'); //navigate to confirmation page with links to 1. create a new survey and to 2. distribute the survey
+    await addSurvey(questionsConfirmed, title, scheduledDate);
+
+    setLoading(false);
+    setComplete(true);
   };
 
   const assignInputTeacher = () => {
@@ -127,15 +171,44 @@ const OfficerSurveyMaking = () => {
   };
 
   return (
-    <div id="survey_div">
-      <body id="survey_body">
-        <h1>Create a New Survey</h1>
-        <p id="created_questions">{questionList}</p>
-        <label>
-          Question:
-          <input type="text" onInput={e => setQuestion(e.target.value)} />
-          <br></br>
-        </label>
+    <>
+    {!complete ?
+    <div className="container">
+      <div className='sign-in-form' onSubmit={addCurrentSurvey}>
+        <h1 style={{textAlign: 'center'}}>Create a New Survey</h1>
+
+        {error && <p className='error'>{error}</p>}
+        <div className='input-field'>
+          <input required className='question' type="text" 
+          placeholder='Enter your title here..'
+          value={title}
+          onInput={e => setTitle(e.target.value)} />
+          <label>
+            Survey Title
+          </label>
+        </div>
+
+        <div className='input-field'>
+          <input required className='question' type="date" 
+          placeholder='Enter your title here..'
+          value={scheduledDate}
+          onInput={e => setScheduledDate(e.target.value)} />
+          <label>
+            Scheduled Date
+          </label>
+        </div>
+
+        <div id="created_questions">{questionList}</div>
+        <div className='input-field'>
+          <input required className='question' type="text" 
+          placeholder='Enter your question here...'
+          value={question}
+          onInput={e => setQuestion(e.target.value)} />
+          <label>
+            Question
+          </label>
+        </div>
+
         <label>
           Type of Answer:
           <label>
@@ -177,18 +250,41 @@ const OfficerSurveyMaking = () => {
         </label>
         <label>
           {options}
-          <br></br><br></br>
         </label>
-        <label>
-          Add Teacher ID (optional; only one teacher):
+
+        <div className='input-field'>
           <input type="text" onInput={e => setTeacherID(e.target.value)} />
-          <br></br>
-        </label>
-        <button onClick={() => addQuestion()}>Add Question</button><br></br>
-        <button onClick={() => addCurrentSurvey()}>Submit Survey</button><br></br>
-        <button onClick={() => assignInputTeacher()}>Assign Teacher ID</button><br></br>
-      </body>
+          <label>
+            Add Teacher ID (optional; only one teacher):
+          </label>
+        </div>
+
+        <div className='survey-buttons'>          
+          <div className='survey-sub-btns'>
+            <button onClick={() => addQuestion()}> {question === '' ? 'Create question' : 'Save question'}</button>
+            <button onClick={() => assignInputTeacher()}>Assign Teacher ID</button>
+          </div>
+
+          <button className='auth-btn' disabled={loading} onClick={()=> addCurrentSurvey()}>Submit Survey</button>
+        </div>
+      </div>
     </div>
+    :
+    <div className='confirmation-box'>
+      <h2>Your survey has been created. </h2>
+      <h4>Survey title: {title}</h4>
+      <h5>What to do next?</h5>
+      <p>To distrubute your survey to your designated group of teachers,
+        simply go to &nbsp;<a href='/surveyDistribution'>Distribute survey</a>&nbsp;
+        tab, and select a group of teachers
+        you want to send this survey to.
+      </p>
+      <button onClick={()=>window.location.reload()}>
+        Create another survey
+      </button>
+    </div> 
+    }
+    </>
   )
 }
 export default OfficerSurveyMaking;
