@@ -63,16 +63,21 @@
 #section{
 	width: 500px;
 	height: 230px;
-	font-size: 20px;
+	font-size: 16px;
+	font-weight: bold;
 	margin-top: 10px;
 	text-align: center;
+}
+#section p:hover{
+	color: grey;
 }
 
 #close {
 	color: #aaa;
 	float: right;
-	margin-right: 15px;
+	margin-right: 16px;
 	font-size: 40px;
 	font-weight: bold;
 	text-decoration: none;
 }
+
