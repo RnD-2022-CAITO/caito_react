@@ -41,8 +41,10 @@ const NavBar = () => {
                     })
                 }
             }
-    
+
             data();
+            data();
+
 
     }, [currentUser])
 
@@ -100,7 +102,15 @@ const NavBar = () => {
     )
 
     return (
-        currentUser ? role==='teacher'? <TeacherNav />: <OfficerNav/> : null
+        currentUser ? 
+            //If role is teacher 
+            role === 'teacher'? <TeacherNav /> : 
+            //Else if role is officer
+            role === 'officer' ? <OfficerNav/> : 
+            //Render nothing if role is undefined
+            null 
+        //User is not authenticated yet
+        : null
     )
 }
 
