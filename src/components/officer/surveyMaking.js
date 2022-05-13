@@ -10,6 +10,8 @@ const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
   //const { addSurvey } = useAuth();
   // const navigate = useNavigate();
+
+  //Set title for the survey
   const [title, setTitle] = useState("");
 
   //Set dates
@@ -17,7 +19,7 @@ const OfficerSurveyMaking = () => {
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
   const [question, setQuestion] = useState("");
-  const [question_type, setQuestionType] = useState("");
+  const [questionType, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
   const [options, setOptions] = useState(""); //visual purposes
   const [questionList, setQuestionList] = useState(""); //visual purposes
@@ -36,6 +38,7 @@ const OfficerSurveyMaking = () => {
   //loading state for the buttons
   const [loading, setLoading] = useState(false);
 
+  //Add survey to the database
   async function addSurvey(survey, title, scheduledDate){
     app.appCheck().activate(site_key, true);
     const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
@@ -53,6 +56,7 @@ const OfficerSurveyMaking = () => {
     }
   }
 
+  //assign teachers to the survey
   async function assignTeacher(){
     app.appCheck().activate(site_key, true);
     const distributeSurvey = func.httpsCallable('officer-distributeSurvey');
@@ -65,6 +69,8 @@ const OfficerSurveyMaking = () => {
         console.error(e);
     }
   }
+
+  //Add answer options if the user choses multiple choice answer type
   useEffect(() => {
     if (optionVisible){
       var i = [];
@@ -81,6 +87,7 @@ const OfficerSurveyMaking = () => {
     }
   }, [optionVisible, optionsConfirmed, currentOption]);
 
+  //Show the questions the user has entered
   useEffect(() => {
     var num = 0;
     setQuestionList(questionsConfirmed.map((o) => 
@@ -101,7 +108,7 @@ const OfficerSurveyMaking = () => {
 
   const addQuestion = () => {
     var pass = true;
-    if (question_type === "checkbox" || question_type === "radio"){
+    if (questionType === "checkbox" || questionType === "radio"){
       if (optionsConfirmed.length < 2){
         alert("Minimum 2 options.");
         pass = false;
@@ -112,16 +119,18 @@ const OfficerSurveyMaking = () => {
       pass = false;
     }
 
-    if(question_type === ''){
+    if(questionType === ''){
       return setError('Type of answer for the question cannot be blank.');
     }
 
     if (pass === true && question.length > 0){
       var obj = {
         question: question,
-        type: question_type,
+        type: questionType,
         options: optionsConfirmed,
       }
+
+      //Clear the inputs
       setQuestionsConfirmed(oldArray => [...oldArray, obj]);
       setQuestion("");
       setQuestionType("");
@@ -133,6 +142,7 @@ const OfficerSurveyMaking = () => {
     }
   };
 
+  //Validate inputs and send to the cloud functions if all inputs are valid
   const addCurrentSurvey = async () => {
     setError('');
 
@@ -170,6 +180,7 @@ const OfficerSurveyMaking = () => {
     //navigate('/'); //navigate to confirmation page with links to 1. create a new survey and to 2. distribute the survey
   };
 
+  //Render component
   return (
     <>
     {!complete ?
@@ -215,7 +226,7 @@ const OfficerSurveyMaking = () => {
             <input
               type="radio"
               value="text"
-              checked={question_type === "text"}
+              checked={questionType === "text"}
               onChange={e => {setQuestionType(e.target.value); setOptionVisible(false)}}
             />
             Text
@@ -224,7 +235,7 @@ const OfficerSurveyMaking = () => {
             <input
               type="radio"
               value="number"
-              checked={question_type === "number"}
+              checked={questionType === "number"}
               onChange={e => {setQuestionType(e.target.value); setOptionVisible(false)}}
             />
             Number
@@ -233,7 +244,7 @@ const OfficerSurveyMaking = () => {
             <input
               type="radio"
               value="checkbox"
-              checked={question_type === "checkbox"}
+              checked={questionType === "checkbox"}
               onChange={e => {setQuestionType(e.target.value); setOptionVisible(true)}}
             />
             Checkbox
@@ -242,7 +253,7 @@ const OfficerSurveyMaking = () => {
             <input
               type="radio"
               value="radio"
-              checked={question_type === "radio"}
+              checked={questionType === "radio"}
               onChange={e => {setQuestionType(e.target.value); setOptionVisible(true)}}
             />
             Radio

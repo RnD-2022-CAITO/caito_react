@@ -1,4 +1,9 @@
-//authenticate a user
+/*
+This useContext authenticate a user by using Firebase Authentication
+To get user's information such as email, username, userID,...
+import {useAuth} and deconstruct it:
+    const {currentUser} = useAuth();
+*/
 import React, {useContext, useState, useEffect} from 'react'
 import app, {func, auth} from '../../../utils/firebase'
 import firebase from 'firebase/compat/app';

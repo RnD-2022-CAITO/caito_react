@@ -1,3 +1,10 @@
+/*
+This useContext extracts authenticated user information from the firestore database
+To get user's information that is not saved in the useAuth context,
+import {useUserData} and deconstruct it:
+    const {userData} = useUserData();
+*/
+
 //Fetch user info from the database Firestore
 import React, {useContext, useState, useEffect} from 'react'
 import { db } from '../../../utils/firebase'

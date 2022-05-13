@@ -10,9 +10,8 @@ const NavBar = () => {
     const {userData} = useUserData();
     const [error, setError] = useState('');
 
+    //check the current path
     const navigate = useNavigate();
-
-
 
     const handleLogOut = async () => {
 
@@ -79,6 +78,7 @@ const NavBar = () => {
         </div>
     )
 
+    //render nav bar based on roles
     return (
         currentUser ? userData.role==='teacher'? <TeacherNav />: <OfficerNav/> : null
     )

@@ -1,3 +1,8 @@
+/*
+Global styling for the application
+Styles that can be applied globally to all elements with the same type are written here
+*/
+
 :root {
     --primary-color: #119DA4;
     --primary-dark: #272635;
