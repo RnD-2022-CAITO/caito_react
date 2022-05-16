@@ -81,3 +81,50 @@
 	text-decoration: none;
 }
 
+textarea {
+	display: none;
+	font-family: Tahoma, sans-serif;
+
+    width: 600px;
+    height: 120px;
+    padding: 5px;
+
+    border: 3px solid #ccc;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+#about-title{
+	display: none;
+	font-size: 30px;
+	font-weight: 700;
+}
+#education-title{
+	display: none;
+	font-size: 30px;
+	font-weight: 700;
+}
+#skills-title{
+	display: none;
+	font-size: 30px;
+	font-weight: 700;
+}
+#workingEx-title{
+	display: none;
+	font-size: 30px;
+	font-weight: 700;
+}
+#hobbies-title{
+	display: none;
+	font-size: 30px;
+	font-weight: 700;
+}
+img {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 30px;
+	height: 30px;
+}
+img:hover{
+	background-color: #119DA4;
+}
