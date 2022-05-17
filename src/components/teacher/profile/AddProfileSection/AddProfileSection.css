@@ -83,7 +83,8 @@
 
 textarea {
 	display: none;
-	font-family: Tahoma, sans-serif;
+	font-family: Georgia, serif;
+	font-size: 15px;
 
     width: 600px;
     height: 120px;

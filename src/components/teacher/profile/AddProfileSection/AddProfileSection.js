@@ -16,8 +16,55 @@ const AddProfileSection = (props) => {
     const {currentUser} = useAuth();
     const {userData} = useUserData();
     const aboutRef = useRef();
+    const educationRef = useRef();
+    const skillsRef = useRef();
+    const workingExRef = useRef();
+    const hobbiesRef = useRef();
 
 
+
+    //show user's current sections, 
+    const showCurrentInfo = () => {
+        if(userData.About != null) {
+            document.getElementById('aboutText').style.display="block";
+            document.getElementById('aboutText').value = userData.About;
+            document.getElementById('about-title').style.display="block";
+            document.getElementById('save-about').style.display="block";
+            document.getElementById('about').style.color='grey';
+        }
+
+        if(userData.Education != null) {
+            document.getElementById('educationText').style.display="block";
+            document.getElementById('educationText').value = userData.Education;
+            document.getElementById('education-title').style.display="block";
+            document.getElementById('save-education').style.display="block";
+            document.getElementById('education').style.color='grey';
+        }
+
+        if(userData.Skills != null) {
+            document.getElementById('skillsText').style.display="block";
+            document.getElementById('skillsText').value = userData.Skills;
+            document.getElementById('skills-title').style.display="block";
+            document.getElementById('save-skills').style.display="block";
+            document.getElementById('skills').style.color='grey';
+        }
+
+        if(userData.WorkingEx != null) {
+            document.getElementById('workingExText').style.display="block";
+            document.getElementById('workingExText').value = userData.WorkingEx;
+            document.getElementById('workingEx-title').style.display="block";
+            document.getElementById('save-workingEx').style.display="block";
+            document.getElementById('working-ex').style.color='grey';
+        }
+
+        if(userData.Hobbies != null) {
+            document.getElementById('hobbiesText').style.display="block";
+            document.getElementById('hobbiesText').value = userData.Hobbies;
+            document.getElementById('hobbies-title').style.display="block";
+            document.getElementById('save-hobbies').style.display="block";
+            document.getElementById('hobbies').style.color='grey';
+        }
+    }
 
     //show the add section dialog when user click button
     const show = () => {
@@ -123,6 +170,7 @@ const AddProfileSection = (props) => {
         }
         document.getElementById('hobbies').style.color='grey';
         close();
+        
      }
 
      //initially the sections are read only, click button to edit
@@ -146,17 +194,74 @@ const AddProfileSection = (props) => {
         }
     }
 
-    const saveAbout= async() => {
+    const saveSections= async(e) => {
         app.appCheck().activate(site_key, true);
-            const addAboutTxt = func.httpsCallable('teacher-addBioSection');
-            try {
-                const response = await addAboutTxt({
-                    sectionName: "About",
-                    sectionData: aboutRef.current.value,
-                });
-                navigate("/profile");
-            } catch (e) {
-                console.error(e);
+        const addAboutTxt = func.httpsCallable('teacher-addBioSection');
+        const addEducationTxt = func.httpsCallable('teacher-addBioSection');
+        const addSkillsTxt = func.httpsCallable('teacher-addBioSection');
+        const addWorkingExTxt = func.httpsCallable('teacher-addBioSection');
+        const addHobbiesTxt = func.httpsCallable('teacher-addBioSection');
+        
+            switch(e) {
+                case 'About':
+                    try {
+                        const response = await addAboutTxt({
+                            sectionName: "About",
+                            sectionData: aboutRef.current.value,
+                        });
+                        navigate("/profile");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+                
+                 case 'Education':
+                    try {
+                        const response = await addEducationTxt({
+                            sectionName: "Education",
+                            sectionData: educationRef.current.value,
+                        });
+                        navigate("/profile");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+
+                case 'Skills':
+                    try {
+                        const response = await addSkillsTxt({
+                            sectionName: "Skills",
+                            sectionData: skillsRef.current.value,
+                        });
+                        navigate("/profile");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+                
+                case 'WorkingEx':
+                    try {
+                        const response = await addWorkingExTxt({
+                            sectionName: "WorkingEx",
+                            sectionData: workingExRef.current.value,
+                        });
+                        navigate("/profile");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
+
+                case 'Hobbies':
+                    try {
+                        const response = await addHobbiesTxt({
+                            sectionName: "Hobbies",
+                            sectionData: hobbiesRef.current.value,
+                        });
+                        navigate("/profile");
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    break;
             }
     }
 
@@ -167,47 +272,48 @@ const AddProfileSection = (props) => {
                 <h3>{userData.firstName} {userData.lastName}</h3>
                 <p>Email: {currentUser.email}</p>
                 <button className='add-section' onClick={show}>Add Profile Section</button>
-                <div id='seciton-text'>
-                    About: {userData.About}
+
+                <div id='seciton-text' onLoad={showCurrentInfo}>
+                    {/* About: {userData.About} */}
                     <p id='about-title'>
                         About
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'about')}></img>
                         </p>
                     <textarea id='aboutText' readOnly="readonly" ref={aboutRef}>
                     </textarea>
-                    <button id='save-about' onClick={saveAbout}>Save</button><br />
+                    <button id='save-about' onClick={saveSections.bind(this,"About")}>Save</button><br />
                     
                     <p id='education-title'>
                         Education
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'education')}></img>
                     </p>
-                    <textarea id='educationText' readOnly="readonly">
+                    <textarea id='educationText' readOnly="readonly" ref={educationRef}>
                     </textarea>
-                    <button id='save-education'>Save</button><br /><br />
+                    <button id='save-education' onClick={saveSections.bind(this,"Education")}>Save</button><br /><br />
                     
                     <p id='skills-title'>
                         Skills
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'skills')}></img>
-                        </p>
-                    <textarea id='skillsText' readOnly="readonly">  
+                    </p>
+                    <textarea id='skillsText' readOnly="readonly" ref={skillsRef}>  
                     </textarea>
-                    <button id='save-skills'>Save</button><br /><br />
+                    <button id='save-skills' onClick={saveSections.bind(this,"Skills")}>Save</button><br /><br />
                     
                     <p id='workingEx-title'>
                         Working Experience
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'workingEx')}></img>
                         </p>
-                    <textarea id='workingExText' readOnly="readonly">
+                    <textarea id='workingExText' readOnly="readonly" ref={workingExRef}>
                     </textarea>
-                    <button id='save-workingEx'>Save</button><br /><br />
+                    <button id='save-workingEx' onClick={saveSections.bind(this,"WorkingEx")}>Save</button><br /><br />
                     
                     <p id='hobbies-title'>
                         Hobbies
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'hobbies')}></img>
                         </p>
-                    <textarea id='hobbiesText' readOnly="readonly">
+                    <textarea id='hobbiesText' readOnly="readonly" ref={hobbiesRef}>
                     </textarea>
-                    <button id='save-hobbies'>Save</button><br /><br />
+                    <button id='save-hobbies' onClick={saveSections.bind(this,"Hobbies")}>Save</button><br /><br />
                 </div>
                 
             </div> 
