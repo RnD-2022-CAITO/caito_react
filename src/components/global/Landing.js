@@ -9,7 +9,10 @@ const Landing = () => {
 
   return (
     <div>
-      {userData.role === 'teacher' ? 
+      
+      {
+      //render component based on the user's role
+      userData.role === 'teacher' ? 
       <TeacherLanding/> : <OfficerLanding/>}
     </div>
   )

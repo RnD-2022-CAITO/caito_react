@@ -1,0 +1,40 @@
+[debug] [2022-05-12T03:05:30.533Z] ----------------------------------------------------------------------
+[debug] [2022-05-12T03:05:30.535Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions:officer-distributeSurvey
+[debug] [2022-05-12T03:05:30.536Z] CLI Version:   10.7.1
+[debug] [2022-05-12T03:05:30.536Z] Platform:      darwin
+[debug] [2022-05-12T03:05:30.536Z] Node Version:  v16.15.0
+[debug] [2022-05-12T03:05:30.560Z] Time:          Thu May 12 2022 15:05:30 GMT+1200 (New Zealand Standard Time)
+[debug] [2022-05-12T03:05:30.561Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-05-12T03:05:30.635Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-05-12T03:05:30.636Z] > authorizing via signed-in user (bcis.caito@gmail.com)
+[debug] [2022-05-12T03:05:30.636Z] [iam] checking project caito-dev for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2022-05-12T03:05:30.638Z] > refreshing access token with scopes: []
+[debug] [2022-05-12T03:05:30.640Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2022-05-12T03:05:31.034Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Thu, 12 May 2022 03:05:30 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2022-05-12T03:05:31.079Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/caito-dev:testIamPermissions [none]
+[debug] [2022-05-12T03:05:31.079Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/caito-dev:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-05-12T03:05:31.665Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/caito-dev:testIamPermissions 200
+[debug] [2022-05-12T03:05:31.665Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/caito-dev:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-05-12T03:05:31.667Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/caito-dev/serviceAccounts/caito-dev@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2022-05-12T03:05:31.667Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/caito-dev/serviceAccounts/caito-dev@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2022-05-12T03:05:32.484Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/caito-dev/serviceAccounts/caito-dev@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2022-05-12T03:05:32.485Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/caito-dev/serviceAccounts/caito-dev@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'caito-dev'...
+[info] 
+[info] i  deploying functions 
+[debug] [2022-05-12T03:05:32.802Z] TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at new NodeError (node:internal/errors:372:5)
+    at validateString (node:internal/validators:120:11)
+    at Object.join (node:path:1172:7)
+    at Config.path (/usr/local/lib/node_modules/firebase-tools/lib/config.js:122:45)
+    at getChildEnvironment (/usr/local/lib/node_modules/firebase-tools/lib/deploy/lifecycleHooks.js:50:49)
+    at runTargetCommands (/usr/local/lib/node_modules/firebase-tools/lib/deploy/lifecycleHooks.js:71:14)
+    at /usr/local/lib/node_modules/firebase-tools/lib/deploy/lifecycleHooks.js:122:24
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async chain (/usr/local/lib/node_modules/firebase-tools/lib/deploy/index.js:32:9)
+    at async deploy (/usr/local/lib/node_modules/firebase-tools/lib/deploy/index.js:66:5)
+[error] 
+[error] Error: An unexpected error has occurred.

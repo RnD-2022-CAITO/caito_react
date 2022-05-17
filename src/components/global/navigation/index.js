@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../auth/Authentication'
+import { db } from '../../../utils/firebase';
 import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useUserData } from '../auth/UserData';
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
-    const {userData} = useUserData();
     const [error, setError] = useState('');
 
+    const [role, setRole] = useState('');
+
     const navigate = useNavigate();
-
-
 
     const handleLogOut = async () => {
 
@@ -25,6 +24,32 @@ const NavBar = () => {
             setError('Something went wrong..');
         }
     }
+
+      //only runs when the component mounts
+      useEffect(() => {
+            const data = async () => {
+
+                if(currentUser){
+                    const  docExists = (await db.collection("teacher-info").doc(currentUser.uid).get()).exists
+
+                    if(docExists){
+                        await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                            setRole(querySnapshot.data().role)
+                        })
+                    } else {
+                        await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                            setRole(querySnapshot.data().role)
+                        })
+                    }
+                }
+
+            }
+
+            data();
+            data();
+
+
+    }, [currentUser])
 
 
     const TeacherNav = () => (
@@ -56,7 +81,14 @@ const NavBar = () => {
                     home
                     </NavLink>
                 <li>
-                    survey
+                    <NavLink activeClassName='active' to="/surveyMaking">
+                    create survey
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink activeClassName='active' to="/surveyDistribution">
+                    distribute survey
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink activeClassName='active' to="/summary">
@@ -73,7 +105,15 @@ const NavBar = () => {
     )
 
     return (
-        currentUser ? userData.role==='teacher'? <TeacherNav />: <OfficerNav/> : null
+        currentUser ? 
+            //If role is teacher 
+            role === 'teacher'? <TeacherNav /> : 
+            //Else if role is officer
+            role === 'officer' ? <OfficerNav/> : 
+            //Render nothing if role is undefined
+            null 
+        //User is not authenticated yet
+        : null
     )
 }
 

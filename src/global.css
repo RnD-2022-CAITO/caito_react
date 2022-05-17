@@ -1,3 +1,8 @@
+/*
+Global styling for the application
+Styles that can be applied globally to all elements with the same type are written here
+*/
+
 :root {
     --primary-color: #119DA4;
     --primary-dark: #272635;
@@ -16,7 +21,7 @@ button{
     text-transform: uppercase;
     background-color: var(--primary-color);
     color: white;
-    padding: 5px 0;
+    padding: 5px 15px;
     border: none;
     border-radius: 3px;
     transition: 0.5s;
@@ -26,7 +31,6 @@ button{
 button:hover{
     background-color: var(--primary-dark);
     cursor: pointer;
-    letter-spacing: 10px;
 }
 
 button:disabled{

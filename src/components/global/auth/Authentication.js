@@ -1,4 +1,9 @@
-//authenticate a user
+/*
+This useContext authenticate a user by using Firebase Authentication
+To get user's information such as email, username, userID,...
+import {useAuth} and deconstruct it:
+    const {currentUser} = useAuth();
+*/
 import React, {useContext, useState, useEffect} from 'react'
 import app, {func, auth} from '../../../utils/firebase'
 import firebase from 'firebase/compat/app';
@@ -35,7 +40,6 @@ export const AuthProvider = ({children}) => {
                 console.error(e);
             }
         });
-
     }
 
     function signIn(email, password){
@@ -58,22 +62,12 @@ export const AuthProvider = ({children}) => {
         await reauthenticate(oldPass)
         return auth.currentUser.updatePassword(newPass);
     }
-
     //reauthenticate the user to update details
     const reauthenticate = currentPassword => {
         const cred = firebase.auth.EmailAuthProvider.credential(
             auth.currentUser.email, currentPassword);
         return auth.currentUser.reauthenticateWithCredential(cred);
     }
-
-    /*async function updateTeacherDatabase(userID, user){
-        return await db.collection('teacher-info').doc(userID).set({
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: 'teacher'
-        }).catch(error => console.log(error))
-    }*/
 
     //only runs when the component mounts
     useEffect(() => {
@@ -93,7 +87,7 @@ export const AuthProvider = ({children}) => {
         signOut,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
     }
 
     return (

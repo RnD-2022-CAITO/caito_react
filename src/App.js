@@ -1,3 +1,10 @@
+/*
+This component stores all the routes for the app
+Two routes are used in this app: public route and private routes.
+*/
+
+//styling
+import './global.css'
 //Routes 
 import React from 'react'
 import LogIn from './components/global/login/LogIn'
@@ -8,25 +15,14 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
-
-
-//styling
-import './global.css'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
+import OfficerSurveyMaking from './components/officer/surveyMaking'
+import OfficerSurveyDistribution from './components/officer/surveyDistribution';
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import AddProfileSection from './components/teacher/profile/AddProfileSection/AddProfileSection'
-
-// const currentPath = (location) => {
-//   switch(location){
-//     case '/':
-//       return true;
-//     default:
-//       return false;
-//   }
-// }
 
 //Roles to access paths
 const role = {
@@ -40,9 +36,7 @@ const App = () => {
   return (
         <Router>
           <AuthProvider>
-            <UserDataProvider>
             <NavBar/>
-            </UserDataProvider>
             <Routes>
              {/* Private routes for teacher/officer should be like this: */}
               <Route exact path="/" element={
@@ -86,6 +80,24 @@ const App = () => {
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSummary />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
+              <Route exact path="/surveyMaking" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <OfficerSurveyMaking />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
+              <Route exact path="/surveyDistribution" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <OfficerSurveyDistribution />
                       </PrivateRoute>
                     </UserDataProvider>
                     }

@@ -105,7 +105,7 @@ const SignUp = () => {
 
         {error && <p className='error'>{error}</p>}
         <div className='btn-position'>
-          <button disabled={loading} type="submit">
+          <button className='auth-btn' disabled={loading} type="submit">
             {loading?<span>Creating user...</span> :<span>Sign up</span>}
 
           </button>
