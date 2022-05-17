@@ -128,3 +128,24 @@ img {
 img:hover{
 	background-color: #119DA4;
 }
+
+#save-about {
+	margin-top: 5px;
+	display: none;
+}
+#save-education {
+	margin-top: 5px;
+	display: none;
+}
+#save-skills {
+	margin-top: 5px;
+	display: none;
+}
+#save-workingEx {
+	margin-top: 5px;
+	display: none;
+}
+#save-hobbies {
+	margin-top: 5px;
+	display: none;
+}
