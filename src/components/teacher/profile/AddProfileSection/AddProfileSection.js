@@ -172,27 +172,54 @@ const AddProfileSection = (props) => {
      //initially the sections are read only, click button to edit
      const enableEdit = (e) => {
         setEdit(e);
-        console.log(e);
+
         switch(e) {
             case 'about':
                 document.getElementById('aboutText').removeAttribute('readOnly');
                 document.getElementById('aboutText').focus();
+
+                //set other elements to read only
+                document.getElementById('educationText').setAttribute('readOnly', true);
+                document.getElementById('skillsText').setAttribute('readOnly', true);
+                document.getElementById('workingExText').setAttribute('readOnly', true);
+                document.getElementById('hobbiesText').setAttribute('readOnly', true);
+                
                 break;
             case 'education':
                 document.getElementById('educationText').removeAttribute('readOnly');
                 document.getElementById('educationText').focus();
+
+                document.getElementById('aboutText').setAttribute('readOnly', true);
+                document.getElementById('skillsText').setAttribute('readOnly', true);
+                document.getElementById('workingExText').setAttribute('readOnly', true);
+                document.getElementById('hobbiesText').setAttribute('readOnly', true);
                 break;
             case 'skills':
                 document.getElementById('skillsText').removeAttribute('readOnly');
                 document.getElementById('skillsText').focus();
+
+                document.getElementById('aboutText').setAttribute('readOnly', true);
+                document.getElementById('educationText').setAttribute('readOnly', true);
+                document.getElementById('workingExText').setAttribute('readOnly', true);
+                document.getElementById('hobbiesText').setAttribute('readOnly', true);
                 break;
             case 'workingEx':
                 document.getElementById('workingExText').removeAttribute('readOnly');
                 document.getElementById('workingExText').focus();
+
+                document.getElementById('aboutText').setAttribute('readOnly', true);
+                document.getElementById('educationText').setAttribute('readOnly', true);
+                document.getElementById('skillsText').setAttribute('readOnly', true);
+                document.getElementById('hobbiesText').setAttribute('readOnly', true);
                 break;
             case 'hobbies':
                 document.getElementById('hobbiesText').removeAttribute('readOnly');
                 document.getElementById('hobbiesText').focus();
+
+                document.getElementById('aboutText').setAttribute('readOnly', true);
+                document.getElementById('educationText').setAttribute('readOnly', true);
+                document.getElementById('workingExText').setAttribute('readOnly', true);
+                document.getElementById('skillsText').setAttribute('readOnly', true);
                 break;
             default:
                 break;
