@@ -17,11 +17,6 @@ const AccountInfo = (props) => {
            
            {/* button for more information */}
             </Link>
-            <Link to='/profile/more'>
-            <button className='more-btn'> 
-                More
-            </button>
-            </Link>
 
         </div>
     )

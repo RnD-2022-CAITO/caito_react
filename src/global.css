@@ -60,14 +60,14 @@ a:hover{
 }
 
 
-input{
+input, textarea{
     border: none;
     border-bottom: 2px solid var(--primary-color);
     border-right: 2px solid var(--primary-color);
     transition: 0.5s;
 }
 
-input:focus{
+input:focus, textarea:focus{
     outline: none;
     border: 2px solid var(--primary-color);
 }

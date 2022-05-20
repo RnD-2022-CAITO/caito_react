@@ -5,7 +5,7 @@ const ErrorRoute = (props) => {
   const printMessage = () =>{
     switch(err){
       case 'already-login':
-        return 'You have already logged in.';
+        return 'Loading...';
       default:
         return 'Oops! Seems like you don\'t have permission to access this path!';
     }

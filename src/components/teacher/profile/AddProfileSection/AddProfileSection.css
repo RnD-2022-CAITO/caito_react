@@ -6,6 +6,11 @@
     border: 0.1px solid black;
     padding: 10px;
     border-radius: 5px;
+	height: fit-content;
+}
+
+.btn-section{
+	text-align: center;
 }
 
 .add-section{
@@ -25,10 +30,10 @@
     color: white;
     background-color: black;
     border-radius:30px;
-
+	padding: 3px;
 }
 .close-btn:hover{
-    background-color: red;
+    background-color: var(--primary-color);
 }
 
 #dialog {
@@ -39,7 +44,7 @@
 	width: 100%;
 	height: 100%;
 	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.4)
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 #content {
@@ -49,6 +54,7 @@
 	background-color: #fefefe;
 	border-radius: 10px;
 	box-shadow: 0 0 5px 5px darkgray;
+	padding-bottom: 15px;
 }
 #aclose{
 	width: 500px;
@@ -90,7 +96,7 @@ textarea {
     height: 120px;
     padding: 5px;
 
-    border: 3px solid #ccc;
+    border: 0.5px var(--primary-dark) solid;
     background-repeat: no-repeat;
     background-position: bottom right;
 }
@@ -149,4 +155,8 @@ img:hover{
 #save-hobbies {
 	margin-top: 5px;
 	display: none;
+}
+
+#about, #education, #skills, #working-ex, #hobbies{
+	cursor: pointer;
 }

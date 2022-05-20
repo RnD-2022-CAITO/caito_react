@@ -67,7 +67,6 @@ const SignUp = () => {
           return setError('Something is wrong... please try again later');
       }
      }
-    
     navigate('/');
   }
 
