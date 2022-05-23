@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../global/auth/Authentication'
 import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 import "./teacherLanding.css";
 
@@ -10,8 +11,9 @@ const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const TeacherLanding = () => {
 
-    const {currentUser} = useAuth();
     const {userData} = useUserData();
+
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [upcomingSurvey, setUpcomingSurvey] = useState([]);
@@ -36,10 +38,14 @@ const TeacherLanding = () => {
     },[]);
 
     const renderSurveys = () => (
-        <div>
+        <div className='survey-display'>
+            <div>
             <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
             <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{upcomingSurvey.length}</span> new 
             {(upcomingSurvey.length < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
+            </div>
+
+            <div className='survey-box'>
             {//Render surveys
             upcomingSurvey.map(sur => 
             sur.isSubmitted === false &&
@@ -49,12 +55,20 @@ const TeacherLanding = () => {
             </section>
             )
             }
+            </div>
         </div>
     )
 
     const openSurvey = (e) => {
         console.log(e.target.id);
-        alert('Redirect user to question ID: ' + e.target.id);
+        // alert('Redirect user to question ID: ' + e.target.id);
+
+        //Pass the question ID to the next path
+        navigate('/survey', {
+            state: {
+                questionID: e.target.id,
+            }
+        })
     }
         
 

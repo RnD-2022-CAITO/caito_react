@@ -22,6 +22,7 @@ import OfficerSurveyDistribution from './components/officer/surveyDistribution';
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
+import Survey from './components/teacher/survey'
 
 //Roles to access paths
 const role = {
@@ -44,6 +45,15 @@ const App = () => {
                         <Landing />
                       </UserDataProvider>
                     </PrivateLandingRoute>
+                    }
+              />
+
+              <Route exact path="/survey" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <Survey/>
+                      </PrivateRoute>
+                    </UserDataProvider>
                     }
               />
 
