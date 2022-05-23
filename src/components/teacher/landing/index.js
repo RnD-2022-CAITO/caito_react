@@ -1,37 +1,69 @@
 //Main page for the components
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../global/auth/Authentication'
-import { useNavigate } from 'react-router-dom'
 import { useUserData } from '../../global/auth/UserData'
+import app, {func} from '../../../utils/firebase';
+
+import "./teacherLanding.css";
+
+const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const TeacherLanding = () => {
-    // eslint-disable-next-line
-    const [error, setError] = useState('');
 
-    const {currentUser,  signOut} = useAuth();
+    const {currentUser} = useAuth();
     const {userData} = useUserData();
 
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [upcomingSurvey, setUpcomingSurvey] = useState([]);
 
-    const handleLogOut = async () => {
+    //Get surveys
+    useEffect(() => {
+        const retrieveSurvey = async  () => {
+            app.appCheck().activate(site_key, true);
+            const getSurvey = func.httpsCallable('teacher-getAllAssignedSurveys_Answers');
+            try {
+                const response = await getSurvey();
+                
+                setUpcomingSurvey(response.data);
 
-        try {
-            await signOut();
-            navigate('/login');
-        }catch{
-            setError('Something went wrong..');
+                setLoading(false);
+            } catch (e) {
+                console.error(e);
+            }
         }
+
+        retrieveSurvey();
+    },[]);
+
+    const renderSurveys = () => (
+        <div>
+            <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
+            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{upcomingSurvey.length}</span> new 
+            {(upcomingSurvey.length < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
+            {//Render surveys
+            upcomingSurvey.map(sur => 
+            sur.isSubmitted === false &&
+            <section className='new-survey' key={sur.questionID}>
+                <h3 >{sur.questionTitle}</h3>
+                <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
+            </section>
+            )
+            }
+        </div>
+    )
+
+    const openSurvey = (e) => {
+        console.log(e.target.id);
+        alert('Redirect user to question ID: ' + e.target.id);
     }
+        
+
 
     return (
         <div>
-            <h1>Landing Page - Teacher</h1>
-            <p>Name: {userData.firstName} {userData.lastName}</p>
-            <p>Role: {userData.role}</p>
-            <p>{currentUser.email}</p>
-            <button onClick={handleLogOut}>
-                Log out
-            </button>
+           {loading ? 
+           <p style={{textAlign:"center"}}>Loading...</p> : 
+           renderSurveys()}
         </div>
 
     )
