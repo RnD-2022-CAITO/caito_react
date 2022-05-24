@@ -15,6 +15,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
+import TeacherSurvey from './components/teacher/survey'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
 import OfficerSurveyMaking from './components/officer/surveyMaking'
@@ -22,6 +23,7 @@ import OfficerSurveyDistribution from './components/officer/surveyDistribution';
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
+import Questions from './components/teacher/survey/ShowQuestions/Questions'
 
 //Roles to access paths
 const role = {
@@ -55,6 +57,24 @@ const App = () => {
                           <TeacherProfile />
                       </PrivateRoute>
                     </UserDataProvider>
+                    }
+              />
+
+              <Route exact path="/survey" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <TeacherSurvey />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
+<Route exact path="/survey/questions" element={   
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <Questions />
+                      </PrivateRoute>   
+                    </UserDataProvider>                     
                     }
               />
 

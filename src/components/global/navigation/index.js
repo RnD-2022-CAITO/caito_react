@@ -39,6 +39,13 @@ const NavBar = () => {
                     profile
                     </NavLink>
                 </li>
+
+                <li>
+                    <NavLink activeClassName='active' to="/survey">
+                    survey
+                    </NavLink>
+                </li>
+
                 <li>
                     <button className='logout-btn-nav' onClick={handleLogOut}>
                         Log out
