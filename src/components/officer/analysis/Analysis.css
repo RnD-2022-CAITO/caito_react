@@ -1,0 +1,18 @@
+.summary-view{
+    padding: 10px;
+    margin: 10px;
+    border: 0.2px solid black;
+    border-radius: 10px;
+}
+
+.search-engine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-engine input{
+    min-width: 50vw;
+}

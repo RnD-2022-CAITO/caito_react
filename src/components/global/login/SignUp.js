@@ -55,6 +55,7 @@ const SignUp = () => {
     }
     try{
       await signUp(user);
+      navigate('/');
     }catch(err){ 
       setLoading(false);
       console.log(err.code);
@@ -67,7 +68,6 @@ const SignUp = () => {
           return setError('Something is wrong... please try again later');
       }
      }
-    navigate('/');
   }
 
   return (
