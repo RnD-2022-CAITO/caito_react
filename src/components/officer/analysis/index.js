@@ -76,6 +76,9 @@ const OfficerSummary = () => {
   }
 
   return (
+    loading ? 
+    <p>Loading..</p>
+    :
     <div>
         <h1 style={{textAlign:'center'}}>Survey Summary</h1>
 
