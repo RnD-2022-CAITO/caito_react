@@ -35,12 +35,13 @@ const OfficerSummary = () => {
 
   //Get surveys
   useEffect(() => {
-      const retrieveAnswers = async  () => {
+      const retrieveAnswers =  async () => {
+        console.log('run')
         if(questionID.length>1){
-          questionID.map( async question => {
+          const newArr = await Promise.all(questionID.map(async (question) => {
             var total = 0;
             var complete = 0;
-            return db.collection('survey-answer').where('questionID', '==', question.id).get()
+            const res =  await db.collection('survey-answer').where('questionID', '==', question.id).get()
             .then((res) => 
             {
                 res.docs.map(doc => {
@@ -51,33 +52,27 @@ const OfficerSummary = () => {
                   }
                 });
 
-                question.total = total;
-                question.complete = complete;
-                return question;
+                return ({total: total, complete: complete});
             });
-          }
-          )
+
+            const newObj = {
+              ...question,
+              total: res.total,
+              complete: res.complete
+            }
+            return newObj;
+          }))
+
+          setQuestionID(newArr)
         }
       }
 
       retrieveAnswers();
 
-  },[questionID]);
+  },[JSON.stringify(questionID)]);
 
   const clickButton = (question) => {
-    console.log(question)
-    if(question.total === 0){
-      alert('You have not assigned this survey to any teachers')
-    } else {
-      var message = "";
-      message += "Survey is sent out to the teachers on: " + question.scheduledDate;
-      var progress = question.complete/question.total * 100;
-      message += "\n Complettion rate: "+ progress + "%";
-      message += "\n Distributed: "+ question.total + "surveys";
-      message += "\n "+ question.complete + " teacher(s) have submitted their survey.";
-
-      alert(message);
-    }
+    alert('this feature has not been developed.')
   }
 
   return (
@@ -91,6 +86,9 @@ const OfficerSummary = () => {
                 <div className='summary-view'>
                 <h3>{question.title}</h3>
                 <h4>Question ID: {question.id}</h4>
+                <p>Total surveys sent out: {question.total}</p>
+                <p>Total teachers submitted: {question.complete}</p>
+                <p>Completion rate: {question.total != 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
                 <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
               </div>
           </div>
