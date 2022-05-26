@@ -23,7 +23,7 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     //call the auth function from firebase
-    function signUp(user){
+    async function signUp(user){
         return auth.createUserWithEmailAndPassword(user.email,user.password)
         .then(async u => {
             // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this

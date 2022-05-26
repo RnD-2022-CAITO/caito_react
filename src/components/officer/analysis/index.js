@@ -15,6 +15,7 @@ const OfficerSummary = () => {
   const searchRef = useRef();
   const [search, setSearch] = useState(false);
   //Pattern for search engine
+  // eslint-disable-next-line
   const [pattern, setPattern] = useState('');
 
   // const {currentUser} = useAuth();
@@ -54,6 +55,11 @@ const OfficerSummary = () => {
                   if(doc.data().isSubmitted){
                     complete+=1;
                   }
+                  return {
+                    ...doc,
+                    total: total,
+                    complete: complete
+                  }
                 });
 
                 return ({total: total, complete: complete});
@@ -73,7 +79,7 @@ const OfficerSummary = () => {
 
       retrieveAnswers();
 
-  },[JSON.stringify(questionID)]);
+  },[questionID]);
 
   const clickButton = (question) => {
     alert('this feature has not been developed.')
@@ -95,7 +101,6 @@ const OfficerSummary = () => {
     console.log(str.includes(searchRef.current.value));
 
     if(!searchRef.current.value.trim()){
-
       setSearch(false);
     }
 
@@ -123,7 +128,7 @@ const OfficerSummary = () => {
                 <h4>Question ID: {question.id}</h4>
                 <p>Total surveys sent out: {question.total}</p>
                 <p>Total teachers submitted: {question.complete}</p>
-                <p>Completion rate: {question.total != 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
                 <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
               </div>
           </div>
@@ -142,7 +147,7 @@ const OfficerSummary = () => {
                 <h4>Question ID: {question.id}</h4>
                 <p>Total surveys sent out: {question.total}</p>
                 <p>Total teachers submitted: {question.complete}</p>
-                <p>Completion rate: {question.total != 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
                 <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
               </div>
           </div>
