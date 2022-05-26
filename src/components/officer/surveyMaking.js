@@ -13,11 +13,6 @@ const OfficerSurveyMaking = () => {
 
   //Set title for the survey
   const [title, setTitle] = useState("");
-
-  //Set dates
-  const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
-  const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
-
   const [question, setQuestion] = useState("");
   const [questionType, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -26,8 +21,6 @@ const OfficerSurveyMaking = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
-  const [questionID, setQuestionID] = useState("");
-  const [teacherID, setTeacherID] = useState("");
 
   //Validate inputs
   const [error, setError] = useState("");
@@ -39,31 +32,13 @@ const OfficerSurveyMaking = () => {
   const [loading, setLoading] = useState(false);
 
   //Add survey to the database
-  async function addSurvey(survey, title, scheduledDate){
+  async function addSurvey(survey, title){
     app.appCheck().activate(site_key, true);
     const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
     try {
         await addSurvey({
             questions: survey,
             title: title,
-            scheduledDate: scheduledDate,
-        }).then((res) => {
-            setQuestionID(res.data);
-            alert("new survey id made: " + res.data);
-        });
-    } catch (e) {
-        console.error(e);
-    }
-  }
-
-  //assign teachers to the survey
-  async function assignTeacher(){
-    app.appCheck().activate(site_key, true);
-    const distributeSurvey = func.httpsCallable('officer-distributeSurvey');
-    try {
-        await distributeSurvey({
-            questionID: questionID,
-            teacherID: teacherID,
         });
     } catch (e) {
         console.error(e);
@@ -80,7 +55,7 @@ const OfficerSurveyMaking = () => {
       i.push(optionsConfirmed.map((o) => <p>{++num}. {o}<br></br></p>)); //run this only once each. 
 
       i.push(<label>Option:<input type="text" onInput={e => setCurrentOption(e.target.value)} /><br></br></label>);
-      i.push(<button onClick={() => addOption(currentOption)}>Add</button>); //this is triggering for some reason
+      i.push(<button onClick={() => addOption(currentOption)}>Add</button>);
       setOptions(i);
     } else{
       setOptions("");
@@ -151,10 +126,6 @@ const OfficerSurveyMaking = () => {
         return setError('Please enter a title for the survey');
     }
 
-    if(scheduledDate < today.substring(0,10)){
-        return setError('Scheduled survey date should not be in the past.')
-    }
-
     if(question !== ''){
       return setError('You have unsaved question. Save it before submitting!')
     }
@@ -165,19 +136,10 @@ const OfficerSurveyMaking = () => {
 
     setLoading(true);
     //add questionsConfirmed into firebase 
-    await addSurvey(questionsConfirmed, title, scheduledDate);
+    await addSurvey(questionsConfirmed, title);
 
     setLoading(false);
     setComplete(true);
-  };
-
-  const assignInputTeacher = () => {
-    //add questionsConfirmed into firebase 
-    if (questionID && teacherID){
-      assignTeacher();
-      alert("assigned questionID: " + questionID + "to teacherID: " + teacherID);
-    }
-    //navigate('/'); //navigate to confirmation page with links to 1. create a new survey and to 2. distribute the survey
   };
 
   //Render component
@@ -196,16 +158,6 @@ const OfficerSurveyMaking = () => {
           onInput={e => setTitle(e.target.value)} />
           <label>
             Survey Title
-          </label>
-        </div>
-
-        <div className='input-field'>
-          <input required className='question' type="date" 
-          placeholder='Enter your title here..'
-          value={scheduledDate}
-          onInput={e => setScheduledDate(e.target.value)} />
-          <label>
-            Scheduled Date
           </label>
         </div>
 
@@ -262,18 +214,9 @@ const OfficerSurveyMaking = () => {
         <label>
           {options}
         </label>
-
-        <div className='input-field'>
-          <input type="text" onInput={e => setTeacherID(e.target.value)} />
-          <label>
-            Add Teacher ID (optional; only one teacher):
-          </label>
-        </div>
-
         <div className='survey-buttons'>          
           <div className='survey-sub-btns'>
             <button onClick={() => addQuestion()}> {question === '' ? 'Create question' : 'Save question'}</button>
-            <button onClick={() => assignInputTeacher()}>Assign Teacher ID</button>
           </div>
 
           <button className='auth-btn' disabled={loading} onClick={()=> addCurrentSurvey()}>Submit Survey</button>
