@@ -5,7 +5,6 @@ import { db } from '../../../utils/firebase';
 
 import "./Analysis.css"
 
-
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSummary = () => {
@@ -14,12 +13,6 @@ const OfficerSummary = () => {
 
   const searchRef = useRef();
   const [search, setSearch] = useState(false);
-  //Pattern for search engine
-  // eslint-disable-next-line
-  const [pattern, setPattern] = useState('');
-
-  // const {currentUser} = useAuth();
-  // const [questionID, setQuestionID] = useState([]);
 
   //Get surveys
   useEffect(() => {
@@ -85,20 +78,11 @@ const OfficerSummary = () => {
     alert('this feature has not been developed.')
   }
 
-  const searchSurvey = () => {
-    console.log(searchRef.current.value);
+  const searchSurvey = (e) => {
 
-    setSearch(true);
+    setSearch(!search);
 
-
-    //Set new regular expression
-    const regex = `^.*${searchRef.current.value}.*$`;
-
-    setPattern(new RegExp(regex));
-
-    const str = 'abd lalala';
-
-    console.log(str.includes(searchRef.current.value));
+    console.log(search);
 
     if(!searchRef.current.value.trim()){
       setSearch(false);
@@ -114,24 +98,17 @@ const OfficerSummary = () => {
         <h1 style={{textAlign:'center'}}>Survey Summary</h1>
 
         <div className='search-engine'>
-          <input type="text" ref={searchRef} placeholder="Type survey name to search"/>
-          <button id="search-btn" onClick={searchSurvey}>Search</button>
+          <input id='search-input' type="text" ref={searchRef} placeholder="Type survey name to search"/>
+          <button id="search-btn" onClick={searchSurvey}>
+            {search ? 'Clear' : 'Search'}
+          </button>
         </div>
         {!search ? 
         //Display all surveys
         <>
         <h5 style={{textAlign:'center'}}>You have {questionID.length} survey(s) in total</h5>
         {questionID.map(question => (
-          <div key={question.id}>
-                <div className='summary-view'>
-                <h3>{question.title}</h3>
-                <h4>Question ID: {question.id}</h4>
-                <p>Total surveys sent out: {question.total}</p>
-                <p>Total teachers submitted: {question.complete}</p>
-                <p>Completion rate: {question.total !== 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
-                <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
-              </div>
-          </div>
+          renderQuestion(question, clickButton)
         ) )}
         </>
         :
@@ -141,16 +118,7 @@ const OfficerSummary = () => {
 
         {questionID.map(question => (
           question.title.toLowerCase().includes(searchRef.current.value.toLowerCase()) &&
-          <div key={question.id}>
-                <div className='summary-view'>
-                <h3>{question.title}</h3>
-                <h4>Question ID: {question.id}</h4>
-                <p>Total surveys sent out: {question.total}</p>
-                <p>Total teachers submitted: {question.complete}</p>
-                <p>Completion rate: {question.total !== 0 ? question.complete/question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
-                <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
-              </div>
-          </div>
+          renderQuestion(question, clickButton)
         ) )}
         </>}
     </div>
@@ -158,3 +126,16 @@ const OfficerSummary = () => {
 }
 
 export default OfficerSummary
+
+function renderQuestion(question, clickButton) {
+  return <div key={question.id}>
+    <div className='summary-view'>
+      <h3>{question.title}</h3>
+      <h4>Question ID: {question.id}</h4>
+      <p>Total surveys sent out: {question.total}</p>
+      <p>Total teachers submitted: {question.complete}</p>
+      <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+      <button className='summary-btn' onClick={() => clickButton(question)}>View details</button>
+    </div>
+  </div>;
+}
