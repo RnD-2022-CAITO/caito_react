@@ -12,23 +12,62 @@ const OfficerSurveyDistribution = () => {
 // 3. distribute
 
   const [allSurveys, setAllSurveys] = useState([]);
+  const [selectedSurveys, setSelectedSurveys] = useState([]);
   const [displaySurveys, setDisplaySurveys] = useState(""); //visual purposes
+  const [allTeachers, setAllTeachers] = useState([]);
+  const [selectedTeachers, setSelectedTeachers] = useState([]);
+  const [displayTeachers, setDisplayTeachers] = useState(""); //visual purposes
   //Set dates
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
-  async function getSurveys(){
-    await getAllSurveys();
+  //Show created surveys with checkboxes (visual)
+  useEffect(() => {
     var num = 0;
-    setDisplaySurveys("");
-    //allSurveys.forEach((survey) => displaySurveys += <p>{++num}. createdDate: {survey.createdDate} <br></br>
-    //questions: </p>);
-    allSurveys.forEach((survey) => console.log("survey.title: " + survey.title))
-    //console.log("displaySurveys: " + displaySurveys);
-  };
+    setDisplaySurveys(allSurveys.map((o) => 
+      <p>{++num}. Title: {o.title}
+      <input
+        type="checkbox"
+        value={o.id}
+        checked={selectedSurveys.includes(o.id)}
+        onChange={e => 
+          {
+            if (selectedSurveys.includes(e.target.value)){
+              setSelectedSurveys(selectedSurveys.filter(obj => obj !== e.target.value));
+            }else{
+            setSelectedSurveys(oldArray => [...oldArray, e.target.value])
+            }
+          }
+        }
+      />
+      <br></br></p>));
+  }, [allSurveys, selectedSurveys]);
 
-  // retrieve own surveys from database and set it to allSurveys
+  //Show all teachers with checkboxes (visual)
+  useEffect(() => {
+    var num = 0;
+    setDisplayTeachers(allTeachers.map((o) => 
+      <p>{++num}. Name: {o.firstName} {o.lastName}
+      <input
+        type="checkbox"
+        value={o.id}
+        checked={selectedTeachers.includes(o.id)}
+        onChange={e => 
+          {
+            if (selectedTeachers.includes(e.target.value)){
+              setSelectedTeachers(selectedTeachers.filter(obj => obj !== e.target.value));
+            }else{
+              setSelectedTeachers(oldArray => [...oldArray, e.target.value])
+            }
+          }
+        }
+      />
+      <br></br></p>));
+  }, [allTeachers, selectedTeachers]);
+
+  // retrieve own surveys from database
   async function getAllSurveys(){
+    setAllSurveys([]);
     app.appCheck().activate(site_key, true);
     const getSurveys = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
     try {
@@ -39,11 +78,36 @@ const OfficerSurveyDistribution = () => {
     } catch (e) {
         console.error(e);
     }
-    allSurveys.forEach((survey) => console.log("survey.title: " + survey.title))
+  }
+
+  // retrieve all teachers from database
+  async function getAllTeachers(){
+    setAllTeachers([]);
+    app.appCheck().activate(site_key, true);
+    const getTeachers = func.httpsCallable('officer-getAllTeachers');
+    try {
+        await getTeachers().then((result) => 
+        {
+          setAllTeachers(result.data);
+        });
+    } catch (e) {
+        console.error(e);
+    }
+  }
+
+  async function assignTeachers(){
+    selectedSurveys.map((survey) => {
+      let obj = allSurveys.find((o) => o.id === survey);
+      selectedTeachers.map((teacher) => {
+        assignTeacher(survey, obj.title, teacher);
+      })
+    })
+    if((scheduledDate > today.substring(0,10)) && (selectedSurveys.length > 0) && (selectedTeachers.length > 0)){
+    } //if statement not working
   }
 
   //assign one teacher to the survey
-  /*async function assignTeacher(){
+  async function assignTeacher(questionID, title, teacherID){
     app.appCheck().activate(site_key, true);
     const scheduleSurvey = func.httpsCallable('officer-scheduleSurvey');
     try {
@@ -57,17 +121,14 @@ const OfficerSurveyDistribution = () => {
         console.error(e);
     }
   }
-  
-  if(scheduledDate < today.substring(0,10)){
-        return setError('Scheduled survey date should not be in the past.')
-    }
-  */
 
   return (
     <div>
       <body>
         <button onClick={() => getAllSurveys()}>Select Survey(s)</button><br></br>
-
+        <div>{displaySurveys}</div><br></br>
+        <button onClick={() => getAllTeachers()}>Select Teacher(s)</button><br></br>
+        <div>{displayTeachers}</div><br></br>
         <div className='input-field'>
           <input required className='question' type="date" 
           placeholder='Enter your title here..'
@@ -77,6 +138,7 @@ const OfficerSurveyDistribution = () => {
             Scheduled Date
           </label>
         </div>
+        <button onClick={() => assignTeachers()}>Assign Teacher(s)</button><br></br>
       </body>
     </div>
   )
