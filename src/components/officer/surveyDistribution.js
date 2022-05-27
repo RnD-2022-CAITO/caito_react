@@ -96,14 +96,27 @@ const OfficerSurveyDistribution = () => {
   }
 
   async function assignTeachers(){
-    selectedSurveys.map((survey) => {
-      let obj = allSurveys.find((o) => o.id === survey);
-      selectedTeachers.map((teacher) => {
-        assignTeacher(survey, obj.title, teacher);
-      })
-    })
-    if((scheduledDate > today.substring(0,10)) && (selectedSurveys.length > 0) && (selectedTeachers.length > 0)){
+    let error = 0;
+    if(scheduledDate < today.substring(0,10)){
+      ++error;
     } //if statement not working
+    if((selectedSurveys.length < 1)){
+      ++error;
+    } //if statement not working
+    if((selectedTeachers.length < 1)){
+      ++error;
+    } //if statement not working
+    if (error == 0){
+      selectedSurveys.map((survey) => {
+        let obj = allSurveys.find((o) => o.id === survey);
+        selectedTeachers.map((teacher) => {
+          assignTeacher(survey, obj.title, teacher);
+        })
+      })
+    }
+    else{
+      alert("There's an error");
+    }
   }
 
   //assign one teacher to the survey
