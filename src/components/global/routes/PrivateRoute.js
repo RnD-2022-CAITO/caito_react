@@ -14,7 +14,7 @@ export const PrivateRoute = ({children, role}) => {
     // console.log(userData);
 
     //Return the error page if the role is not allowed to access the path
-    if(role != "all" && role != userData.role){
+    if(role !== "all" && role !== userData.role){
         return <ErrorRoute/>
     }
 

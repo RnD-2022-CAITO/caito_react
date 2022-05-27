@@ -56,12 +56,12 @@ const NavBar = () => {
         <div className='nav'>
             <ul>
                 <li>
-                    <NavLink activeClassName='active' to="/">
+                    <NavLink activeclassname='active' to="/">
                     home
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to="/profile">
+                    <NavLink activeclassname='active' to="/profile">
                     profile
                     </NavLink>
                 </li>
@@ -77,21 +77,21 @@ const NavBar = () => {
     const OfficerNav = () => (
         <div className='nav'>
             <ul>
-                    <NavLink activeClassName='active' to="/">
+                    <NavLink activeclassname='active' to="/">
                     home
                     </NavLink>
                 <li>
-                    <NavLink activeClassName='active' to="/surveyMaking">
+                    <NavLink activeclassname='active' to="/surveyMaking">
                     create survey
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to="/surveyDistribution">
+                    <NavLink activeclassname='active' to="/surveyDistribution">
                     distribute survey
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink activeClassName='active' to="/summary">
+                    <NavLink activeclassname='active' to="/summary">
                     summary
                     </NavLink>
                 </li>

@@ -5,7 +5,7 @@ import { db } from '../../../utils/firebase';
 
 import "./Analysis.css"
 
-const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSummary = () => {
   const [questionID, setQuestionID] = useState([]);
@@ -17,7 +17,7 @@ const OfficerSummary = () => {
   //Get surveys
   useEffect(() => {
       const retrieveQuestionID = async  () => {
-          app.appCheck().activate(site_key, true);
+          app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
           const getQuestion = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
           try {
               const response = await getQuestion();

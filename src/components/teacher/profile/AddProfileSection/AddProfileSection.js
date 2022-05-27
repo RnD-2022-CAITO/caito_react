@@ -5,7 +5,7 @@ import { useRef } from 'react'
 
 import "./AddProfileSection.css"
 
-const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 
 const AddProfileSection = (props) => {
@@ -227,7 +227,7 @@ const AddProfileSection = (props) => {
     }
 
     const saveSections= async(e) => {
-        app.appCheck().activate(site_key, true);
+        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
         const addAboutTxt = func.httpsCallable('teacher-addBioSection');
         const addEducationTxt = func.httpsCallable('teacher-addBioSection');
         const addSkillsTxt = func.httpsCallable('teacher-addBioSection');

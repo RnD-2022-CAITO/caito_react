@@ -1,16 +1,14 @@
 //Main page for the components
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../global/auth/Authentication'
 import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
 
 import "./teacherLanding.css";
 
-const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const TeacherLanding = () => {
 
-    const {currentUser} = useAuth();
     const {userData} = useUserData();
 
     const [loading, setLoading] = useState(true);
@@ -19,7 +17,7 @@ const TeacherLanding = () => {
     //Get surveys
     useEffect(() => {
         const retrieveSurvey = async  () => {
-            app.appCheck().activate(site_key, true);
+            app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
             const getSurvey = func.httpsCallable('teacher-getAllAssignedSurveys_Answers');
             try {
                 const response = await getSurvey();

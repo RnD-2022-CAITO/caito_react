@@ -4,7 +4,7 @@ import app, {func} from '../../utils/firebase';
 import 'firebase/compat/app-check';
 
 import "./surveyMaking.css"
-const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
@@ -33,7 +33,7 @@ const OfficerSurveyMaking = () => {
 
   //Add survey to the database
   async function addSurvey(survey, title){
-    app.appCheck().activate(site_key, true);
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const addSurvey = func.httpsCallable('officer-addSurveyQuestions');
     try {
         await addSurvey({
