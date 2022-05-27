@@ -115,7 +115,7 @@ const OfficerSurveyDistribution = () => {
       })
     }
     else{
-      alert("There's an error");
+      alert("Make sure there's at least one survey and one teacher checked. Date must be at least from today.");
     }
   }
 
