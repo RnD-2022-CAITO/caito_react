@@ -39,9 +39,9 @@ const TeacherLanding = () => {
             <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{upcomingSurvey.length}</span> new 
             {(upcomingSurvey.length < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
             {//Render surveys
-            upcomingSurvey.map(sur => 
+            upcomingSurvey.map((sur, index) => 
             sur.isSubmitted === false &&
-            <section className='new-survey' key={sur.questionID}>
+            <section className='new-survey' key={index}>
                 <h3 >{sur.questionTitle}</h3>
                 <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
             </section>

@@ -1,0 +1,13 @@
+.survey {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sur-question{
+    padding: 10px;
+    margin: 10px;
+    border: 0.2px solid black;
+    border-radius: 2px;
+}
