@@ -6,15 +6,20 @@ import "./survey.css";
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const Survey = () => {
+  //Retrieve props from previous page
   const location = useLocation();
 
+  //Check if survey exists
   const [isFound, setFound] = useState(true);
 
+  //Set title and question array
   const [surveyTitle, setTitle] = useState('');
   const [questions, setQuestions] = useState([]);
 
+  //Set answer
   const [answers, setAnswers] = useState([]);
 
+  //Loading state when submit the form
   const [loading, setLoading] = useState(false);
 
 
@@ -30,8 +35,11 @@ const Survey = () => {
             setFound(false);
           } else {
 
+            //Assign survey details to the variables
             setTitle(response.data.title);
             setQuestions(response.data.questions);
+
+            //Clone the questions to the answers 
             setAnswers(response.data.questions);
 
           }
@@ -45,10 +53,8 @@ const Survey = () => {
   }, []);
 
 
+  //save the current answer to the answers array
   const saveAnswer = (e, index) => {
-    console.log(e.target.value);
-    console.log(index);
-
     //Create a new temporary array to store the answers
     let newArr = [...answers];
 
@@ -60,15 +66,17 @@ const Survey = () => {
 
   }
 
+  //Submit survey to the server 
   const sendSurvey = async (e) => {
     e.preventDefault();
 
     console.log(answers);
 
-    //Server update goes here...
+    //TODO: Server update goes here...
     
   }
 
+  //Placeholder for the inputs
   const displayPlaceHolder = (inputType ) => {
     switch(inputType) {
       case 'text':

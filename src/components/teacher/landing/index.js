@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 import "./teacherLanding.css";
 
@@ -9,6 +10,7 @@ import "./teacherLanding.css";
 
 const TeacherLanding = () => {
 
+    const navigate = useNavigate();
     const {userData} = useUserData();
 
     const [loading, setLoading] = useState(true);
@@ -52,7 +54,12 @@ const TeacherLanding = () => {
 
     const openSurvey = (e) => {
         console.log(e.target.id);
-        alert('Redirect user to question ID: ' + e.target.id);
+        //Pass the question ID to the next path
+        navigate('/survey', {
+            state: {
+                questionID: e.target.id,
+            }
+        })
     }
         
 
