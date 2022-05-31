@@ -143,7 +143,7 @@ const Survey = () => {
              { q.options.map((o) => 
               <div key={o}>
               <input type={q.type} value={o} name={q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
-              <label for={o}>{o}</label>
+              <label htmlFor={o}>{o}</label>
               </div>
               )}
             </div>
