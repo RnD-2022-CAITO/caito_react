@@ -1,4 +1,4 @@
-# englight - Teacher Profiling Web Application 
+# enlight - Teacher Profiling Web Application 
 
 This project was created for <a href="https://www.caito.ai">CAITO - Cognitive AI Solutions</a>.
 This project is in its final state of Sprint 1 (it has 5 Sprints in total).
