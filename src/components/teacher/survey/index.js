@@ -86,7 +86,17 @@ const Survey = () => {
     //Assign the answer to its question
     if(type==="checkbox"){
       //TODO: Not working properly
-      newArr[index] = e.target.value;
+      if(e.target.checked){
+        if(!(checkboxVal.indexOf(e.target.value) > -1)){
+          setCheckboxVal(oldArr => [...oldArr, e.target.value]);
+        }
+      } else {
+        const item = e.target.value;
+        const removed = checkboxVal.filter(e => e!==item);
+        setCheckboxVal(removed);
+      }
+
+      newArr[index] = Object.assign({}, checkboxVal);
     }else{
       newArr[index] = e.target.value;
     }
@@ -100,9 +110,7 @@ const Survey = () => {
   const sendSurvey = async (e) => {
     e.preventDefault();
 
-    console.log(answers);
-    
-    updateSurvey();
+    await updateSurvey();
 
     alert('You have submitted the survey!');
 
@@ -149,7 +157,7 @@ const Survey = () => {
             <div >
              { q.options.map((o) => 
               <div key={o}>
-              <input type={q.type} value={o} name={q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
+              <input type={q.type} value={o} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
               <label htmlFor={o}>{o}</label>
               </div>
               )}
