@@ -11,3 +11,13 @@
 .new-sur{
     color: var(--primary-color);
 }
+
+.survey-display{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.survey-box{
+    min-width: 50vw;
+}
