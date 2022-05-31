@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import app, {db, func} from '../../../utils/firebase';
 import { useAuth } from '../../global/auth/Authentication';
+import { useNavigate } from 'react-router-dom';
+
 import "./survey.css";
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
@@ -10,6 +12,8 @@ const Survey = () => {
   const {currentUser} = useAuth();
   //Retrieve props from previous page
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   //Check if survey exists
   const [isFound, setFound] = useState(true);
@@ -105,6 +109,10 @@ const Survey = () => {
     await db.collection('survey-answer').doc(answerID).update(
       {answers: answers, isSubmitted: true}
     ).then((res) => console.log(res));
+
+    alert('You have submitted the survey!');
+
+    navigate('/');
     
   }
 
