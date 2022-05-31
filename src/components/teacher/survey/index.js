@@ -101,20 +101,27 @@ const Survey = () => {
     e.preventDefault();
 
     console.log(answers);
-
-    //TODO: Server update goes here...
-
-    //updateAssignedSurvey_Answers not working!
-
-    await db.collection('survey-answer').doc(answerID).update(
-      {answers: answers, isSubmitted: true}
-    ).then((res) => console.log(res));
+    
+    updateSurvey();
 
     alert('You have submitted the survey!');
 
     navigate('/');
     
   }
+
+  async function updateSurvey(){
+    app.appCheck().activate(site_key, true);
+    const getSurveys = func.httpsCallable('teacher-updateAssignedSurvey_Answers');
+    try {
+        await getSurveys({
+          answerID: answerID,
+          answers: answers
+        });
+    } catch (e) {
+        console.error(e);
+    }
+}
 
   //Placeholder for the inputs
   const displayPlaceHolder = (inputType ) => {
