@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom'
-import app, {func} from '../../../utils/firebase';
+import app, {db, func} from '../../../utils/firebase';
+import { useAuth } from '../../global/auth/Authentication';
+import "./survey.css";
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const Survey = () => {
+  const {currentUser} = useAuth();
   //Retrieve props from previous page
   const location = useLocation();
 
@@ -17,9 +20,12 @@ const Survey = () => {
 
   //Set answer
   const [answers, setAnswers] = useState([]);
+  const [answerID, setAnswerID] = useState('');
 
   //Loading state when submit the form
   const [loading, setLoading] = useState(false);
+
+  const [checkboxVal, setCheckboxVal] = useState([]);
 
 
   useEffect(() => {
@@ -47,6 +53,18 @@ const Survey = () => {
 
           }
 
+          //Retrieve Answer ID
+          await db.collection('survey-answer').where('questionID', '==', location.state.questionID).get()
+          .then((res) => {
+              return res.docs.map(doc => {
+                  if(doc.data().teacherID === currentUser.uid){
+                    setAnswerID(doc.id);
+                  }
+
+                  return doc.id;
+              })
+          })
+
       } catch (e) {
           console.error(e);
       }
@@ -57,12 +75,17 @@ const Survey = () => {
 
 
   //save the current answer to the answers array
-  const saveAnswer = (e, index) => {
+  const saveAnswer = (e, index, type) => {
     //Create a new temporary array to store the answers
     let newArr = [...answers];
 
     //Assign the answer to its question
-    newArr[index] = e.target.value;
+    if(type==="checkbox"){
+      //TODO: Not working properly
+      newArr[index] = e.target.value;
+    }else{
+      newArr[index] = e.target.value;
+    }
 
     //Save to the answers array
     setAnswers(newArr);
@@ -73,9 +96,15 @@ const Survey = () => {
   const sendSurvey = async (e) => {
     e.preventDefault();
 
-    //console.log(answers);
+    console.log(answers);
 
     //TODO: Server update goes here...
+
+    //updateAssignedSurvey_Answers not working!
+
+    await db.collection('survey-answer').doc(answerID).update(
+      {answers: answers, isSubmitted: true}
+    ).then((res) => console.log(res));
     
   }
 
@@ -101,18 +130,21 @@ const Survey = () => {
         <label>{index+1}. {q.question}</label>
         <br/>
         <br/>
-          {q.options.map((o) => 
-          <form>
-          <input type={q.type} value={o} name={o}></input>
-          <label for={o}>{o}</label>
-          </form>
-          )}
-
-        
+          {q.options.length > 1 ?
+            <div >
+             { q.options.map((o) => 
+              <div key={o}>
+              <input type={q.type} value={o} name={q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
+              <label for={o}>{o}</label>
+              </div>
+              )}
+            </div>
+          : 
+          <div>
+          <input required type={q.type} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+          </div>}
         </div>)
         }
-        
-
         <button disabled={loading} type='submit'>Submit</button>
     </form> : <h1>Survey not found</h1>
   )
