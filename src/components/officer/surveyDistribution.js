@@ -47,7 +47,7 @@ const OfficerSurveyDistribution = () => {
       alert('Successfully sent out the invitation to fill in the task!');
 
       //refresh the page
-      window.location.reload();
+      // window.location.reload();
     }
     else{
       alert("Make sure there's at least one survey and one teacher checked. Date must be at least from today.");
