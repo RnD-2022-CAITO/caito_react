@@ -33,12 +33,10 @@ export const UserDataProvider = ({children}) => {
 
                 if(docExists){
                     await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                        console.log(querySnapshot.data())
                         setUserData(querySnapshot.data());
                     })
                 } else {
                     await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                        console.log(querySnapshot.data())
                         setUserData(querySnapshot.data());
                     })
                 }
