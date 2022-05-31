@@ -18,6 +18,8 @@ const TeacherLanding = () => {
     const [loading, setLoading] = useState(true);
     const [upcomingSurvey, setUpcomingSurvey] = useState([]);
 
+    const [totalSurvey, setTotalSurvey] = useState(0);
+
     //Get surveys
     useEffect(() => {
         const retrieveSurvey = async  () => {
@@ -37,19 +39,38 @@ const TeacherLanding = () => {
         retrieveSurvey();
     },[]);
 
+    //Display the total new surveys
+    useEffect(() => {
+        const setTotalDisplay = () => {
+            var count = 0;
+
+            for(var k = 0; k < upcomingSurvey.length; k++){
+
+                if(upcomingSurvey[k].isSubmitted === false){
+                    count++;
+                }
+    
+                setTotalSurvey(count);
+            }
+        }
+
+        setTotalDisplay();
+
+    }, [upcomingSurvey])
+
     const renderSurveys = () => (
         <div className='survey-display'>
             <div>
             <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
-            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{upcomingSurvey.length}</span> new 
-            {(upcomingSurvey.length < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
+            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{totalSurvey}</span> new 
+            {(totalSurvey < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
             </div>
 
             <div className='survey-box'>
             {//Render surveys
-            upcomingSurvey.map(sur => 
+            upcomingSurvey.map((sur, index) => 
             sur.isSubmitted === false &&
-            <section className='new-survey' key={sur.questionID}>
+            <section className='new-survey' key={index}>
                 <h3 >{sur.questionTitle}</h3>
                 <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
             </section>
