@@ -5,13 +5,17 @@ This project is in its final state of Sprint 1 (it has 5 Sprints in total).
 
 ## About the project
 enlight is a full stack web application that helps collect data from the teachers in the TVET system in Southeast Asia countries. It consists of two different type of user: <strong >officer </strong> and <strong>teacher</strong>. The user can sign up as a teacher, and the officers will be provided the account. 
+<br>
 <strong>Officer</strong> is able to create, schedule, and view a summary of the surveys they sent out. From those data, they can send back to the researchers or their government to conduct workforce planning. 
+<br>
 <strong>Teacher</strong> is able to view and complete their upcoming surveys. They can also create their profile and connect with other teachers within their country. 
 During first state of this project, we will aim at one specific country, prefereably Nepal. 
 
 ## How to use
 
 In the project directory, you can run:
+### `npm i`
+Install all the packages
 
 ### `npm start`
 
