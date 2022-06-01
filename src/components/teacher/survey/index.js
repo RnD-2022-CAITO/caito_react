@@ -30,6 +30,7 @@ const Survey = () => {
   const [loading, setLoading] = useState(false);
 
   const [checkboxVal, setCheckboxVal] = useState([]);
+  const [index, setIndex] = useState('');
 
 
   useEffect(() => {
@@ -44,9 +45,6 @@ const Survey = () => {
           if(response.data == null){
             setFound(false);
           } else {
-            //console.log(response.data.title);
-            console.log(response.data.questions);
-            console.log(response.data.questions[0].options);
 
             //Assign survey details to the variables
             setTitle(response.data.title);
@@ -75,34 +73,50 @@ const Survey = () => {
     }
 
     retrieveSurvey();
+    // eslint-disable-next-line
   }, []);
+
+  //Update checkbox values
+  useEffect(() => {
+    if(index!==''){
+
+      let newArr = [...answers];
+  
+      newArr[index] = Object.assign({}, checkboxVal);
+  
+      setAnswers(newArr);
+    }
+
+    // eslint-disable-next-line
+  }, [checkboxVal])
 
 
   //save the current answer to the answers array
   const saveAnswer = (e, index, type) => {
     //Create a new temporary array to store the answers
     let newArr = [...answers];
+    setIndex(index);
 
     //Assign the answer to its question
     if(type==="checkbox"){
-      //TODO: Not working properly
       if(e.target.checked){
         if(!(checkboxVal.indexOf(e.target.value) > -1)){
-          setCheckboxVal(oldArr => [...oldArr, e.target.value]);
+          const newItem = e.target.value;
+          setCheckboxVal(oldArr => ([...oldArr, newItem]));
         }
       } else {
+        //When user unchecks
         const item = e.target.value;
         const removed = checkboxVal.filter(e => e!==item);
+        
         setCheckboxVal(removed);
       }
-
-      newArr[index] = Object.assign({}, checkboxVal);
     }else{
       newArr[index] = e.target.value;
-    }
 
-    //Save to the answers array
-    setAnswers(newArr);
+      //Save to the answers array
+      setAnswers(newArr);
+    }
 
   }
 
@@ -122,10 +136,12 @@ const Survey = () => {
     app.appCheck().activate(site_key, true);
     const getSurveys = func.httpsCallable('teacher-updateAssignedSurvey_Answers');
     try {
+        setLoading(true);
         await getSurveys({
           answerID: answerID,
           answers: answers
         });
+        setLoading(false);
     } catch (e) {
         console.error(e);
     }
@@ -168,7 +184,7 @@ const Survey = () => {
           </div>}
         </div>)
         }
-        <button disabled={loading} type='submit'>Submit</button>
+        <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
     </form> : <h1>Survey not found</h1>
   )
 }
