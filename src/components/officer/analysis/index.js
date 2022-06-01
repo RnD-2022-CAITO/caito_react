@@ -21,6 +21,7 @@ const OfficerSummary = () => {
           const getQuestion = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
           try {
               const response = await getQuestion();
+
               setQuestionID(response.data);
 
               setLoading(false);
@@ -35,7 +36,7 @@ const OfficerSummary = () => {
   //Get surveys
   useEffect(() => {
       const retrieveAnswers =  async () => {
-        if(questionID.length>1){
+        if(questionID.length>=1){
           const newArr = await Promise.all(questionID.map(async (question) => {
             var total = 0;
             var complete = 0;
