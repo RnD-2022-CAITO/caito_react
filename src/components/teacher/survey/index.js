@@ -26,6 +26,9 @@ const Survey = () => {
   const [answers, setAnswers] = useState([]);
   const [answerID, setAnswerID] = useState('');
 
+  //Set loading state for the form
+  const [formLoading, setFormLoading] = useState(true);
+
   //Loading state when submit the form
   const [loading, setLoading] = useState(false);
 
@@ -53,6 +56,7 @@ const Survey = () => {
             //Clone the questions to the answers 
             setAnswers(response.data.questions);
 
+            setFormLoading(false);
           }
 
           //Retrieve Answer ID
@@ -163,28 +167,33 @@ const Survey = () => {
   return (
     isFound ?
     <form className='survey' onSubmit={e => sendSurvey(e)}>
-        <h1>Survey: {surveyTitle}</h1>
-        {questions.map((q, index) => 
-        <div className='sur-question' key={index}>
-        <label>{index+1}. {q.question}</label>
-        <br/>
-        <br/>
-          {q.options.length > 1 ?
-            <div >
-             { q.options.map((o) => 
-              <div key={o}>
-              <input type={q.type} value={o} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
-              <label htmlFor={o}>{o}</label>
-              </div>
-              )}
-            </div>
-          : 
-          <div>
-          <input required type={q.type} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
-          </div>}
-        </div>)
-        }
-        <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
+       {!formLoading ? 
+              <>
+              <h1>Survey: {surveyTitle}</h1>
+               {questions.map((q, index) => 
+               <div className='sur-question' key={index}>
+               <label>{index+1}. {q.question}</label>
+               <br/>
+               <br/>
+                 {q.options.length > 1 ?
+                   <div >
+                    { q.options.map((o) => 
+                     <div key={o}>
+                     <input type={q.type} value={o} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
+                     <label htmlFor={o}>{o}</label>
+                     </div>
+                     )}
+                   </div>
+                 : 
+                 <div>
+                 <input required type={q.type} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+                 </div>}
+               </div>)
+               }
+                       
+                <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
+              </>
+       : <p>Loading...</p>}
     </form> : <h1>Survey not found</h1>
   )
 }

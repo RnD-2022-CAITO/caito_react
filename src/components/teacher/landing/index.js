@@ -80,7 +80,6 @@ const TeacherLanding = () => {
     )
 
     const openSurvey = (e) => {
-        console.log(e.target.id);
         // alert('Redirect user to question ID: ' + e.target.id);
 
         //Pass the question ID to the next path
