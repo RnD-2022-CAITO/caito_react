@@ -91,6 +91,11 @@ const NavBar = () => {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink activeclassname='active' to="/deleteAccount">
+                    delete account
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink activeclassname='active' to="/summary">
                     summary
                     </NavLink>

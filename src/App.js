@@ -23,6 +23,7 @@ import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
+import DeleteAccount from './components/officer/deleteAccount'
 
 //Roles to access paths
 const role = {
@@ -72,6 +73,15 @@ const App = () => {
                           <EditAccount />
                       </PrivateRoute>   
                     </UserDataProvider>                     
+                    }
+              />
+
+              <Route exact path="/deleteAccount" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <DeleteAccount />
+                      </PrivateRoute>
+                    </UserDataProvider>
                     }
               />
             
