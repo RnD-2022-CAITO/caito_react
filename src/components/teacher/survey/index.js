@@ -54,22 +54,20 @@ const Survey = () => {
             //Clone the questions to the answers 
             setAnswers(response.data.questions);
 
-            setFormLoading(false);
-          }
-
-          //Retrieve Answer ID
+            //Retrieve Answer ID
           await db.collection('survey-answer').where('questionID', '==', location.state.questionID).get()
           .then((res) => {
               return res.docs.map(doc => {
                   if(doc.data().teacherID === currentUser.uid){
                     setAnswerID(doc.id);
                   }
-                  console.log("doc.id: " + doc.id);
                   populateExistingAnswers(doc.id);
                   return doc.id;
               })
           });
 
+            setFormLoading(false);
+          }
           
       } catch (e) {
           console.error(e);
@@ -92,7 +90,7 @@ const Survey = () => {
   }, [checkboxVal])
 
   //populate existing answers upon page initialization
-  const populateExistingAnswers = async (id) => {
+  const populateExistingAnswers = (id) => {
     app.appCheck().activate(site_key, true);
     const getAnswers = func.httpsCallable('teacher-getAssignedSurvey_Answers');
     try {
@@ -100,10 +98,8 @@ const Survey = () => {
         answerID: id
       }).then((i) => {
         let newArr = [...i.data.answers];
-        if (newArr.length > 1){
+        if (newArr.length > 0){
           setAnswers(newArr);
-          console.log("newArr: " + newArr); // <- this updates TODO
-          console.log("answers: "+ answers); // <- this doesn't. updates too slow. how to populate existing answers?
         }
       }).catch(e => {
         console.log(e);
@@ -114,7 +110,7 @@ const Survey = () => {
   }
 
   //save the current answer to the answers array
-  const saveAnswer = (e, index, type) => {
+  const saveAnswer = (e, index, type) => { // TODO populate checkboxes and radio
     //Create a new temporary array to store the answers
     let newArr = [...answers];
     setIndex(index);
@@ -124,20 +120,72 @@ const Survey = () => {
       if(e.target.checked){
         if(!(checkboxVal.indexOf(e.target.value) > -1)){
           const newItem = e.target.value;
+          let newArray = [];
+          if (answers.at(index) !== checkboxVal){ // if initial saved answers and checkbox values are not the same
+            newArray.push(answers.at(index));
+            newArray.forEach((i) => {
+            if (i.length === undefined){
+              newArray = Object.keys(i).map((key) => i[key]);
+            }
+          });
+            setCheckboxVal(newArray);
+          }
           setCheckboxVal(oldArr => ([...oldArr, newItem]));
         }
       } else {
         //When user unchecks
-        const item = e.target.value;
-        const removed = checkboxVal.filter(e => e!==item);
-        
-        setCheckboxVal(removed);
+        let newArray = [];
+        if (answers.at(index) !== checkboxVal){ // if initial saved answers and checkbox values are not the same
+          newArray.push(answers.at(index));
+          newArray.forEach((i) => {
+          if (i.length === undefined){
+            newArray = Object.keys(i).map((key) => i[key]);
+          }
+        });
+          const item = e.target.value;
+          const removed = newArray.filter(e => e!==item);
+          setCheckboxVal(removed);
+        }else{
+          const item = e.target.value;
+          const removed = checkboxVal.filter(e => e!==item);
+          setCheckboxVal(removed);
+        }
       }
-    }else{
+    }else{ // if type is radio
       newArr[index] = e.target.value;
 
       //Save to the answers array
       setAnswers(newArr);
+      populateCheckboxAndRadio(e.target.value, index);
+    }
+  }
+
+  // uses the initial answers (if there are any saved ones from previous attempts) to populate 
+  // checkboxes and radios in the UI
+  const populateCheckboxAndRadio = (o, index) => {
+    let newArray = [];
+    newArray.push(answers.at(index));
+    newArray.forEach((i) => {
+      if (i.length === undefined){
+        newArray = Object.keys(i).map((key) => i[key]);
+      }
+    });
+    if (newArray.includes(o)){
+      return true;
+    }
+    else {
+      return false
+    }
+  }
+
+  // uses the initial answers (if there are any saved ones from previous attempts) to populate 
+  // texts and numbers in the UI
+  const populateTextAndNum = (index) => {
+    if (answers.at(index) === questions.at(index)){
+      return "";
+    }
+    else {
+      return answers.at(index);
     }
   }
 
@@ -184,7 +232,7 @@ const Survey = () => {
 
   return (
     isFound ?
-    <form className='survey' onSubmit={e => sendSurvey(e, true)}>
+    <form className='survey' onSubmit={e => sendSurvey(e, true)}> 
        {!formLoading ? 
               <>
               <h1>Survey: {surveyTitle}</h1>
@@ -195,16 +243,16 @@ const Survey = () => {
                <br/>
                  {q.options.length > 1 ?
                    <div >
-                    { q.options.map((o) => 
+                    { q.options.map((o) =>
                      <div key={o}>
-                     <input type={q.type} value={answers.at(index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
+                     <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
                      <label htmlFor={o}>{o}</label>
                      </div>
                      )}
                    </div>
                  : 
                  <div>
-                 <input required type={q.type} value={answers.at(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+                 <input required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
                  </div>}
                </div>)
                }
