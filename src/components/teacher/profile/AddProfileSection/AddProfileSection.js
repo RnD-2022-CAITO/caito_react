@@ -26,6 +26,7 @@ const AddProfileSection = (props) => {
             document.getElementById('aboutText').value = userData.About;
             document.getElementById('about-title').style.display="block";
             document.getElementById('save-about').style.display="block";
+            document.getElementById('delete-about').style.display="block";
             document.getElementById('about').style.color='grey';
         }
 
@@ -34,6 +35,7 @@ const AddProfileSection = (props) => {
             document.getElementById('educationText').value = userData.Education;
             document.getElementById('education-title').style.display="block";
             document.getElementById('save-education').style.display="block";
+            document.getElementById('delete-education').style.display="block";
             document.getElementById('education').style.color='grey';
         }
 
@@ -42,6 +44,7 @@ const AddProfileSection = (props) => {
             document.getElementById('skillsText').value = userData.Skills;
             document.getElementById('skills-title').style.display="block";
             document.getElementById('save-skills').style.display="block";
+            document.getElementById('delete-skills').style.display="block";
             document.getElementById('skills').style.color='grey';
         }
 
@@ -50,6 +53,7 @@ const AddProfileSection = (props) => {
             document.getElementById('workingExText').value = userData.WorkingEx;
             document.getElementById('workingEx-title').style.display="block";
             document.getElementById('save-workingEx').style.display="block";
+            document.getElementById('delete-workingEx').style.display="block";
             document.getElementById('working-ex').style.color='grey';
         }
 
@@ -58,6 +62,7 @@ const AddProfileSection = (props) => {
             document.getElementById('hobbiesText').value = userData.Hobbies;
             document.getElementById('hobbies-title').style.display="block";
             document.getElementById('save-hobbies').style.display="block";
+            document.getElementById('delete-hobbies').style.display="block";
             document.getElementById('hobbies').style.color='grey';
         }
     }
@@ -70,6 +75,14 @@ const AddProfileSection = (props) => {
         }
     }
 
+    //show alert
+    const showAlert = () => {
+        let dialog = document.getElementById('dialogAlert');
+        if  ((dialog.style.display = "none")) {
+            dialog.style.display = "block";
+        }
+    }
+
     //close the add section dialog when user click exit
     const close = () => {
         let dialog = document.getElementById('dialog');
@@ -77,6 +90,14 @@ const AddProfileSection = (props) => {
             dialog.style.display = "none";
         }
     }
+
+    // //close the alert dialog when user click exit
+    // const closeAlert = () => {
+    //     let dialog = document.getElementById('dialogAlert');
+    //     if  ((dialog.style.display = "block")) {
+    //         dialog.style.display = "none";
+    //     }
+    // }
 
     //show textArea for About
     const showAbout = () => {
@@ -92,7 +113,22 @@ const AddProfileSection = (props) => {
         if  ((btn.style.display = "none")) {
             btn.style.display = "block";
         }
+        let btn_delete = document.getElementById('delete-about')
+        if  ((btn_delete.style.display = "none")) {
+            btn_delete.style.display = "block";
+        }
         document.getElementById('about').style.color='grey';
+        close();
+    }
+
+    const deleteAbout = () => {
+        let btn_delete = document.getElementById('delete-about');
+        let about = document.getElementById('aboutText');
+        var input = prompt("Type yes to clean the text");
+        if(btn_delete !== "block" && input === "yes")
+        {
+            about.value = "";
+        }
         close();
     }
 
@@ -110,9 +146,24 @@ const AddProfileSection = (props) => {
         if  ((btn.style.display = "none")) {
             btn.style.display = "block";
         }
+        let btn_delete = document.getElementById('delete-education')
+        if  ((btn_delete.style.display = "none")) {
+            btn_delete.style.display = "block";
+        }
         document.getElementById('education').style.color='grey';
         close();
      }
+
+     const deleteEducation = () => {
+        let btn_delete = document.getElementById('delete-education');
+        let education = document.getElementById('educationText');
+        var input = prompt("Type yes to clean the text");
+        if(btn_delete !== "block" && input === "yes")
+        {
+            education.value = "";
+        }
+        close();
+    }
 
      //show textArea for Skills
      const showSkills = () => {
@@ -128,9 +179,24 @@ const AddProfileSection = (props) => {
         if  ((btn.style.display = "none")) {
             btn.style.display = "block";
         }
+        let btn_delete = document.getElementById('delete-skills')
+        if  ((btn_delete.style.display = "none")) {
+            btn_delete.style.display = "block";
+        }
         document.getElementById('skills').style.color='grey';
         close();
      }
+
+     const deleteSkills = () => {
+        let btn_delete = document.getElementById('delete-skills');
+        let skills = document.getElementById('skillsText');
+        var input = prompt("Type yes to clean the text");
+        if(btn_delete !== "block" && input === "yes")
+        {
+            skills.value = "";
+        }
+        close();
+    }
 
      //show textArea for Working experience
      const showWorkingEx = () => {
@@ -146,9 +212,24 @@ const AddProfileSection = (props) => {
         if  ((btn.style.display = "none")) {
             btn.style.display = "block";
         }
+        let btn_delete = document.getElementById('delete-workingEx')
+        if  ((btn_delete.style.display = "none")) {
+            btn_delete.style.display = "block";
+        }
         document.getElementById('working-ex').style.color='grey';
         close();
      }
+
+     const deleteWorkingEx = () => {
+        let btn_delete = document.getElementById('delete-workingEx');
+        let workingEx = document.getElementById('workingExText');
+        var input = prompt("Type yes to clean the text");
+        if(btn_delete !== "block" && input === "yes")
+        {
+            workingEx.value = "";
+        }
+        close();
+    }
 
      //show textArea for Hobbies
      const showHobbies = () => {
@@ -164,10 +245,25 @@ const AddProfileSection = (props) => {
         if  ((btn.style.display = "none")) {
             btn.style.display = "block";
         }
+        let btn_delete = document.getElementById('delete-hobbies')
+        if  ((btn_delete.style.display = "none")) {
+            btn_delete.style.display = "block";
+        }
         document.getElementById('hobbies').style.color='grey';
         close();
         
      }
+
+     const deleteHobbies = () => {
+        let btn_delete = document.getElementById('delete-hobbies');
+        let hobbies = document.getElementById('hobbiesText');
+        var input = prompt("Type yes to clean the text");
+        if(btn_delete !== "block" && input === "yes")
+        {
+            hobbies.value = "";
+        }
+        close();
+    }
 
      //initially the sections are read only, click button to edit
      const enableEdit = (e) => {
@@ -328,6 +424,8 @@ const AddProfileSection = (props) => {
 
                     <button disabled = {edit === 'about' ?false :true}
                     id='save-about' onClick={saveSections.bind(this,"About")}>Save</button>
+                    <button disabled = {edit === 'about' ?false :true}
+                    id='delete-about' onClick={deleteAbout}>Clear</button>
           
                     
                     <p id='education-title'>
@@ -338,6 +436,8 @@ const AddProfileSection = (props) => {
                     </textarea>
                     <button disabled = {edit === 'education' ?false :true}
                     id='save-education' onClick={saveSections.bind(this,"Education")}>Save</button><br /><br />
+                    <button disabled = {edit === 'education' ?false :true}
+                    id='delete-education' onClick={deleteEducation}>Clear</button>
                     
                     <p id='skills-title'>
                         Skills
@@ -347,7 +447,9 @@ const AddProfileSection = (props) => {
                     </textarea>
                     <button disabled = {edit === 'skills' ?false :true}
                     id='save-skills' onClick={saveSections.bind(this,"Skills")}>Save</button><br /><br />
-                    
+                    <button disabled = {edit === 'skills' ?false :true}
+                    id='delete-skills' onClick={deleteSkills}>Clear</button>
+
                     <p id='workingEx-title'>
                         Working Experience
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'workingEx')} alt='edit-icon'></img>
@@ -356,7 +458,9 @@ const AddProfileSection = (props) => {
                     </textarea>
                     <button disabled = {edit === 'workingEx' ?false :true}
                     id='save-workingEx' onClick={saveSections.bind(this,"WorkingEx")}>Save</button><br /><br />
-                    
+                    <button disabled = {edit === 'workingEx' ?false :true}
+                    id='delete-workingEx' onClick={deleteWorkingEx}>Delete</button>
+
                     <p id='hobbies-title'>
                         Hobbies
                         <img src={require('./images/edit.png')} onClick={enableEdit.bind(this, 'hobbies')} alt='edit-icon'></img>
@@ -365,6 +469,8 @@ const AddProfileSection = (props) => {
                     </textarea>
                     <button disabled = {edit === 'hobbies' ?false :true}
                     id='save-hobbies' onClick={saveSections.bind(this,"Hobbies")}>Save</button><br /><br />
+                    <button disabled = {edit === 'hobbies' ?false :true}
+                    id='delete-hobbies' onClick={deleteHobbies}>Clear</button>
                 </div>
                 
             </div> 
@@ -385,7 +491,20 @@ const AddProfileSection = (props) => {
                         
                     </div>
                 </div>
-            </div>   
+            </div>
+
+            {/* <div id='dialogAlert'>
+                <div id='content'>
+                    <div id='aclose'>
+                        <span>Warning!!! Do you want to delete About</span>
+                        <button className='close-btn' onClick={closeAlert}>x</button>
+                    </div>
+                    <div id='section'>
+                        <p id='quit' onClick={cleanText}>Yes</p><hr />
+                    </div>
+                </div>
+            </div> */}
+
         </div>
     )
     
