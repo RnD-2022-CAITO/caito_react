@@ -4,6 +4,7 @@
     list-style-type: none;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
 
 .nav ul li{
@@ -16,6 +17,12 @@
     border-radius: 0px;
 }
 
-.logout-btn-nav:hover{
-    letter-spacing: 0;
+.navigation-bar{
+    background-color: #8CBCED;
+    padding: 0;
+    margin: 0;
+}
+
+li a{
+    color: var(--primary-light)
 }

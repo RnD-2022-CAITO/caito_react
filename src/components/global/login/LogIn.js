@@ -3,6 +3,7 @@ import {React, useRef, useState} from 'react'
 import { useAuth } from '../auth/Authentication'
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorRoute from '../routes/ErrorRoute';
+import {ReactComponent as Logo} from '../../../assets/logo.svg';
 
 import './Login.css'
 
@@ -53,7 +54,9 @@ const LogIn = () => {
   !currentUser ?
   <div className='container'>
       <form className='sign-in-form' onSubmit={handleSubmit}>
-        <h1 className='logo'>enlight</h1>
+        <h1 className='logo'>
+          <Logo style={{width:'5em'}}/>
+        </h1>
         <h2>log in</h2>
         <div className='input-field'>
           <input id='email' type = 'email' ref={emailRef} required autoComplete='off'/>

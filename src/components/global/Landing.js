@@ -1,5 +1,5 @@
 import React from 'react'
-import OfficerLanding from '../officer/landing';
+import OfficerLanding from '../officer/analysis';
 import TeacherLanding from '../teacher/landing';
 import { useUserData } from './auth/UserData'
 

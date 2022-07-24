@@ -4,13 +4,20 @@ Styles that can be applied globally to all elements with the same type are writt
 */
 
 :root {
-    --primary-color: #119DA4;
+    --primary-color: #8CBCED;
+    --primary-light: #fff;
     --primary-dark: #272635;
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Questrial', sans-serif;
 }
 
 *{
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Questrial', sans-serif;
+}
+
+.brand-logo{
+    width: 7em;
+    height: auto;
+    padding-bottom: 10px;
 }
 
 button, input, label{
@@ -25,7 +32,6 @@ button{
     border: none;
     border-radius: 3px;
     transition: 0.5s;
-    font-family: 'Inconsolata', monospace;
 }
 
 button:hover{
@@ -40,7 +46,7 @@ button:disabled{
 .logo{
     font-family: 'Orelega One', cursive;
     font-size: 3em;
-    color: var(--primary-color);
+    color: var(--primary-white);
     cursor: none;
 }
 
@@ -52,24 +58,27 @@ a{
 
 a:hover{
     color: var(--primary-dark);
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .active{
-    text-decoration: underline;
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+    padding: 10px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 
 input, textarea{
     border: none;
-    border-bottom: 2px solid var(--primary-color);
-    border-right: 2px solid var(--primary-color);
+    border: 2px solid var(--primary-color);
     transition: 0.5s;
 }
 
 input:focus, textarea:focus{
     outline: none;
-    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 3px;
 }
 
 label{

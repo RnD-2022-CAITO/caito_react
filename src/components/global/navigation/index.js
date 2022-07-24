@@ -4,6 +4,8 @@ import { db } from '../../../utils/firebase';
 import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {ReactComponent as Logo} from '../../../assets/logo.svg';
+import {FiLogOut} from 'react-icons/fi';
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
@@ -53,59 +55,66 @@ const NavBar = () => {
 
 
     const TeacherNav = () => (
-        <div className='nav'>
-            <ul>
-                <li>
-                    <NavLink activeclassname='active' to="/">
-                    home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/profile">
-                    profile
-                    </NavLink>
-                </li>
-                <li>
-                    <button className='logout-btn-nav' onClick={handleLogOut}>
-                        Log out
-                    </button>
-                </li>
-            </ul>
+        <div className='navigation-bar'>
+    `       <div style={{textAlign:'center'}}>
+                <Logo className='brand-logo'/>
+            </div>
+            <div className='nav'>
+                <ul>
+                    <li>
+                        <NavLink activeclassname='active' to="/">
+                        home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/profile">
+                        profile
+                        </NavLink>
+                    </li>
+                    <li>
+                        <button className='logout-btn-nav' onClick={handleLogOut}>
+                            <FiLogOut/>
+                        </button>
+                    </li>
+                </ul>
+            </div>`
         </div>
     )
 
     const OfficerNav = () => (
-        <div className='nav'>
-            <ul>
-                    <NavLink activeclassname='active' to="/">
-                    home
-                    </NavLink>
-                <li>
-                    <NavLink activeclassname='active' to="/surveyMaking">
-                    create survey
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/surveyDistribution">
-                    distribute survey
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/deleteAccount">
-                    delete account
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/summary">
-                    summary
-                    </NavLink>
-                </li>
-                <li>
-                    <button className='logout-btn-nav' onClick={handleLogOut}>
-                        Log out
-                    </button>
-                </li>
-            </ul>
+        <div className='navigation-bar'>
+            <div style={{textAlign:'center'}}>
+                <Logo className='brand-logo'/>
+            </div>
+            <div className='nav'>
+                <ul>
+                    <li>
+                        <NavLink activeclassname='active' to="/">
+                        home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/surveyMaking">
+                        create survey
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/surveyDistribution">
+                        distribute survey
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/deleteAccount">
+                        delete account
+                        </NavLink>
+                    </li>
+                    <li>
+                        <button className='logout-btn-nav' onClick={handleLogOut}>
+                            <FiLogOut/>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     )
 
