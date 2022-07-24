@@ -78,7 +78,7 @@ const OfficerSummary = () => {
   },[questionID]);
 
   const clickButton = (question) => {
-    navigate('/surveyStats');
+    navigate('/surveyStats', { state: { question: question} });
   }
 
   const searchSurvey = (e) => {
