@@ -23,6 +23,10 @@
     margin: 0;
 }
 
+.navigation-bar div button:hover{
+    background-color: transparent;
+}
+
 li a{
     color: var(--primary-light)
 }

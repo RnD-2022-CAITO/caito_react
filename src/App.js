@@ -85,14 +85,14 @@ const App = () => {
                     }
               />
             
-              <Route exact path="/summary" element={    
+              {/* <Route exact path="/summary" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSummary />
                       </PrivateRoute>
                     </UserDataProvider>
                     }
-              />
+              /> */}
 
               <Route exact path="/surveyMaking" element={    
                     <UserDataProvider>

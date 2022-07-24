@@ -27,6 +27,10 @@ const NavBar = () => {
         }
     }
 
+    const navigateHome = () => {
+        navigate('/');
+    }
+
       //only runs when the component mounts
       useEffect(() => {
             const data = async () => {
@@ -57,7 +61,9 @@ const NavBar = () => {
     const TeacherNav = () => (
         <div className='navigation-bar'>
     `       <div style={{textAlign:'center'}}>
-                <Logo className='brand-logo'/>
+                <button onClick={navigateHome}>
+                    <Logo className='brand-logo'/>
+                </button>
             </div>
             <div className='nav'>
                 <ul>
@@ -84,7 +90,9 @@ const NavBar = () => {
     const OfficerNav = () => (
         <div className='navigation-bar'>
             <div style={{textAlign:'center'}}>
-                <Logo className='brand-logo'/>
+                <button onClick={navigateHome}>
+                    <Logo className='brand-logo'/>
+                </button>
             </div>
             <div className='nav'>
                 <ul>
