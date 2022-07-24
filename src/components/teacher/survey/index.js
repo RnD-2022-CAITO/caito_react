@@ -181,10 +181,7 @@ const Survey = () => {
   // uses the initial answers (if there are any saved ones from previous attempts) to populate 
   // texts and numbers in the UI
   const populateTextAndNum = (index) => {
-    if (answers.at(index) === questions.at(index)){
-      return "";
-    }
-    else {
+    if (answers.at(index) !== questions.at(index)){
       return answers.at(index);
     }
   }
