@@ -2,12 +2,14 @@
 import React, {useState, useEffect, useRef} from 'react'
 import app, {func} from '../../../utils/firebase';
 import { db } from '../../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 import "./Analysis.css"
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSummary = () => {
+  const navigate = useNavigate();
   const [questionID, setQuestionID] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,7 +78,7 @@ const OfficerSummary = () => {
   },[questionID]);
 
   const clickButton = (question) => {
-    alert('this feature has not been developed.')
+    navigate('/surveyStats');
   }
 
   const searchSurvey = (e) => {
