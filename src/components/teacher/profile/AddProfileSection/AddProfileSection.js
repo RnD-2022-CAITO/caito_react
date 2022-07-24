@@ -425,7 +425,7 @@ const AddProfileSection = (props) => {
                     <button disabled = {edit === 'about' ?false :true}
                     id='save-about' onClick={saveSections.bind(this,"About")}>Save</button>
                     <button disabled = {edit === 'about' ?false :true}
-                    id='delete-about' onClick={deleteAbout}>Delete</button>
+                    id='delete-about' onClick={deleteAbout}>Clear</button>
           
                     
                     <p id='education-title'>
@@ -437,7 +437,7 @@ const AddProfileSection = (props) => {
                     <button disabled = {edit === 'education' ?false :true}
                     id='save-education' onClick={saveSections.bind(this,"Education")}>Save</button><br /><br />
                     <button disabled = {edit === 'education' ?false :true}
-                    id='delete-education' onClick={deleteEducation}>Delete</button>
+                    id='delete-education' onClick={deleteEducation}>Clear</button>
                     
                     <p id='skills-title'>
                         Skills
@@ -448,7 +448,7 @@ const AddProfileSection = (props) => {
                     <button disabled = {edit === 'skills' ?false :true}
                     id='save-skills' onClick={saveSections.bind(this,"Skills")}>Save</button><br /><br />
                     <button disabled = {edit === 'skills' ?false :true}
-                    id='delete-skills' onClick={deleteSkills}>Delete</button>
+                    id='delete-skills' onClick={deleteSkills}>Clear</button>
 
                     <p id='workingEx-title'>
                         Working Experience
@@ -470,7 +470,7 @@ const AddProfileSection = (props) => {
                     <button disabled = {edit === 'hobbies' ?false :true}
                     id='save-hobbies' onClick={saveSections.bind(this,"Hobbies")}>Save</button><br /><br />
                     <button disabled = {edit === 'hobbies' ?false :true}
-                    id='delete-hobbies' onClick={deleteHobbies}>Delete</button>
+                    id='delete-hobbies' onClick={deleteHobbies}>Clear</button>
                 </div>
                 
             </div> 
