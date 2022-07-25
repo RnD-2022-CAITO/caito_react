@@ -5,8 +5,10 @@ Styles that can be applied globally to all elements with the same type are writt
 
 :root {
     --primary-color: #8CBCED;
+    --secondary-color: #D3E7FC;
     --primary-light: #fff;
     --primary-dark: #272635;
+    --warning: #ED8C8C;
     font-family: 'Questrial', sans-serif;
 }
 
@@ -41,6 +43,21 @@ button:hover{
 
 button:disabled{
     background-color: rgb(211, 211, 211);
+}
+
+.secondary-btn{
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+}
+
+.warning-btn{
+    background-color: var(--warning);
+}
+
+.secondary-btn:hover{
+    background-color: var(--primary-color);
+    color: var(--primary-dark);
+    color: var(--primary-light);
 }
 
 .logo{

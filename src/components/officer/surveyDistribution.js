@@ -14,8 +14,6 @@ const OfficerSurveyDistribution = () => {
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveyDisplay, setSurveyDisplay] = useState(false);
 
-  const [scheduledDateDisplay, setScheduledDateDisplay] = useState(false);
-
   const [selectedSurveys, setSelectedSurveys] = useState([]);
   const [selectedTeachers, setSelectedTeachers] = useState([]);
 
@@ -73,6 +71,28 @@ const OfficerSurveyDistribution = () => {
   //Get all teachers from the database
 
   useEffect(() => {
+    console.log(surveyDisplay);
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+
+    const retrieveSurveyInfo = async () => {
+      const getSurveys = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
+      try {
+          await getSurveys().then((result) => 
+          {
+            setAllSurveys(result.data);
+          });
+      } catch (e) {
+          console.error(e);
+      }
+    }
+
+    retrieveSurveyInfo();
+
+    setSurveyDisplay(true);
+
+  }, [])
+
+  useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
 
     const retrieveTeachersInfo = async () => {
@@ -87,54 +107,68 @@ const OfficerSurveyDistribution = () => {
         }
     }
 
-    const retrieveSurveyInfo = async () => {
-      const getSurveys = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
-      try {
-          await getSurveys().then((result) => 
-          {
-            setAllSurveys(result.data);
-          });
-      } catch (e) {
-          console.error(e);
-      }
-    }
-
     retrieveTeachersInfo();
+  },[])
 
-    retrieveSurveyInfo();
+  const selectTeachers = () => {
+    //Select a group of teachers from the officer's created target group
+    alert("This feature is under development");
+  }
 
-  }, [])
+  const createTargetGroup = () => {
+    //Redirect the user to the create group page
+    alert("This feature is under development");
+  }
+
+  //Clear the form
+  const clearSchedule = () => {
+    setSelectedSurveys([]);
+    setSelectedTeachers([]);
+    setScheduledDate(today.substring(0,10));
+  }
 
   return (
-    <div>
-        <div className='select-display'>
-        <h3>1. Select your surveys</h3>
-        <button onClick={() => setSurveyDisplay(!surveyDisplay)}>Select surveys</button>
-        {surveyDisplay && 
+    <>
+    <div className='grid-layout'>
+        <div className='select-display-survey'>
+        <h3>Select your surveys</h3>
+        {surveyDisplay ?
         allSurveys.map((o, index) => 
         <div key={index}>
-        <span>{++index}. Title: {o.title}</span>
-        <input
-          type="checkbox"
-          value={o.id}
-          checked={selectedSurveys.includes(o.id)}
-          onChange={e => 
-            {
-              if (selectedSurveys.includes(e.target.value)){
-                setSelectedSurveys(selectedSurveys.filter(obj => obj !== e.target.value));
-              }else{
-              setSelectedSurveys(oldArray => [...oldArray, e.target.value])
+          <span>{++index}. Title: {o.title}</span>
+          <input
+            type="checkbox"
+            value={o.id}
+            checked={selectedSurveys.includes(o.id)}
+            onChange={e => 
+              {
+                if (selectedSurveys.includes(e.target.value)){
+                  setSelectedSurveys(selectedSurveys.filter(obj => obj !== e.target.value));
+                }else{
+                setSelectedSurveys(oldArray => [...oldArray, e.target.value])
+                }
               }
             }
-          }
-        />
+          />
         </div>)
+        : <p>Loading...</p>
         }
         </div>
 
         <div className='select-display'>
-        <h3>2. Select a group of teachers you want to send the surveys to</h3>
+        <h3>Select your target groups</h3>
+        <div style={{textAlign:'center'}}>
+        <p>Select a group of teachers that you want to send the survey to</p>
+        <button onClick={selectTeachers}>Select your target group</button>
+        <p> or </p>
+        <button className='secondary-btn' onClick={createTargetGroup}>Create a new target group</button>
+        </div>
+        
+        <div style={{backgroundColor:'red', color:'white', textAlign:'center', padding:'10px'}}>
+        <p>This is an old feature. It will be left here for debugging...</p>
         <button onClick={() => setTeacherDisplay(!teacherDisplay)}>Select teachers</button>
+
+        {/* old feature */}
         {teacherDisplay && 
         allTeachers.map((o, index) => 
         <div key={index}> 
@@ -154,26 +188,26 @@ const OfficerSurveyDistribution = () => {
           }
         />
         </div>)}
+
+        </div>
+
         </div>
         <div className='select-display'>
-          <h3>3. Schedule your date to send the surveys</h3>
-          <button onClick={() => setScheduledDateDisplay(!scheduledDateDisplay)}>Schedule date</button>
-          {scheduledDateDisplay &&
-          <div className='input-field'>
-            <input required className='question' type="date" 
-            placeholder='Enter your title here..'
-            value={scheduledDate}
-            onInput={e => setScheduledDate(e.target.value)} />
-            <label>
-              Scheduled Date
-            </label>
-          </div>}
+          <h3>Schedule your date to send the profiling task</h3>
+          <input required className='question' type="date" 
+          placeholder='Enter your title here..'
+          value={scheduledDate}
+          onInput={e => setScheduledDate(e.target.value)} />
         </div>
-          
-        <div style={{textAlign:'center'}}>
-        <button onClick={() => assignTeachers()}>Start sending out survey invitation</button>
-        </div>
+
     </div>
+          
+    <div className='schedule-btns'>
+        <button onClick={() => assignTeachers()}>Start sending out survey invitation</button>
+
+        <button className='warning-btn' onClick={clearSchedule}>Discard changes</button>        
+    </div>
+    </>
   )
 }
 export default OfficerSurveyDistribution;
