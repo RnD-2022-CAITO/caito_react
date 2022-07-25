@@ -4,7 +4,7 @@ import { db } from '../../../utils/firebase';
 import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {ReactComponent as Logo} from '../../../assets/logo.svg';
+import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import {FiLogOut} from 'react-icons/fi';
 
 const NavBar = () => {
