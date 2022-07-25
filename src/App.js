@@ -19,6 +19,7 @@ import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
 import OfficerSurveyMaking from './components/officer/surveyMaking'
 import OfficerSurveyDistribution from './components/officer/surveyDistribution';
+import OfficerSurveyStats from './components/officer/surveyStats';
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
@@ -107,6 +108,15 @@ const App = () => {
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyDistribution />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
+              <Route exact path="/surveyStats" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <OfficerSurveyStats />
                       </PrivateRoute>
                     </UserDataProvider>
                     }
