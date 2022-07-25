@@ -1,4 +1,4 @@
-//put survey distribution process here
+//put survey stats here
 import React, { useState, useEffect } from 'react';
 import app, {func} from '../../utils/firebase';
 import { useLocation } from 'react-router-dom';
@@ -21,11 +21,8 @@ const OfficerSurveyStats = () => {
                 questionID: question.id,
             }).then((i) => {
                 let newArr = [...i.data];
-                //console.log(newArr);
                 let index = 0;
                 newArr.map(o => {
-                    //console.log("(newArr.length-1): " + (newArr.length-1));
-                    //console.log("index: " + index);
                     if ((newArr.length-1) === index){
                         getTeacher(o.teacherID, true);
                     } else{
@@ -34,8 +31,6 @@ const OfficerSurveyStats = () => {
                     ++index;
                 })
                 setAnswers(newArr);
-                //setLoading(false);
-                //setLoading(false);
               }).catch(e => {
                 console.log(e);
               });
@@ -51,20 +46,15 @@ const OfficerSurveyStats = () => {
             const response = await getInfo({
                 teacherID: teacherID,
             }).then((i) => {
-                //console.log(i.data);
                 if (!teachersID.includes(teacherID)){
-                    //console.log("!teachersID.includes(teacherID): " + !teachersID.includes(teacherID));
                     teachersID.push(teacherID);
                     const newObj = {
                         ...i.data,
                         teacherID: teacherID,
                       }
                     teachers.push(newObj);
-                    //setTeachers(oldArr => ([...oldArr, i.data]));
-                    //setLoading(false);
                 }
                 if (boolean === true){
-                    //console.log("reached");
                     setLoading(false);
                 }
               }).catch(e => {
@@ -75,13 +65,10 @@ const OfficerSurveyStats = () => {
         }
       }
 
+      // UI
       function renderTeachers(id, index) {
-        //console.log("teachers: " + teachers);
-        //console.log("teachersID: " + teachersID);
-        //getTeacher(answer.teacherID);
         let teacher = "";
         teachers.map(o => {
-            console.log(o);
             if (o.teacherID === id){
                 teacher = o;
             }
@@ -91,31 +78,50 @@ const OfficerSurveyStats = () => {
             <h4>{index + 1}. {teacher.firstName} {teacher.lastName}</h4>
             {answers.map((o, index) => ( //list out all answer copies from the teacher
                 renderAnswers(o, teacher, index)
-                //console.log("o: " + o.answers)
             ))}
           </div>
         </div>;
       }
 
+      // UI
       function renderAnswers(o, t, index) {
-        //console.log("teachers: " + teachers);
-        //console.log("teachersID: " + teachersID);
-        //getTeacher(answer.teacherID);
-        console.log(o.answers);
         let newArray = [];
         newArray.push(o.answers);
-        newArray.forEach((i) => {
-        if (i.length === undefined){
-            newArray = Object.keys(i).map((key) => i[key]);
-        }
-        });
         if (o.teacherID === t.teacherID){
             return <div key={index+t}>
-            <div>
-                <h4>{newArray.length} TODO adjust this part</h4> 
+                <div>
+                    <h4>question.questions.length: {question.questions.length}</h4> 
+                    <h4>o.answers.length: {o.answers.length}</h4> 
+                    {timeline(question, o)}
                 </div>
+                
             </div>;
         }
+      }
+
+      // UI
+      function timeline(question, answer) {
+        const totalItems = question.questions.length;
+        const numberOfActiveItems = answer.answers.length;
+        const progressBarWidth = totalItems > 0 ? (numberOfActiveItems) / (totalItems) * 100 : 1;
+
+        let arr = [];
+        question.questions.map((item) => (
+            arr.push(item)
+        ));
+        arr.push(1);
+        
+        return (
+            <div className="timeline">
+                <div className="timeline-progress" style={{ width: `${progressBarWidth}%`}}></div>
+                <div className="timeline-items">
+                    {arr.map((item, i) => (
+                        <div key={i} className={"timeline-item" + (numberOfActiveItems >= i ? ' active' : '')}>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
       }
 
     return (
@@ -123,9 +129,9 @@ const OfficerSurveyStats = () => {
         <p>Loading..</p>
         :
         <div>
-            <p>OfficerSurveyStats</p>
+            <p>OfficerSurveyStats. Note that each teacher may have multiple copies. Will distinguish that in future user stories.</p>
             {teachersID.map((id, index) => (
-                renderTeachers(id, index)))
+                renderTeachers(id, index))) 
             }
         </div>
     )
