@@ -14,7 +14,7 @@
 .timeline-progress {
 	width: 0;
 	height: 100%;
-	background-color: orange;
+	background-color: var(--primary-color);
 }
 
 .timeline-items {
@@ -39,5 +39,7 @@
 }
 
 .timeline-item.active::before {
-	background-color: orange;
+	background-color: var(--primary-color);
+	position: relative;
+	top: -10px;
 }

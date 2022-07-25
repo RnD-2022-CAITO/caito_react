@@ -90,8 +90,8 @@ const OfficerSurveyStats = () => {
         if (o.teacherID === t.teacherID){
             return <div key={index+t}>
                 <div>
-                    <h4>question.questions.length: {question.questions.length}</h4> 
-                    <h4>o.answers.length: {o.answers.length}</h4> 
+                    <h4>Total questions: {question.questions.length}</h4> 
+                    <h4>Total answered questions: {o.answers.length}</h4> 
                     {timeline(question, o)}
                 </div>
                 
@@ -112,6 +112,8 @@ const OfficerSurveyStats = () => {
         arr.push(1);
         
         return (
+            <>
+            <p>Progress: {progressBarWidth}%</p>
             <div className="timeline">
                 <div className="timeline-progress" style={{ width: `${progressBarWidth}%`}}></div>
                 <div className="timeline-items">
@@ -121,6 +123,7 @@ const OfficerSurveyStats = () => {
                     ))}
                 </div>
             </div>
+            </>
         )
       }
 
@@ -129,7 +132,9 @@ const OfficerSurveyStats = () => {
         <p>Loading..</p>
         :
         <div>
-            <p>OfficerSurveyStats. Note that each teacher may have multiple copies. Will distinguish that in future user stories.</p>
+            <h2>Survey Statistics</h2>
+            <p>Teacher's profiling task filling progress</p>
+            <p></p>
             {teachersID.map((id, index) => (
                 renderTeachers(id, index))) 
             }
