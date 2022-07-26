@@ -1,6 +1,6 @@
 //put survey stats here
 import React, { useState, useEffect } from 'react';
-import app, {func} from '../../utils/firebase';
+import app, {func} from '../../../utils/firebase';
 import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyStats.css';

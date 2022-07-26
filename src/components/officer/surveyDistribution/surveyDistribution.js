@@ -1,6 +1,6 @@
 //put survey distribution process here
 import React, { useState, useEffect } from 'react';
-import app, {func} from '../../utils/firebase';
+import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 

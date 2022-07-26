@@ -102,17 +102,17 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink activeclassname='active' to="/surveyMaking">
+                        <NavLink activeclassname='active' to="/survey-making">
                         create survey
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink activeclassname='active' to="/surveyDistribution">
+                        <NavLink activeclassname='active' to="/survey-distribution">
                         distribute survey
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink activeclassname='active' to="/deleteAccount">
+                        <NavLink activeclassname='active' to="/delete-account">
                         delete account
                         </NavLink>
                     </li>

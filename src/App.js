@@ -17,9 +17,9 @@ import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
 import NavBar from './components/global/navigation'
 import OfficerSummary from './components/officer/analysis'
-import OfficerSurveyMaking from './components/officer/surveyMaking'
-import OfficerSurveyDistribution from './components/officer/surveyDistribution';
-import OfficerSurveyStats from './components/officer/surveyStats';
+import OfficerSurveyMaking from './components/officer/makingSurvey/surveyMaking'
+import OfficerSurveyDistribution from './components/officer/surveyDistribution/surveyDistribution';
+import OfficerSurveyStats from './components/officer/surveyStats/surveyStats';
 import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
@@ -77,7 +77,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/deleteAccount" element={    
+              <Route exact path="/delete-account" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <DeleteAccount />
@@ -95,7 +95,7 @@ const App = () => {
                     }
               /> */}
 
-              <Route exact path="/surveyMaking" element={    
+              <Route exact path="/survey-making" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyMaking />
@@ -104,7 +104,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/surveyDistribution" element={    
+              <Route exact path="/survey-distribution" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyDistribution />
@@ -113,7 +113,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/surveyStats" element={    
+              <Route exact path="/survey-stats" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyStats />
