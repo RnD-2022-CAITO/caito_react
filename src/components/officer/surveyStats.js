@@ -92,10 +92,45 @@ const OfficerSurveyStats = () => {
                 <div>
                     <h4>Total questions: {question.questions.length}</h4> 
                     <h4>Total answered questions: {o.answers.length}</h4> 
+                    <h4>Submitted? {o.isSubmitted ? "Yes" : "No"}</h4> 
                     {timeline(question, o)}
+                    {sendNotificationButton(o.teacherID, o.id, o.isSubmitted)}
                 </div>
                 
             </div>;
+        }
+      }
+
+      // set expiry date to 7 days from today so that officer can't spam the teacher
+      async function sendNotification(teacherID, answerID) {
+        let expiry = new Date();
+        expiry.setDate(expiry.getDate() + 7);
+        expiry = expiry.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
+        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+        const addReminder = func.httpsCallable('officer-addSurveyReminder');
+        try {
+            await addReminder({
+                teacherID: teacherID,
+                answerID: answerID,
+                expiryDate: expiry
+            }).then((i) => {
+                if (i.data === "doc exists"){
+                    alert("You have recently notified the teacher about this already.");
+                }else{
+                    alert("Successfully sent notification to " + teacherID);
+                }
+              }).catch(e => {
+                console.log(e);
+              });
+        } catch (e) {
+            console.error(e);
+        }
+      }
+
+      // UI
+      function sendNotificationButton(teacherID, answerID, isSubmmited) {
+        if (isSubmmited === false){
+            return <button type='button' onClick={e => sendNotification(teacherID, answerID)}>Send Reminder</button>
         }
       }
 
