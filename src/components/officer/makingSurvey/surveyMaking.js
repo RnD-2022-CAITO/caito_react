@@ -13,6 +13,7 @@ const OfficerSurveyMaking = () => {
 
   //Set title for the survey
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [question, setQuestion] = useState("");
   const [questionType, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -21,6 +22,8 @@ const OfficerSurveyMaking = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
+
+  const [showQuestion, setShowQuestion] = useState(false);
 
   //Validate inputs
   const [error, setError] = useState("");
@@ -50,12 +53,16 @@ const OfficerSurveyMaking = () => {
     if (optionVisible){
       var i = [];
       var num = 0;
-      i.push(<p>Add Options (at least 2)<br></br></p>);
+      i.push(<p style={{borderTop:"0.2px solid black", paddingTop:"10px"}}>Add Options (at least 2)<br></br></p>);
       i.push(<p>You've added options:<br></br></p>);
       i.push(optionsConfirmed.map((o) => <p>{++num}. {o}<br></br></p>)); //run this only once each. 
 
-      i.push(<label>Option:<input type="text" onInput={e => setCurrentOption(e.target.value)} /><br></br></label>);
-      i.push(<button onClick={() => addOption(currentOption)}>Add</button>);
+      i.push(<label style={{fontSize:"0.85em"}}>Option:<input type="text" placeholder='Type in your option...' onInput={e => setCurrentOption(e.target.value)} /><br></br></label>);
+      i.push(
+      <div style={{textAlign:"center"}}>
+      <button className='option-button' onClick={() => addOption(currentOption)}>Add</button>
+      </div>
+      );
       setOptions(i);
     } else{
       setOptions("");
@@ -66,9 +73,31 @@ const OfficerSurveyMaking = () => {
   useEffect(() => {
     var num = 0;
     setQuestionList(questionsConfirmed.map((o) => 
-      <p>{++num}. Question: {o.question}<br></br>
-      Type: {o.type}<br></br>
-      Options: {o.options.toString()}<br></br></p>));
+      <>
+
+      <div className='task-question'>
+
+      <p>{++num} </p>
+      
+      <div className='question'>
+        <p><strong>Question: {o.question}</strong></p>
+        
+        <h5>Answer type: {o.type}</h5>
+
+        {o.options.length > 1 &&
+        <h5>Options: {o.options.toString()}</h5>}
+      </div>
+
+      {/* To be developed */}
+      <div style={{backgroundColor:'red'}} className='question-btns'>
+        <button>Edit</button>
+        <button>Delete</button>
+      </div>
+      
+      </div>
+
+      
+      </>));
   }, [questionsConfirmed]);
 
   const addOption = (currentOption) => {
@@ -142,24 +171,171 @@ const OfficerSurveyMaking = () => {
     setComplete(true);
   };
 
+  const showInputField = () => {
+    setShowQuestion(true);
+  }
+
+  //The user doesn't want to save the form
+  const refreshForm = () => {
+    setTitle("");
+    setDescription("");
+    setQuestionsConfirmed([]);
+    setQuestion("");
+    setQuestionType("");
+    setOptionVisible(false);
+    setOptions("");
+    setCurrentOption("");
+    setOptionsConfirmed([]);
+    setError("");
+    setShowQuestion(false);
+  }
+
+  //TODO
+  const saveDraft = () => {
+    alert("This feature is being developed...");
+  }
+
   //Render component
   return (
     <>
     {!complete ?
+    <>
+    <h2 style={{textAlign:'center'}}>Profiling task creator</h2>
+    {error && <p className='error'>{error}</p>}
+
+    <div className='grid-layout'>
+      <div className='select-display'>
+        <h3>Task details</h3>
+
+        <div className='input-field'>
+            <input required className='question' type="text" 
+            placeholder='Enter your title here..'
+            value={title}
+            onInput={e => setTitle(e.target.value)} />
+            <label>
+              Profiling Task Title
+            </label>
+        </div>
+
+        {/* To be developed */}
+        <div style={{backgroundColor:'red'}} className='input-field'>
+            <input required className='question' type="text" 
+            placeholder='Enter your task description here..'
+            value={description}
+            onInput={e => setDescription(e.target.value)} />
+            <label>
+              Task description
+            </label>
+        </div>
+
+        {/* To be developed */}
+        <div style={{backgroundColor:'red'}} className='input-field'>
+            <select>
+              <option>Default</option>
+              <option>Template 2</option>
+            </select>
+            <label>
+              Task template
+            </label>
+        </div>
+      </div>
+
+      <div className='select-display'>
+        <h3>Task questions</h3>
+
+        {!showQuestion ?
+        <button style={{width:'100%'}} onClick={showInputField}>Add question</button>
+        :
+        <>
+
+        <div id="created_questions">{questionList}</div>
+        <div className='input-field'>
+          <input style={{width:"80%"}} required type="text" 
+          placeholder='Enter your question here...'
+          value={question}
+          onInput={e => setQuestion(e.target.value)} />
+          <label>
+            Question
+          </label>
+        </div>
+
+        <label>
+          Type of Answer:
+          <label>
+            <input
+              type="radio"
+              value="text"
+              checked={questionType === "text"}
+              onChange={e => {setQuestionType(e.target.value); setOptionVisible(false)}}
+            />
+            Text
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="number"
+              checked={questionType === "number"}
+              onChange={e => {setQuestionType(e.target.value); setOptionVisible(false)}}
+            />
+            Number
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="checkbox"
+              checked={questionType === "checkbox"}
+              onChange={e => {setQuestionType(e.target.value); setOptionVisible(true)}}
+            />
+            Checkbox
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="radio"
+              checked={questionType === "radio"}
+              onChange={e => {setQuestionType(e.target.value); setOptionVisible(true)}}
+            />
+            Radio
+          </label><br></br>
+        </label>
+        <label>
+          {options}
+        </label>
+        <div className='survey-buttons'>          
+            <button className='survey-sub-btns' onClick={() => addQuestion()}> {question === '' ? 'Create question' : 'Save question'}</button>
+        </div>
+
+        </>}
+      </div>
+
+      <div className='select-display create-btns'> 
+          <button style={{backgroundColor:'var(--warning)'}} onClick={refreshForm}>Discard</button>
+          <button style={{backgroundColor:'var(--secondary-color)'}} onClick={saveDraft}>Save draft</button>
+          <button  disabled={loading} onClick={()=> addCurrentSurvey()}>Create task</button>
+      </div>
+    </div>
+    </>
+        :
+        <div className='confirmation-box'>
+          <h2>Your survey has been created. </h2>
+          <h4>Survey title: {title}</h4>
+          <h5>What to do next?</h5>
+          <p>To distrubute your survey to your designated group of teachers,
+            simply go to &nbsp;<a href='/surveyDistribution'>Distribute survey</a>&nbsp;
+            tab, and select a group of teachers
+            you want to send this survey to.
+          </p>
+          <button onClick={()=>window.location.reload()}>
+            Create another survey
+          </button>
+        </div> 
+    }
+    {/* {!complete ?
     <div className="container">
       <div className='sign-in-form' onSubmit={addCurrentSurvey}>
         <h1 style={{textAlign: 'center'}}>Create a New Survey</h1>
 
-        {error && <p className='error'>{error}</p>}
-        <div className='input-field'>
-          <input required className='question' type="text" 
-          placeholder='Enter your title here..'
-          value={title}
-          onInput={e => setTitle(e.target.value)} />
-          <label>
-            Survey Title
-          </label>
-        </div>
+
 
         <div id="created_questions">{questionList}</div>
         <div className='input-field'>
@@ -237,7 +413,7 @@ const OfficerSurveyMaking = () => {
         Create another survey
       </button>
     </div> 
-    }
+    } */}
     </>
   )
 }

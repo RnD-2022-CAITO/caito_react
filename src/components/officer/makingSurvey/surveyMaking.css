@@ -9,9 +9,7 @@
 }
 
 .survey-sub-btns{
-    display: flex;
-    flex-direction: row;
-    gap: 3px
+    width: 100%;
 }
 
 .survey-sub-btns button:hover{
@@ -20,4 +18,51 @@
 
 .confirmation-box{
     text-align: center;
+}
+
+.create-btns{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-question{
+    border: 0.2px solid black;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.task-question>p {
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 0.2px solid black;
+}
+
+.question{
+    padding: 10px;
+}
+
+.question-btns{
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.question-btns button:last-child{
+    background-color: var(--warning);
+}
+
+.option-button{
+    margin: 10px;
 }
