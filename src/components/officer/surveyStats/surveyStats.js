@@ -4,6 +4,7 @@ import app, {func} from '../../../utils/firebase';
 import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyStats.css';
+import ReactDOMServer from 'react-dom/server';
 
 const OfficerSurveyStats = () => {
     const {state} = useLocation();
@@ -12,6 +13,7 @@ const OfficerSurveyStats = () => {
     const [answers, setAnswers] = useState([]);
     const [teachers, setTeachers] = useState([]);
     const [teachersID, setTeachersID] = useState([]);
+    const [content, setContent] = useState("inital");
 
     useEffect(() => {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -66,27 +68,66 @@ const OfficerSurveyStats = () => {
       }
 
       // UI
-      function renderTeachers(id, index) {
+      function renderTeachers(id, index, condition) {
         let teacher = "";
         teachers.map(o => {
             if (o.teacherID === id){
                 teacher = o;
             }
         })
-        return <div key={index}>
-          <div className='summary-view'>
+
+        if (condition === "all"){
+            return <div key={index}>
+            <div className='summary-view'>
             <h4>{index + 1}. {teacher.firstName} {teacher.lastName}</h4>
             {answers.map((o, index) => ( //list out all answer copies from the teacher
                 renderAnswers(o, teacher, index)
             ))}
-          </div>
-        </div>;
+            </div>
+            </div>;
+        } else if (condition === "submitted"){
+            let filteredArr = [];
+            let content = "There is none here!";
+            answers.map((o) => {
+                if (o.isSubmitted === true){
+                    filteredArr.push(o);
+                }
+            });
+            if (filteredArr.length > 0){
+                content = <div key={index}>
+                <div className='summary-view'>
+                <h4>{index + 1}. {teacher.firstName} {teacher.lastName}</h4>
+                {filteredArr.map((o, index) => ( //list out all completed answer copies from the teacher
+                    renderAnswers(o, teacher, index)
+                ))}
+                </div>
+                </div>;
+            }
+            return content;
+        } else if (condition === "unsubmitted"){
+            let filteredArr = [];
+            let content = "There is none here!";
+            answers.map((o) => {
+                if (o.isSubmitted === false){
+                    filteredArr.push(o);
+                }
+            });
+            if (filteredArr.length > 0){
+                content = <div key={index}>
+                <div className='summary-view'>
+                <h4>{index + 1}. {teacher.firstName} {teacher.lastName}</h4>
+                {filteredArr.map((o, index) => ( //list out all completed answer copies from the teacher
+                    renderAnswers(o, teacher, index)
+                ))}
+                </div>
+                </div>;
+            }
+            return content;
+        }   
       }
 
       // UI
       function renderAnswers(o, t, index) {
-        let newArray = [];
-        newArray.push(o.answers);
         if (o.teacherID === t.teacherID){
             return <div key={index+t}>
                 <div>
@@ -162,17 +203,37 @@ const OfficerSurveyStats = () => {
         )
       }
 
+      // UI
+      function filterPageResults(condition){
+        let returnAll = <>
+        <h2>Survey Statistics</h2>
+        <p>Teacher's profiling task filling progress</p>
+        {teachersID.map((id, index) => (
+            renderTeachers(id, index, condition)
+        )) 
+        }</>
+        if (!ReactDOMServer.renderToString(returnAll).includes("timeline-progress", 0)){
+            returnAll = <h2>There is nothing here!</h2>
+        }
+        setContent(returnAll);
+      }
+
+      // UI
+      function initializePage(){
+        if (content === "inital"){
+            filterPageResults("all");
+        }
+      }
     return (
         loading ? 
         <p>Loading..</p>
         :
         <div>
-            <h2>Survey Statistics</h2>
-            <p>Teacher's profiling task filling progress</p>
-            <p></p>
-            {teachersID.map((id, index) => (
-                renderTeachers(id, index))) 
-            }
+            {initializePage()}
+            <button onClick={() => filterPageResults("all")}>All</button>
+            <button onClick={() => filterPageResults("submitted")}>Submitted</button>
+            <button onClick={() => filterPageResults("unsubmitted")}>Unsubmitted</button>
+            {content}
         </div>
     )
 }
