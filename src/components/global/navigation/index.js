@@ -59,31 +59,29 @@ const NavBar = () => {
 
 
     const TeacherNav = () => (
-        <div className='navigation-bar'>
-    `       <div style={{textAlign:'center'}}>
-                <button onClick={navigateHome}>
-                    <Logo className='brand-logo'/>
-                </button>
-            </div>
-            <div className='nav'>
-                <ul>
-                    <li>
-                        <NavLink activeclassname='active' to="/">
-                        home
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink activeclassname='active' to="/profile">
-                        profile
-                        </NavLink>
-                    </li>
-                    <li>
-                        <button className='logout-btn-nav' onClick={handleLogOut}>
-                            <FiLogOut/>
-                        </button>
-                    </li>
-                </ul>
-            </div>`
+        <div className='nav'>
+            <ul>
+                <li>
+                    <NavLink activeclassname='active' to="/">
+                    home
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink activeclassname='active' to="/profile">
+                    profile
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink activeclassname='active' to="/downLoad/downLoadSurvey">
+                    download
+                    </NavLink>
+                </li>
+                <li>
+                    <button className='logout-btn-nav' onClick={handleLogOut}>
+                        Log out
+                    </button>
+                </li>
+            </ul>
         </div>
     )
 
