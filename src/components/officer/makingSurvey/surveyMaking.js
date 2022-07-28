@@ -208,7 +208,7 @@ const OfficerSurveyMaking = () => {
         <h3>Task details</h3>
 
         <div className='input-field'>
-            <input required className='question' type="text" 
+            <input required  style={{width:'77.25%'}} type="text" 
             placeholder='Enter your title here..'
             value={title}
             onInput={e => setTitle(e.target.value)} />
@@ -219,7 +219,7 @@ const OfficerSurveyMaking = () => {
 
         {/* To be developed */}
         <div style={{backgroundColor:'red'}} className='input-field'>
-            <input required className='question' type="text" 
+            <input required  style={{width:'70%'}} type="text" 
             placeholder='Enter your task description here..'
             value={description}
             onInput={e => setDescription(e.target.value)} />
