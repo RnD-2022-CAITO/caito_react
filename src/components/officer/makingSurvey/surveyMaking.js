@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
-
 import "./surveyMaking.css"
+import ReactDOMServer from 'react-dom/server';
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
@@ -22,6 +22,8 @@ const OfficerSurveyMaking = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
+  const [templates, setTemplates] = useState([]);
+  const [templateDisplay, setTemplateDisplay] = useState("");
 
   const [showQuestion, setShowQuestion] = useState(false);
 
@@ -47,6 +49,24 @@ const OfficerSurveyMaking = () => {
         console.error(e);
     }
   }
+
+  //Get templates from the database
+  async function getTemplates(){
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    const getTemplates = func.httpsCallable('officer-getAllTemplateSurveys_Questions');
+    try {
+        await getTemplates().then(i => {
+          templates.push(i.data);
+          templateDropdown();
+        });
+    } catch (e) {
+        console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    getTemplates();
+  }, []);
 
   //Add answer options if the user choses multiple choice answer type
   useEffect(() => {
@@ -195,6 +215,44 @@ const OfficerSurveyMaking = () => {
     alert("This feature is being developed...");
   }
 
+  //UI
+  const templateDropdown = () => {
+    let options = [];
+    let content;
+    let currentTargetValue;
+    content = <div><select onChange={e => {
+      currentTargetValue = e.target.value;
+      {templates.map((template) => {
+        if (currentTargetValue !== "Default"){
+          setQuestionsConfirmed([]);
+          setQuestionsConfirmed([...template.at(currentTargetValue).questions]);
+          setTitle(template.at(currentTargetValue).title);
+          if (showQuestion === false){
+            setShowQuestion(true);
+          }
+        } else{
+          setQuestionsConfirmed([]);
+          setTitle("");
+        }
+      }
+      )}
+      }} value={currentTargetValue}>
+      <option key={0} value="Default">Default</option>
+    {templates.map((template) => 
+      {template.map((i, index) => {
+        options.push(<option key={index+1} value={index}>{i.title}</option>);
+      })}
+    )}
+    {options}
+    </select>
+    <label>
+      Task template
+    </label>
+    </div>;
+    //console.log(ReactDOMServer.renderToString(content));
+    setTemplateDisplay(content);
+    }
+
   //Render component
   return (
     <>
@@ -229,14 +287,8 @@ const OfficerSurveyMaking = () => {
         </div>
 
         {/* To be developed */}
-        <div style={{backgroundColor:'red'}} className='input-field'>
-            <select>
-              <option>Default</option>
-              <option>Template 2</option>
-            </select>
-            <label>
-              Task template
-            </label>
+        <div className='input-field'>
+            {templateDisplay}
         </div>
       </div>
 
