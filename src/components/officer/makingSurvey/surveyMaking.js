@@ -92,10 +92,9 @@ const OfficerSurveyMaking = () => {
   //Show the questions the user has entered
   useEffect(() => {
     var num = 0;
-    setQuestionList(questionsConfirmed.map((o) => 
-      <>
+    setQuestionList(questionsConfirmed.map((o, index) => 
 
-      <div className='task-question'>
+      <div key={index} className='task-question'>
 
       <p>{++num} </p>
       
@@ -115,9 +114,7 @@ const OfficerSurveyMaking = () => {
       </div>
       
       </div>
-
-      
-      </>));
+      ));
   }, [questionsConfirmed]);
 
   const addOption = (currentOption) => {
@@ -220,7 +217,9 @@ const OfficerSurveyMaking = () => {
     let options = [];
     let content;
     let currentTargetValue;
-    content = <div><select onChange={e => {
+    content =         
+      <div className='template input-field'>
+      <select onChange={e => {
       currentTargetValue = e.target.value;
       {templates.map((template) => {
         if (currentTargetValue !== "Default"){
@@ -286,7 +285,6 @@ const OfficerSurveyMaking = () => {
             </label>
         </div>
 
-        {/* To be developed */}
         <div className='input-field'>
             {templateDisplay}
         </div>
