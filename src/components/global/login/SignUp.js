@@ -3,6 +3,7 @@ import {React, useRef, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
+import {ReactComponent as Logo} from '../../../assets/logo.svg';
 
 import './SignUp.css'
 
@@ -55,7 +56,6 @@ const SignUp = () => {
     }
     try{
       await signUp(user);
-      navigate('/');
     }catch(err){ 
       setLoading(false);
       console.log(err.code);
@@ -67,14 +67,18 @@ const SignUp = () => {
         default:
           return setError('Something is wrong... please try again later');
       }
-     }
+    }
+
+    navigate('/');
   }
 
   return (
   !currentUser ?
   <div className='container'>
       <form className='sign-up-form' onSubmit={handleSubmit}>
-        <h1 className='logo'>enlight</h1>
+        <h1 className='logo'>
+          <Logo style={{width:'5em'}}/>
+        </h1>
         <h2>Sign Up</h2>
         <div className='input-field'>
           <input id="email" type="email" ref={emailRef} required autoComplete='off'/>

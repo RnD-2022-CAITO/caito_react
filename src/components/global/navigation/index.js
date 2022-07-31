@@ -31,34 +31,36 @@ const NavBar = () => {
         navigate('/');
     }
 
-      //only runs when the component mounts
-      useEffect(() => {
-            const data = async () => {
+    const retrieveUserData = async () => {
+            if(currentUser){
+                const  docExists = (await db.collection("teacher-info").doc(currentUser.uid).get()).exists
 
-                if(currentUser){
-                    const  docExists = (await db.collection("teacher-info").doc(currentUser.uid).get()).exists
-
-                    if(docExists){
-                        await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                            setRole(querySnapshot.data().role)
-                        })
-                    } else {
-                        await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
-                            setRole(querySnapshot.data().role)
-                        })
-                    }
+                if(docExists){
+                    await db.collection("teacher-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                        setRole(querySnapshot.data().role)
+                    })
+                } else {
+                    await db.collection("officer-info").doc(currentUser.uid).get().then((querySnapshot) => {
+                        setRole(querySnapshot.data().role)
+                    })
                 }
-
             }
 
-            data();
-            data();
+    }
 
-
+      //only runs when the component mounts
+      useEffect(() => {
+        retrieveUserData();
     }, [currentUser])
 
 
     const TeacherNav = () => (
+        <div className='navigation-bar'>
+        <div style={{textAlign:'center'}}>
+            <button onClick={navigateHome}>
+                <Logo className='brand-logo'/>
+            </button>
+        </div>
         <div className='nav'>
             <ul>
                 <li>
@@ -78,10 +80,11 @@ const NavBar = () => {
                 </li>
                 <li>
                     <button className='logout-btn-nav' onClick={handleLogOut}>
-                        Log out
+                            <FiLogOut/>
                     </button>
                 </li>
             </ul>
+        </div>
         </div>
     )
 
