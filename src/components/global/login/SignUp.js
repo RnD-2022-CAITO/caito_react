@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
+import app, {func, auth} from '../../../utils/firebase'
+
 
 import './SignUp.css'
 
@@ -68,8 +70,22 @@ const SignUp = () => {
           return setError('Something is wrong... please try again later');
       }
     }
+    // Save user information into the database
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    const addTeacher = func.httpsCallable('teacher-addTeacher');
+    try {
+        const response = await addTeacher({
+            firstName: user.firstName,
+            lastName: user.lastName,
+        });
 
-    navigate('/');
+        navigate('/');
+
+        window.location.reload();
+
+    } catch (e) {
+        console.error(e);
+    }
   }
 
   return (

@@ -25,21 +25,6 @@ export const AuthProvider = ({children}) => {
     //call the auth function from firebase
     async function signUp(user){
         return auth.createUserWithEmailAndPassword(user.email,user.password)
-        .then(async u => {
-            // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
-            // key is the counterpart to the secret key you set in the Firebase console.
-            app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-            const addTeacher = func.httpsCallable('teacher-addTeacher');
-            try {
-                const response = await addTeacher({
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                });
-                console.log(response);
-            } catch (e) {
-                console.error(e);
-            }
-        });
     }
 
     function signIn(email, password){
