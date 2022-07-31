@@ -25,6 +25,7 @@ import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRo
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
+import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 
 //Roles to access paths
 const role = {
@@ -76,6 +77,15 @@ const App = () => {
                     </UserDataProvider>                     
                     }
               />
+  
+              <Route exact path="/downLoad/downLoadSurvey" element={   
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <DownLoadSurvey />
+                      </PrivateRoute>   
+                    </UserDataProvider>                     
+                    }
+              />     
 
               <Route exact path="/delete-account" element={    
                     <UserDataProvider>
