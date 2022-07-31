@@ -21,6 +21,168 @@ const OfficerSurveyDistribution = () => {
   //Set dates
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
+  const [currentGroupId, setCurrentGroupId] = useState(null);
+  const [currentGroup, setCurrentGroup] = useState(null);
+  const [addVisible, setAddVisible] = useState(false);
+  const [refreshCurrentGroup, setRefreshCurrentGroup] = useState(true);
+  const [selectedGroupTeachers, setSelectedGroupTeachers] = useState([]);
+  const handleRemoveTeacherFromGroup = async (teacherId) => {
+    const removeTeacherFromGroup = func.httpsCallable('group-removeTeacherFromGroup');
+    try {
+      await removeTeacherFromGroup({
+        teacherId,
+        groupId: currentGroupId
+      });
+      setRefreshCurrentGroup(!refreshCurrentGroup);
+      setRefreshGroup(!refreshGroup);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleGroupTeacher = async () => {
+    const groupTeachers = func.httpsCallable('group-groupTeacher');
+    try {
+      await groupTeachers({
+        teacherIds: selectedGroupTeachers,
+        groupId: currentGroupId
+      })
+      setRefreshCurrentGroup(!refreshCurrentGroup);
+      setRefreshGroup(!refreshGroup);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const renderTeacherList = () => {
+    const currentGroup = groups.find(group => group.id === currentGroupId);
+    const teachers = [...currentGroup.teachers];
+    return allTeachers.filter(teacher => !teachers.includes(teacher.id)).map(teacher => {
+      return (
+        <div key={teacher.id}>
+          <span>Teacher's Name: {teacher.firstName} {teacher.lastName}</span>
+          <input
+            onChange={e => {
+              if (e.target.checked) {
+                setSelectedGroupTeachers(
+                  [...selectedGroupTeachers, teacher.id]
+                )
+              } else {
+                console.log(selectedGroupTeachers, teacher)
+                setSelectedGroupTeachers(selectedGroupTeachers.filter(item => {
+                  return item !== teacher.id
+                }))
+              }
+            }}
+            checked={selectedGroupTeachers.includes(teacher.id)} type={'checkbox'}  />
+        </div>
+      )
+    })
+  }
+  const renderCurrentGroup = () => {
+    if (currentGroup === null) {
+      return <></>;
+    }
+    const teachers = currentGroup.teachers;
+    const trs = teachers.map((teacher, index) => {
+      return (
+        <tr key={teacher.id}>
+          <td>{index + 1}</td>
+          <td>{teacher.firstName} {teacher.lastName}</td>
+          <td>{teacher.email}</td>
+          <td>
+            <button onClick={() => handleRemoveTeacherFromGroup(teacher.id)}>Remove</button>
+          </td>
+        </tr>
+      )
+    })
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Teacher' s Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {trs}
+        </tbody>
+      </table>
+    )
+  }
+  useEffect(() => {
+    const retrieveGroupTeachers = async () => {
+      const getGroupTeachers = func.httpsCallable('group-getGroupTeachers');
+      try {
+        const res = await getGroupTeachers({
+          groupId: currentGroupId
+        });
+        setCurrentGroup(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (currentGroupId !== null) {
+      retrieveGroupTeachers();
+    }
+  }, [currentGroupId, refreshCurrentGroup]);
+  const [groups, setGroups] = useState([]);
+  const [refreshGroup, setRefreshGroup] = useState(true);
+  useEffect(() => {
+    const retrieveGroups = async () => {
+      const getGroups = func.httpsCallable('group-findGroups');
+      try {
+        const res = await getGroups();
+        setGroups(res.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    retrieveGroups()
+  }, [refreshGroup]);
+  const handleDeleteGroup = async (groupId) => {
+    try {
+      const deleteGroup = func.httpsCallable('group-deleteGroup');
+      await deleteGroup({
+        groupId: groupId
+      });
+      setRefreshGroup(!refreshGroup);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const renderGroups = () => {
+    const trs = groups.map((group, index) => {
+      return (
+        <tr key={group.id}>
+          <td>{index + 1}</td>
+          <td>{group.name}</td>
+          <td>
+            <button onClick={() => {
+              setAddVisible(true);
+              setCurrentGroupId(group.id);
+            }} style={{marginRight:'10px'}}>Add Teacher</button>
+            <button onClick={() => setCurrentGroupId(group.id)} style={{marginRight: '10px'}}>Look at teachers</button>
+            <button onClick={() => handleDeleteGroup(group.id)}>Delete</button>
+          </td>
+        </tr>
+      )
+    });
+    return (
+      <table border={1} width={'100%'}>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {trs}
+        </tbody>
+      </table>
+    )
+  }
 
   const navigate = useNavigate();
 
@@ -117,9 +279,17 @@ const OfficerSurveyDistribution = () => {
     alert("This feature is under development");
   }
 
-  const createTargetGroup = () => {
+  const createTargetGroup = async () => {
     //Redirect the user to the create group page
-    alert("This feature is under development");
+    const group_name = window.prompt("Enter group name: ");
+    if (group_name) {
+      const createGroup = func.httpsCallable('group-createGroup');
+      await createGroup({
+        name: group_name
+      });
+      setRefreshGroup(!refreshGroup);
+      return;
+    }
   }
 
   //Clear the form
@@ -185,6 +355,21 @@ const OfficerSurveyDistribution = () => {
         <p> or </p>
         <button className='secondary-btn' onClick={createTargetGroup}>Create a new target group</button>
         </div>
+          <div>{renderCurrentGroup()}</div>
+          <div>
+            {renderGroups()}
+          </div>
+          {addVisible && (
+            <div>
+              <div>
+                {renderTeacherList()}
+              </div>
+              <div>
+                <button onClick={() => handleGroupTeacher()}>Submit</button>
+              </div>
+            </div>
+          )}
+
         
         <div style={{backgroundColor:'red', color:'white', textAlign:'center', padding:'10px'}}>
         <p>This is an old feature. It will be left here for debugging...</p>
