@@ -162,7 +162,7 @@ const OfficerSurveyDistribution = () => {
               setAddVisible(true);
               setCurrentGroupId(group.id);
             }} style={{marginRight:'10px'}}>Add Teacher</button>
-            <button onClick={() => setCurrentGroupId(group.id)} style={{marginRight: '10px'}}>Look at teachers</button>
+            <button onClick={() => setCurrentGroupId(group.id)} style={{marginRight: '10px'}}>Show teachers</button>
             <button onClick={() => handleDeleteGroup(group.id)}>Delete</button>
           </td>
         </tr>
