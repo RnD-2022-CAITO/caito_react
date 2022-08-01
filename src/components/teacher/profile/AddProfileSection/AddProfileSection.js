@@ -75,13 +75,6 @@ const AddProfileSection = (props) => {
         }
     }
 
-    //show alert
-    // const showAlert = () => {
-    //     let dialog = document.getElementById('dialogAlert');
-    //     if  ((dialog.style.display = "none")) {
-    //         dialog.style.display = "block";
-    //     }
-    // }
 
     //close the add section dialog when user click exit
     const close = () => {
@@ -91,13 +84,6 @@ const AddProfileSection = (props) => {
         }
     }
 
-    // //close the alert dialog when user click exit
-    // const closeAlert = () => {
-    //     let dialog = document.getElementById('dialogAlert');
-    //     if  ((dialog.style.display = "block")) {
-    //         dialog.style.display = "none";
-    //     }
-    // }
 
     //show textArea for About
     const showAbout = () => {
@@ -492,18 +478,6 @@ const AddProfileSection = (props) => {
                     </div>
                 </div>
             </div>
-
-            {/* <div id='dialogAlert'>
-                <div id='content'>
-                    <div id='aclose'>
-                        <span>Warning!!! Do you want to delete About</span>
-                        <button className='close-btn' onClick={closeAlert}>x</button>
-                    </div>
-                    <div id='section'>
-                        <p id='quit' onClick={cleanText}>Yes</p><hr />
-                    </div>
-                </div>
-            </div> */}
 
         </div>
     )
