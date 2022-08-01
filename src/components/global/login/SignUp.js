@@ -16,6 +16,7 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
+  const schoolRef = useRef();
 
   //Retrive the sign up from context
   const { signUp, currentUser } = useAuth();
@@ -55,7 +56,8 @@ const SignUp = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value
+      lastName: lastNameRef.current.value,
+      school: schoolRef.current.value
     }
     try{
       await signUp(user);
@@ -122,6 +124,18 @@ const SignUp = () => {
           <input id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
           <label className='control-label' htmlFor='last-name'>Last name</label>
         </div>
+
+        <div className='input-field'>
+        {/* <input id='school-name' type="select" ref={schoolRef} /> */}
+          {/* <a>Graduate School</a> */}
+            <input id='school-namex' type="text" list="schoollist" ref={schoolRef}/>
+            <label className='control-label' htmlFor='school-name'>School name</label>
+            <datalist id="schoollist">
+                <option>Tribhuvan University(TU)</option>
+                <option>Nepal Sanskrit University(NSU)</option>
+            </datalist>
+          </div>
+
 
         {error && <p className='error'>{error}</p>}
         <div className='btn-position'>
