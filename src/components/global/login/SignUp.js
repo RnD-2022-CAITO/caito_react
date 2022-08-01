@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
-import app, {func} from '../../../utils/firebase'
-import {getAuth,  sendEmailVerification, updateCurrentUser } from "firebase/auth";
+import app, {func, auth} from '../../../utils/firebase'
 
 
 import './SignUp.css'
@@ -17,7 +16,6 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const schoolRef = useRef();
 
   //Retrive the sign up from context
   const { signUp, currentUser } = useAuth();
@@ -27,8 +25,6 @@ const SignUp = () => {
 
   //Loading to sign up
   const [loading, setLoading] = useState(false);
-
-
 
   const navigate = useNavigate();
 
@@ -55,17 +51,11 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
-    if(!schoolRef.current.value.match(/^[A-Za-z()\- ]+$/)){
-      setLoading(false);
-      return setError('School name should contain alphabetical letters only.');
-    }
-
     const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-
+      lastName: lastNameRef.current.value
     }
     try{
       await signUp(user);
@@ -81,7 +71,6 @@ const SignUp = () => {
           return setError('Something is wrong... please try again later');
       }
     }
-
     // Save user information into the database
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const addTeacher = func.httpsCallable('teacher-addTeacher');
@@ -98,39 +87,7 @@ const SignUp = () => {
     } catch (e) {
         console.error(e);
     }
-
-    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-    const addSchool = func.httpsCallable('teacher-addBioSection');
-    try{
-      const response= addSchool({
-        sectionName: "school",
-        sectionData: schoolRef.current.value,
-    });
-      } catch (e) {
-    console.error(e);
-    }
-
   }
-
-  const auth = getAuth();
-    sendEmailVerification(auth.currentUser)
-      .then(() => {
-    // Email verification sent!
-        alert("Vertify email has been send");
-  } 
- 
-  );
-
-//   var user = firebase.auth().currentUser;
-// var name, email, photoUrl, uid, emailVerified;
-
-// if (user != null) {
-//   name = user.displayName;
-//   email = user.email;
-//   photoUrl = user.photoURL;
-//   emailVerified = user.emailVerified;
-//   uid = user.uid; 
-  
 
   return (
   !currentUser ?
@@ -166,34 +123,6 @@ const SignUp = () => {
           <label className='control-label' htmlFor='last-name'>Last name</label>
         </div>
 
-        <div className='input-field'> 
-            <input id='school-name' type="text"  placeholder='Graduate School'
-            list="schoollist" ref={schoolRef} required autoComplete='off'
-            onFocus= {(e) => {
-              e.target.placeholder = " ";
-            }
-          }
-            onBlur={(e) => {
-              e.target.placeholder = "Graduate School"
-            }
-          }
-          />
-            <label className='control-label' htmlFor='school-name'>Graduate School</label>
-            <datalist id="schoollist">
-                <option>Tribhuvan University(TU)</option>
-                <option>Nepal Sanskrit University(NSU)</option>
-                <option>Kathmandu University(KU)</option>
-                <option>Purbanchal University(PU)</option>
-                <option>Pokhara University(PokU)</option>
-                <option>Lumbini Bouddha University(LBU)</option>
-                <option>Far-western University</option>
-                <option>Mid-western University</option>
-                <option>Agriculture and Forestry University </option>
-                <option>Nepal Open University</option>
-                <option>Rajarshi Janak University</option>
-            </datalist>
-          </div>
-
         {error && <p className='error'>{error}</p>}
         <div className='btn-position'>
           <button className='auth-btn' disabled={loading} type="submit">
@@ -218,7 +147,7 @@ const SignUp = () => {
         </p>
       </div>
     </div>
-    : <ErrorRoute err='already-login or verfy your email'/>
+    : <ErrorRoute err='already-login'/>
   )
 }
 
