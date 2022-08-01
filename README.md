@@ -30,7 +30,7 @@ This project will be deployed on Firebase Web Hosting Service by the end of this
 
 ## Tools used
 - HTML, CSS, Javascript (React)
-- Server: Firebase Cloud Function & Firestore
+- NodeJS, ExpressJS, Firebase Cloud Function & Firestore
 
 ## Authors
 
