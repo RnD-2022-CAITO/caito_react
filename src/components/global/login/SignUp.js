@@ -52,6 +52,11 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
+    if(schoolRef.current.value.match(/^[0-9]+$/)){
+      setLoading(false);
+      return setError('school name should not contain number.');
+    }
+
     const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -80,6 +85,7 @@ const SignUp = () => {
         const response = await addTeacher({
             firstName: user.firstName,
             lastName: user.lastName,
+            school: user.school,
         });
 
         navigate('/');
@@ -125,14 +131,31 @@ const SignUp = () => {
           <label className='control-label' htmlFor='last-name'>Last name</label>
         </div>
 
-        <div className='input-field'>
-        {/* <input id='school-name' type="select" ref={schoolRef} /> */}
-          {/* <a>Graduate School</a> */}
-            <input id='school-namex' type="text" list="schoollist" ref={schoolRef}/>
+        <div className='input-field'> 
+            <input id='school-name' type="text"  placeholder='Graduation school'
+            list="schoollist" ref={schoolRef} required autoComplete='off'
+            onFocus= {(e) => {
+              e.target.placeholder = " ";
+            }
+          }
+            onBlur={(e) => {
+              e.target.placeholder = "Graduation school ";
+            }
+          }
+          />
             <label className='control-label' htmlFor='school-name'>School name</label>
             <datalist id="schoollist">
                 <option>Tribhuvan University(TU)</option>
                 <option>Nepal Sanskrit University(NSU)</option>
+                <option>Kathmandu University(KU)</option>
+                <option>Purbanchal University(PU)</option>
+                <option>Pokhara University(PokU)</option>
+                <option>Lumbini Bouddha University(LBU)</option>
+                <option>Far-western University</option>
+                <option>Mid-western University</option>
+                <option>Agriculture and Forestry University </option>
+                <option>Nepal Open University</option>
+                <option>Rajarshi Janak University</option>
             </datalist>
           </div>
 
