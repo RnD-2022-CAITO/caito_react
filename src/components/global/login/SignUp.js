@@ -53,7 +53,7 @@ const SignUp = () => {
 
     if(!schoolRef.current.value.match(/^[A-Za-z() ]+$/)){
       setLoading(false);
-      return setError('school name should not contain number.');
+      return setError('school name should contain alphabetical letters only.');
     }
 
     const user = {

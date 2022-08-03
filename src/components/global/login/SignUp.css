@@ -18,3 +18,7 @@
 .auth-btn:hover{
     letter-spacing: 10px;
 }
+
+::placeholder{
+    color:rgba(192,192,192,0.5);
+}
