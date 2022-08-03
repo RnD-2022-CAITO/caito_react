@@ -131,6 +131,7 @@ const Survey = () => {
             setCheckboxVal(newArray);
           }
           setCheckboxVal(oldArr => ([...oldArr, newItem]));
+          console.log("checkboxVal: "+checkboxVal);
         }
       } else {
         //When user unchecks

@@ -5,6 +5,11 @@ import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyStats.css';
 import ReactDOMServer from 'react-dom/server';
+import { Dialog, AnchorButton, H1 } from "@blueprintjs/core";
+// using node-style package resolution in a CSS file: 
+//import "normalize.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 
 const OfficerSurveyStats = () => {
     const {state} = useLocation();
@@ -14,6 +19,10 @@ const OfficerSurveyStats = () => {
     const [teachers, setTeachers] = useState([]);
     const [teachersID, setTeachersID] = useState([]);
     const [content, setContent] = useState("inital");
+    const [dialog, setDialog] = useState(false);
+    const [dialogContent, setDialogContent] = useState([]);
+    const [pages, setPages] = useState([]);
+    let currentPageIndex = 0;
 
     useEffect(() => {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -135,7 +144,7 @@ const OfficerSurveyStats = () => {
                     <h4>Total answered questions: {o.answers.length}</h4> 
                     <h4>Submitted? {o.isSubmitted ? "Yes" : "No"}</h4> 
                     {timeline(question, o)}
-                    {sendNotificationButton(o.teacherID, o.id, o.isSubmitted)}
+                    {setButton(o.answers, o.teacherID, o.id, o.isSubmitted)}
                 </div>
                 
             </div>;
@@ -168,10 +177,69 @@ const OfficerSurveyStats = () => {
         }
       }
 
+      // view submission
+      async function viewSubmission(answers) { //
+        setDialog(true);
+        setDialogContent([]);
+        let dialogContentTemp = [];
+        currentPageIndex = 0;
+        let pageIndex = 1;
+        question.questions.map((i, index) => {
+            //console.log("i.question: " + i.question); //display question
+            dialogContentTemp.push(<h1>{index + 1}. {i.question}</h1>);
+            if (answers[index] instanceof Object){
+                let j = Object.values(answers[index]);
+                let test = Object.entries(answers[index]);
+                console.log("test: "+test)
+                dialogContentTemp.push(<p>{j}</p>);
+                //console.log("answer j" + index + ": " + j); //display answer (array type)
+            }else{
+                dialogContentTemp.push(<p>{answers[index]}</p>);
+            }
+            if ((index + 1 ) % 2 === 0){
+                if (pages.length > 0){
+                    dialogContentTemp.push(<button onClick={() => switchPages("prev")}>Previous</button>);
+                }
+                if (answers.length !== index + 1){
+                    dialogContentTemp.push(<button onClick={() => switchPages("next")}>Next</button>);
+                }
+                pages.push({
+                    'index': pageIndex,
+                    'content': dialogContentTemp
+                });
+                ++pageIndex;
+                dialogContentTemp = [];
+            }
+        })
+        if (dialogContentTemp.length > 0){
+            if (pages.length > 0){
+                dialogContentTemp.push(<button onClick={() => switchPages("prev")}>Previous</button>);
+            }
+            pages.push({
+                'index': pageIndex,
+                'content': dialogContentTemp
+            });
+        }
+        setDialogContent(pages[0].content);
+      }
+
       // UI
-      function sendNotificationButton(teacherID, answerID, isSubmmited) {
+      function switchPages(action) {
+        if (action === "prev") {
+            currentPageIndex--;
+            setDialogContent(pages[currentPageIndex].content);
+        } else {
+            currentPageIndex++;
+            setDialogContent(pages[currentPageIndex].content);
+        }
+      }
+
+      // UI
+      function setButton(answers, teacherID, answerID, isSubmmited) {
         if (isSubmmited === false){
-            return <button type='button' onClick={e => sendNotification(teacherID, answerID)}>Send Reminder</button>
+            return <button type='button' onClick={e => sendNotification(teacherID, answerID)}>Send Reminder</button>;
+        } else{
+            return <button type='button' onClick={e => viewSubmission(answers)}>View Submission</button>;
         }
       }
 
@@ -234,6 +302,9 @@ const OfficerSurveyStats = () => {
             <button onClick={() => filterPageResults("submitted")}>Submitted</button>
             <button onClick={() => filterPageResults("unsubmitted")}>Unsubmitted</button>
             {content}
+            <Dialog isOpen={dialog} onClose={() => {
+                setDialog(false);
+            }}>{dialogContent}</Dialog>
         </div>
     )
 }
