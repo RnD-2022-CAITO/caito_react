@@ -189,8 +189,6 @@ const OfficerSurveyStats = () => {
             dialogContentTemp.push(<h1>{index + 1}. {i.question}</h1>);
             if (answers[index] instanceof Object){
                 let j = Object.values(answers[index]);
-                let test = Object.entries(answers[index]);
-                console.log("test: "+test)
                 dialogContentTemp.push(<p>{j}</p>);
                 //console.log("answer j" + index + ": " + j); //display answer (array type)
             }else{
