@@ -7,19 +7,6 @@
     min-height: 100vh;
 }
 
-/* .confirm-delete-user{
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-} */
-
-/* .input-field{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    margin: 5px 5px 5px 5px;
-} */
-
 .input-firstField{
     display: flex;
     justify-content: space-between;
