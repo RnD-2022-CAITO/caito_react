@@ -17,14 +17,12 @@ const DeleteAccount =() =>{
 
 //try to delete teacher's ID
     async function deleteTeachers(){
-      selectedTeachers.map((o) => {
-      deleteteacherAccount(o);  
-      })
+      selectedTeachers.map((o) => (
+      deleteteacherAccount(o)));  
+      
       alert('you selected has been delet and pleas wait seconds to processing');
       setTimeout(
         () => window.location.replace(document.referrer), 2000);
-      
-      //
   }
 
     async function deleteteacherAccount (teacherID) {
