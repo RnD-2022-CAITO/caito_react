@@ -1,6 +1,7 @@
 //put survey distribution process here
 import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 
@@ -21,6 +22,8 @@ const OfficerSurveyDistribution = () => {
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
+  const navigate = useNavigate();
+
 
   async function assignTeachers(){
     let error = 0;
@@ -35,17 +38,16 @@ const OfficerSurveyDistribution = () => {
     } 
     if (error === 0){
       // eslint-disable-next-line
-      selectedSurveys.map((survey) => {
-        let obj = allSurveys.find((o) => o.id === survey);
-        selectedTeachers.map(async (teacher) => {
-          await assignTeacher(survey, obj.title, teacher);
-        })
+      let obj = allSurveys.find((o) => o.id === selectedSurveys);
+      selectedTeachers.map(async (teacher) => {
+        await assignTeacher(selectedSurveys, obj.title, teacher);
       })
+      
 
       alert('Successfully sent out the invitation to fill in the task!');
 
-      //refresh the page
-      // window.location.reload();
+      navigate('/');
+
     }
     else{
       alert("Make sure there's at least one survey and one teacher checked. Date must be at least from today.");
@@ -122,7 +124,7 @@ const OfficerSurveyDistribution = () => {
 
   //Clear the form
   const clearSchedule = () => {
-    setSelectedSurveys([]);
+    setSelectedSurveys("");
     setSelectedTeachers([]);
     setScheduledDate(today.substring(0,10));
   }
@@ -130,9 +132,29 @@ const OfficerSurveyDistribution = () => {
   return (
     <>
     <div className='grid-layout'>
-        <div className='select-display-survey'>
-        <h3>Select your surveys</h3>
-        {surveyDisplay ?
+        <div className='select-display'>
+        <h3>Select your profiling task</h3>
+        <div className=' template input-field'>
+          <select 
+            onChange={e => 
+              {
+                setSelectedSurveys(e.target.value);
+              }
+            }
+          >
+            <option value="" disabled selected >Select a task</option>
+            {allSurveys.map((o) => 
+            <option value={o.id}>
+              {o.title}
+            </option>)}
+          </select>
+          <label>
+            Select a profiling task
+          </label>
+        </div>
+
+        {/* {surveyDisplay ?
+        
         allSurveys.map((o, index) => 
         <div key={index}>
           <span>{++index}. Title: {o.title}</span>
@@ -152,10 +174,10 @@ const OfficerSurveyDistribution = () => {
           />
         </div>)
         : <p>Loading...</p>
-        }
+        } */}
         </div>
 
-        <div className='select-display'>
+        <div className='select-display-survey'>
         <h3>Select your target groups</h3>
         <div style={{textAlign:'center'}}>
         <p>Select a group of teachers that you want to send the survey to</p>

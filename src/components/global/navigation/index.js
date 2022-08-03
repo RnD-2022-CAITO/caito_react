@@ -48,8 +48,8 @@ const NavBar = () => {
 
     }
 
-      //only runs when the component mounts
-      useEffect(() => {
+    //only runs when the component mounts
+    useEffect(() => {
         retrieveUserData();
     }, [currentUser])
 
