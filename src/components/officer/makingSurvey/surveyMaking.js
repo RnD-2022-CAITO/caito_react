@@ -397,9 +397,8 @@ const OfficerSurveyMaking = () => {
     
     <Dialog
                 title="Edit question"
-                icon="info-sign"
                 isOpen={editBtn}
-                canOutsideClickClose={true}
+                onClose={() => setEditBtn(false)}
     >
                 <div>
                     <p>
