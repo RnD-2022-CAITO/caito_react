@@ -181,15 +181,14 @@ const OfficerSurveyMaking = () => {
           onChange={e => 
               {
                 setQType(e.target.value);
-                
               }
           }
         >
           <option value="" disabled>Select an answer type</option>
           <option value="text">Text</option>
           <option value="number">Number</option>
-          {/* <option value="checkbox">Checkbox</option>
-          <option value="radio">Radio</option> */}
+          <option value="checkbox">Checkbox</option>
+          <option value="radio">Radio</option>
 
         </select>
         <label>
@@ -216,7 +215,11 @@ const OfficerSurveyMaking = () => {
 
     //Copy the new question to the object
     questionArr[index].question = editQ;
-    questionArr[index].type = qType;
+
+    if(qType === 'number' || qType === 'text')
+      questionArr[index].type = qType;
+    else 
+      window.alert("this feature is under development..")
 
     //Update the new question
     setQuestionsConfirmed(questionArr);
