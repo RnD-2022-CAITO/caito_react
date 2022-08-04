@@ -136,6 +136,7 @@ const OfficerSurveyDistribution = () => {
         <h3>Select your profiling task</h3>
         <div className=' template input-field'>
           <select 
+            value={selectedSurveys}
             onChange={e => 
               {
                 setSelectedSurveys(e.target.value);
@@ -152,6 +153,10 @@ const OfficerSurveyDistribution = () => {
             Select a profiling task
           </label>
         </div>
+
+        <p>
+          <em>It may take a couple of seconds to load the tasks, please be patient.</em>
+        </p>
 
         {/* {surveyDisplay ?
         
