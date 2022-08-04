@@ -38,6 +38,8 @@ const OfficerSurveyMaking = () => {
   const [qType, setQType] = useState("");
   const [index, setIndex] = useState(0);
 
+  const [editErr, setEditErr] = useState("");
+
   //Validate inputs
   const [error, setError] = useState("");
 
@@ -159,7 +161,7 @@ const OfficerSurveyMaking = () => {
 
   useEffect(() => {
     renderDialog(editQ, qType, index)
-  },[editQ, qType])
+  },[editQ, qType, editErr])
 
   const renderDialog = (q, qType, index) => {
     setDialogDisplay(
@@ -199,6 +201,8 @@ const OfficerSurveyMaking = () => {
               Type of Answer:
         </label>
       </div> 
+      
+      {editErr && <p className='error'>{editErr}</p>}
   
       <div style={{textAlign:'center', marginTop:'30px'}}>
         <button onClick={() => confirmEdit(index)}>Confirm</button>
@@ -210,6 +214,12 @@ const OfficerSurveyMaking = () => {
 
   //Confirm all the edits
   const confirmEdit = (index) =>{
+    setEditErr("");
+
+    if(editQ === ""){
+      return setEditErr("Question cannot be blank.");
+    }
+    
     //Copy the array
     var questionArr = [...questionsConfirmed];
 
@@ -218,15 +228,15 @@ const OfficerSurveyMaking = () => {
 
     if(qType === 'number' || qType === 'text')
       questionArr[index].type = qType;
-    else 
-      window.alert("this feature is under development..")
+    else if(qType !== questionsConfirmed[index].type)
+      window.alert(qType + "feature is being developed..")
 
     //Update the new question
     setQuestionsConfirmed(questionArr);
 
     //Close dialog
     setEditBtn(false);
-
+  
   }
   
 
