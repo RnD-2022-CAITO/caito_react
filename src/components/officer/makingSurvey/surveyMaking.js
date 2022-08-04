@@ -5,6 +5,7 @@ import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
+import { render } from '@testing-library/react';
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
@@ -30,6 +31,11 @@ const OfficerSurveyMaking = () => {
 
   //Edit question
   const [editBtn, setEditBtn] = useState(false);
+
+  //Display questions onto the dialog
+  const [dialogDisplay, setDialogDisplay] = useState();
+  const [editQ, setEditQ] = useState("");
+  const [index, setIndex] = useState(0);
 
   //Validate inputs
   const [error, setError] = useState("");
@@ -132,11 +138,89 @@ const OfficerSurveyMaking = () => {
   }, [questionsConfirmed]);
 
   const editQuestion = (o, index) => {
-    console.log('clicked on edit');
+    setDialogDisplay([]);
 
+    console.log(o);
+
+    //Close the dialog
     setEditBtn(true);
-    
+
+    //Copy the question into the editQ var
+    setEditQ(o.question);
+
+    //Set the edit index
+    setIndex(index);
+
+    //Render component
+    renderDialog(editQ, index);
   }
+
+  useEffect(() => {
+    renderDialog(editQ, index)
+  },[editQ])
+
+  const renderDialog = (q, index) => {
+    setDialogDisplay(
+      <div className='dialog-box'>
+      <div className='input-field'>
+        <input type="text" value={q} //this value needs to be updated.
+        onChange={e => {
+          setEditQ(e.target.value);
+        }}/>
+        <label>
+          Question
+        </label>
+      </div>
+  
+      {/* <div className='input-field'>    
+  
+        <select     
+          value={o.type}         //This one needs to be updated
+          onChange={e => 
+              {
+                //Do something?
+              }
+          }
+        >
+          <option value="" disabled>Select an answer type</option>
+          <option value="text">Text</option>
+          <option value="number">Number</option>
+          <option value="checkbox">Checkbox</option>
+          <option value="radio">Radio</option>
+        </select>
+        <label>
+          {options}
+        </label>
+  
+        <label>
+              Type of Answer:
+        </label>
+      </div> */}
+  
+      <div style={{textAlign:'center', marginTop:'30px'}}>
+        <button onClick={() => confirmEdit(index, editQ)}>Confirm</button>
+        <button className='warning-btn' onClick={() => setEditBtn(false)}>Cancel</button>
+      </div>
+      </div>
+      )
+  }
+
+  //Confirm all the edits
+  const confirmEdit = (index, editQ) =>{
+    //Copy the array
+    var questionArr = [...questionsConfirmed];
+
+    //Copy the new question to the object
+    questionArr[index].question = editQ;
+
+    //Update the new question
+    setQuestionsConfirmed(questionArr);
+
+    //Close dialog
+    setEditBtn(false);
+
+  }
+  
 
   const deleteQuestion = (o, i) => {
     //remove question from the array
@@ -401,10 +485,7 @@ const OfficerSurveyMaking = () => {
                 onClose={() => setEditBtn(false)}
     >
                 <div>
-                    <p>
-                        Sample Dialog Content to display!
-                    </p>
-  
+                        {dialogDisplay}
                 </div>
     </Dialog>
     </>
