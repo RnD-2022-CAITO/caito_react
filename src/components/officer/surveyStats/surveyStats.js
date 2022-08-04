@@ -300,9 +300,15 @@ const OfficerSurveyStats = () => {
             <button onClick={() => filterPageResults("submitted")}>Submitted</button>
             <button onClick={() => filterPageResults("unsubmitted")}>Unsubmitted</button>
             {content}
-            <Dialog isOpen={dialog} onClose={() => {
+            <Dialog 
+            title="Submission"
+            isOpen={dialog} onClose={() => {
                 setDialog(false);
-            }}>{dialogContent}</Dialog>
+            }}>
+                <div style={{padding:'15px'}}>
+                    {dialogContent}
+                </div>
+            </Dialog>
         </div>
     )
 }
