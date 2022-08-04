@@ -5,7 +5,6 @@ import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
-import { render } from '@testing-library/react';
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
@@ -15,7 +14,7 @@ const OfficerSurveyMaking = () => {
 
   //Set title for the survey
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
   const [question, setQuestion] = useState("");
   const [questionType, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -24,6 +23,8 @@ const OfficerSurveyMaking = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
+
+  // eslint-disable-next-line
   const [templates, setTemplates] = useState([]);
   const [templateDisplay, setTemplateDisplay] = useState("");
 
@@ -79,6 +80,8 @@ const OfficerSurveyMaking = () => {
 
   useEffect(() => {
     getTemplates();
+
+  // eslint-disable-next-line
   }, []);
 
   //Add answer options if the user choses multiple choice answer type
@@ -138,6 +141,7 @@ const OfficerSurveyMaking = () => {
       
       </div>
       ));
+  // eslint-disable-next-line
   }, [questionsConfirmed]);
 
   const editQuestion = (o, index) => {
@@ -161,6 +165,8 @@ const OfficerSurveyMaking = () => {
 
   useEffect(() => {
     renderDialog(editQ, qType, index)
+
+  // eslint-disable-next-line
   },[editQ, qType, editErr])
 
   const renderDialog = (q, qType, index) => {
@@ -327,7 +333,7 @@ const OfficerSurveyMaking = () => {
   //The user doesn't want to save the form
   const refreshForm = () => {
     setTitle("");
-    setDescription("");
+    // setDescription("");
     setQuestionsConfirmed([]);
     setQuestion("");
     setQuestionType("");
@@ -337,6 +343,7 @@ const OfficerSurveyMaking = () => {
     setOptionsConfirmed([]);
     setError("");
     setShowQuestion(false);
+
   }
 
   //TODO
@@ -354,7 +361,10 @@ const OfficerSurveyMaking = () => {
       <select 
       onChange={e => {
       currentTargetValue = e.target.value;
-      {templates.map((template) => {
+
+      // eslint-disable-next-line
+      templates.map((template) => {
+
         if (currentTargetValue !== "Default"){
           setQuestionsConfirmed([]);
           setQuestionsConfirmed([...template.at(currentTargetValue).questions]);
@@ -367,13 +377,19 @@ const OfficerSurveyMaking = () => {
           setTitle("");
         }
       }
-      )}
+      )
+
       }} value={currentTargetValue}>
       <option key={0} value="">Default</option>
-    {templates.map((template) => 
+    {
+    // eslint-disable-next-line
+    templates.map((template) => 
+      // eslint-disable-next-line
       {template.map((i, index) => {
         options.push(<option key={`template ${index}`} value={index}>{i.title}</option>);
-      })}
+      })
+      }
+      
     )}
     {options}
     </select>
