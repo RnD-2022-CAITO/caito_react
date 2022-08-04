@@ -35,6 +35,7 @@ const OfficerSurveyMaking = () => {
   //Display questions onto the dialog
   const [dialogDisplay, setDialogDisplay] = useState();
   const [editQ, setEditQ] = useState("");
+  const [qType, setQType] = useState("");
   const [index, setIndex] = useState(0);
 
   //Validate inputs
@@ -147,19 +148,20 @@ const OfficerSurveyMaking = () => {
 
     //Copy the question into the editQ var
     setEditQ(o.question);
+    setQType(o.type);
 
     //Set the edit index
     setIndex(index);
 
     //Render component
-    renderDialog(editQ, index);
+    renderDialog(editQ, qType, index);
   }
 
   useEffect(() => {
-    renderDialog(editQ, index)
-  },[editQ])
+    renderDialog(editQ, qType, index)
+  },[editQ, qType])
 
-  const renderDialog = (q, index) => {
+  const renderDialog = (q, qType, index) => {
     setDialogDisplay(
       <div className='dialog-box'>
       <div className='input-field'>
@@ -172,21 +174,23 @@ const OfficerSurveyMaking = () => {
         </label>
       </div>
   
-      {/* <div className='input-field'>    
-  
-        <select     
-          value={o.type}         //This one needs to be updated
+      <div className='input-field'>    
+
+        <select       
+          value={qType}     
           onChange={e => 
               {
-                //Do something?
+                setQType(e.target.value);
+                
               }
           }
         >
           <option value="" disabled>Select an answer type</option>
           <option value="text">Text</option>
           <option value="number">Number</option>
-          <option value="checkbox">Checkbox</option>
-          <option value="radio">Radio</option>
+          {/* <option value="checkbox">Checkbox</option>
+          <option value="radio">Radio</option> */}
+
         </select>
         <label>
           {options}
@@ -195,10 +199,10 @@ const OfficerSurveyMaking = () => {
         <label>
               Type of Answer:
         </label>
-      </div> */}
+      </div> 
   
       <div style={{textAlign:'center', marginTop:'30px'}}>
-        <button onClick={() => confirmEdit(index, editQ)}>Confirm</button>
+        <button onClick={() => confirmEdit(index)}>Confirm</button>
         <button className='warning-btn' onClick={() => setEditBtn(false)}>Cancel</button>
       </div>
       </div>
@@ -206,12 +210,13 @@ const OfficerSurveyMaking = () => {
   }
 
   //Confirm all the edits
-  const confirmEdit = (index, editQ) =>{
+  const confirmEdit = (index) =>{
     //Copy the array
     var questionArr = [...questionsConfirmed];
 
     //Copy the new question to the object
     questionArr[index].question = editQ;
+    questionArr[index].type = qType;
 
     //Update the new question
     setQuestionsConfirmed(questionArr);
