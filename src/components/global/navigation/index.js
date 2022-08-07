@@ -118,6 +118,11 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li>
+                        <NavLink activeclassname='active' to="/task-overview">
+                        Task Overview
+                        </NavLink>
+                    </li>
+                    <li>
                         <button className='logout-btn-nav' onClick={handleLogOut}>
                             <FiLogOut/>
                         </button>

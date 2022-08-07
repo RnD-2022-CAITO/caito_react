@@ -11,7 +11,7 @@ import LogIn from './components/global/login/LogIn'
 import SignUp from './components/global/login/SignUp'
 import Landing from './components/global/Landing'
 import { AuthProvider } from './components/global/auth/Authentication'
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
@@ -26,7 +26,8 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
-
+import OfficerTaskOverview from './components/officer/taskOverview/taskOverview';
+import TaskSummary from './components/officer/taskSummary/taskSummary'
 //Roles to access paths
 const role = {
   T: 'teacher',
@@ -37,66 +38,83 @@ const role = {
 const App = () => {
 
   return (
-        <Router>
-          <AuthProvider>
-            <NavBar/>
-            <Routes>
-             {/* Private routes for teacher/officer should be like this: */}
-              <Route exact path="/" element={
-                    <PrivateLandingRoute>
-                      <UserDataProvider>
-                        <Landing />
-                      </UserDataProvider>
-                    </PrivateLandingRoute>
-                    }
-              />
+    <Router>
+      <AuthProvider>
+        <NavBar />
+        <Routes>
+          {/* Private routes for teacher/officer should be like this: */}
+          <Route exact path="/" element={
+            <PrivateLandingRoute>
+              <UserDataProvider>
+                <Landing />
+              </UserDataProvider>
+            </PrivateLandingRoute>
+          }
+          />
 
-              <Route exact path="/survey" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.T}>
-                          <Survey/>
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
+          <Route exact path="/survey" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <Survey />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
-              <Route exact path="/profile" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.T}>
-                          <TeacherProfile />
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
+          <Route exact path="/profile" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <TeacherProfile />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
-              <Route exact path="/profile/edit" element={   
-                    <UserDataProvider>
-                      <PrivateRoute role={role.T}>
-                          <EditAccount />
-                      </PrivateRoute>   
-                    </UserDataProvider>                     
-                    }
-              />
-  
-              <Route exact path="/downLoad/downLoadSurvey" element={   
-                    <UserDataProvider>
-                      <PrivateRoute role={role.T}>
-                          <DownLoadSurvey />
-                      </PrivateRoute>   
-                    </UserDataProvider>                     
-                    }
-              />     
+          <Route exact path="/profile/edit" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <EditAccount />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
-              <Route exact path="/delete-account" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.O}>
-                          <DeleteAccount />
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
-            
-              {/* <Route exact path="/summary" element={    
+          <Route exact path="/downLoad/downLoadSurvey" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <DownLoadSurvey />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+
+          <Route exact path="/delete-account" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <DeleteAccount />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+          <Route exact path="/task-overview" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <OfficerTaskOverview />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+
+          <Route exact path="/task-summary" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <TaskSummary />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+
+          {/* <Route exact path="/summary" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSummary />
@@ -105,40 +123,40 @@ const App = () => {
                     }
               /> */}
 
-              <Route exact path="/survey-making" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.O}>
-                          <OfficerSurveyMaking />
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
+          <Route exact path="/survey-making" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <OfficerSurveyMaking />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
-              <Route exact path="/survey-distribution" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.O}>
-                          <OfficerSurveyDistribution />
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
+          <Route exact path="/survey-distribution" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <OfficerSurveyDistribution />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
-              <Route exact path="/survey-stats" element={    
-                    <UserDataProvider>
-                      <PrivateRoute role={role.O}>
-                          <OfficerSurveyStats />
-                      </PrivateRoute>
-                    </UserDataProvider>
-                    }
-              />
+          <Route exact path="/survey-stats" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.O}>
+                <OfficerSurveyStats />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
 
 
-              <Route path="/signup" element={<SignUp/>}/>
-              <Route path="/login" element={<LogIn/>}/>
-              <Route path="/error" element={<ErrorRoute/>}/>
-            </Routes>
-          </AuthProvider>
-        </Router>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/error" element={<ErrorRoute />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   )
 }
 

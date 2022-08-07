@@ -1,0 +1,32 @@
+.grid-layout{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+.select-display-survey{
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.select-display, .select-display-survey{
+    padding: 10px;
+    border: 0.2px solid black;
+    border-radius: 2px;
+    margin: 10px;
+}
+
+.select-display h3, .select-display-survey h3{
+    border: 1px;
+    background-color: var(--secondary-color);
+    margin: -10px -10px 10px -10px;
+    padding: 10px;
+}
+
+.schedule-btns{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px
+}
