@@ -53,7 +53,7 @@ const OfficerSurveyDistribution = () => {
   }
   const renderTeacherList = () => {
     const currentGroup = groups.find(group => group.id === currentGroupId);
-    const teachers = [...currentGroup.teachers];
+    const teachers = currentGroup && [...currentGroup.teachers] || [];
     return allTeachers.filter(teacher => !teachers.includes(teacher.id)).map(teacher => {
       return (
         <div key={teacher.id}>
@@ -146,6 +146,10 @@ const OfficerSurveyDistribution = () => {
         groupId: groupId
       });
       setRefreshGroup(!refreshGroup);
+      if (currentGroupId === groupId) {
+        setCurrentGroup(null);
+        setAddVisible(false);
+      }
     } catch (err) {
       console.log(err);
     }
