@@ -21,7 +21,7 @@ const LogIn = () => {
   //Loading to sign up
   const [loading, setLoading] = useState(false);
 
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
 
   //Get the routes
   const navigate = useNavigate();
@@ -67,8 +67,9 @@ const LogIn = () => {
         </div>
 
         <div className='input-field'>
-          <input id='password' type = {isPasswordShown ? "text" : "password"} ref={passwordRef}  required autoComplete='off'/>
-          <img className='eye-icon' id = 'eye-shown'src= './eye.JPG' alt = ""
+          <input id='password' type = {isPasswordShown ? "password" : "txt"} ref={passwordRef}  required autoComplete='off'/>
+          <img className='eye-icon' id = 'eye-shown'src= {isPasswordShown? './closeEye.JPG': './eye.JPG'} alt = ""
+          onClick={() => setIsPasswordShown(!isPasswordShown)}
           />
           
            <label htmlFor='password'>Password</label>
