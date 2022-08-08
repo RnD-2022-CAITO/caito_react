@@ -16,7 +16,7 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const schoolRef = useRef();
+  const sectorRef = useRef();
 
   //Retrive the sign up from context
   const { signUp, currentUser } = useAuth();
@@ -52,9 +52,9 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
-    if(!schoolRef.current.value.match(/^[A-Za-z() ]+$/)){
+    if(!sectorRef.current.value.match(/^[A-Za-z()\- ]+$/)){
       setLoading(false);
-      return setError('school name should contain alphabetical letters only.');
+      return setError('Sector name should contain alphabetical letters only.');
     }
 
     const user = {
@@ -62,7 +62,6 @@ const SignUp = () => {
       password: passwordRef.current.value,
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value,
-      school: schoolRef.current.value
     }
     try{
       await signUp(user);
@@ -78,6 +77,7 @@ const SignUp = () => {
           return setError('Something is wrong... please try again later');
       }
     }
+
     // Save user information into the database
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const addTeacher = func.httpsCallable('teacher-addTeacher');
@@ -85,7 +85,6 @@ const SignUp = () => {
         const response = await addTeacher({
             firstName: user.firstName,
             lastName: user.lastName,
-            school: user.school,
         });
 
         navigate('/');
@@ -97,6 +96,17 @@ const SignUp = () => {
     }
   }
 
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    const addSchool = func.httpsCallable('teacher-addBioSection');
+    try{
+      const response= addSchool({
+        sectionName: "school",
+        sectionData: sectorRef.current.value,
+    });
+      } catch (e) {
+    console.error(e);
+    }
+  
   return (
   !currentUser ?
   <div className='container'>
@@ -132,20 +142,20 @@ const SignUp = () => {
         </div>
 
         <div className='input-field'> 
-            <input id='school-name' type="text"  placeholder='Graduation school'
-            list="schoollist" ref={schoolRef} required autoComplete='off'
+            <input id='sector-name' type="text"  placeholder='Industry Sector'
+            list="sectorlist" ref={sectorRef} required autoComplete='off'
             onFocus= {(e) => {
               e.target.placeholder = " ";
             }
           }
             onBlur={(e) => {
-              e.target.placeholder = "Graduation school ";
+              e.target.placeholder = "Industry Sector"
             }
           }
           />
-            <label className='control-label' htmlFor='school-name'>School name</label>
-            <datalist id="schoollist">
-                <option>Tribhuvan University(TU)</option>
+            <label className='control-label' htmlFor='sector-name'>Industry Sector</label>
+            <datalist id="sectorlist">
+                <option>Information and technology(IT)</option>
                 <option>Nepal Sanskrit University(NSU)</option>
                 <option>Kathmandu University(KU)</option>
                 <option>Purbanchal University(PU)</option>
@@ -158,7 +168,6 @@ const SignUp = () => {
                 <option>Rajarshi Janak University</option>
             </datalist>
           </div>
-
 
         {error && <p className='error'>{error}</p>}
         <div className='btn-position'>
