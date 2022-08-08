@@ -76,12 +76,12 @@ const AddProfileSection = (props) => {
     }
 
     //show alert
-    const showAlert = () => {
-        let dialog = document.getElementById('dialogAlert');
-        if  ((dialog.style.display = "none")) {
-            dialog.style.display = "block";
-        }
-    }
+    // const showAlert = () => {
+    //     let dialog = document.getElementById('dialogAlert');
+    //     if  ((dialog.style.display = "none")) {
+    //         dialog.style.display = "block";
+    //     }
+    // }
 
     //close the add section dialog when user click exit
     const close = () => {

@@ -78,7 +78,7 @@ const OfficerSummary = () => {
   },[questionID]);
 
   const clickButton = (question) => {
-    navigate('/surveyStats', { state: { question: question} });
+    navigate('/survey-stats', { state: { question: question} });
   }
 
   const searchSurvey = (e) => {
@@ -98,7 +98,7 @@ const OfficerSummary = () => {
     <p>Loading..</p>
     :
     <div>
-        <h1 style={{textAlign:'center'}}>Your Profiling Task</h1>
+        <h1 style={{textAlign:'center'}}>Your Profiling Tasks</h1>
 
         <div className='search-engine'>
           <input id='search-input' type="text" ref={searchRef} placeholder="Type survey name to search"/>
