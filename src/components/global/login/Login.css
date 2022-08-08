@@ -33,3 +33,9 @@
     border: 0.1px solid black;
     border-radius: 5px;
 }
+.eye-icon{
+    position: absolute;
+    height: 20px;
+    margin-right: 3px;
+    margin-top: auto;
+}
