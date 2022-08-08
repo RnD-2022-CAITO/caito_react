@@ -16,7 +16,7 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const sectorRef = useRef();
+  const schoolRef = useRef();
 
   //Retrive the sign up from context
   const { signUp, currentUser } = useAuth();
@@ -52,9 +52,9 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
-    if(!sectorRef.current.value.match(/^[A-Za-z()\- ]+$/)){
+    if(!schoolRef.current.value.match(/^[A-Za-z()\- ]+$/)){
       setLoading(false);
-      return setError('Sector name should contain alphabetical letters only.');
+      return setError('School name should contain alphabetical letters only.');
     }
 
     const user = {
@@ -101,7 +101,7 @@ const SignUp = () => {
     try{
       const response= addSchool({
         sectionName: "school",
-        sectionData: sectorRef.current.value,
+        sectionData: schoolRef.current.value,
     });
       } catch (e) {
     console.error(e);
@@ -142,20 +142,20 @@ const SignUp = () => {
         </div>
 
         <div className='input-field'> 
-            <input id='sector-name' type="text"  placeholder='Industry Sector'
-            list="sectorlist" ref={sectorRef} required autoComplete='off'
+            <input id='school-name' type="text"  placeholder='Graduate School'
+            list="schoollist" ref={schoolRef} required autoComplete='off'
             onFocus= {(e) => {
               e.target.placeholder = " ";
             }
           }
             onBlur={(e) => {
-              e.target.placeholder = "Industry Sector"
+              e.target.placeholder = "Graduate School"
             }
           }
           />
-            <label className='control-label' htmlFor='sector-name'>Industry Sector</label>
-            <datalist id="sectorlist">
-                <option>Information and technology(IT)</option>
+            <label className='control-label' htmlFor='school-name'>Graduate School</label>
+            <datalist id="schoollist">
+                <option>Tribhuvan University(TU)</option>
                 <option>Nepal Sanskrit University(NSU)</option>
                 <option>Kathmandu University(KU)</option>
                 <option>Purbanchal University(PU)</option>

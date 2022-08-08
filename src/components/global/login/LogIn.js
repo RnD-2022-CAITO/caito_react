@@ -21,8 +21,11 @@ const LogIn = () => {
   //Loading to sign up
   const [loading, setLoading] = useState(false);
 
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+
   //Get the routes
   const navigate = useNavigate();
+ 
 
 
   const handleSubmit = async e => {
@@ -49,7 +52,7 @@ const LogIn = () => {
 
       setLoading(false);
   }
-      
+
   return (
   !currentUser ?
   <div className='container'>
@@ -64,7 +67,10 @@ const LogIn = () => {
         </div>
 
         <div className='input-field'>
-          <input id='password' type = 'password' ref={passwordRef} required autoComplete='off'/>
+          <input id='password' type = {isPasswordShown ? "text" : "password"} ref={passwordRef}  required autoComplete='off'/>
+          <img className='eye-icon' id = 'eye-shown'src= './eye.JPG' alt = ""
+          />
+          
            <label htmlFor='password'>Password</label>
         </div>
         <div className='error'>{error}</div>
@@ -86,5 +92,6 @@ const LogIn = () => {
     : <ErrorRoute err='already-login'/>
   )
 }
+
 
 export default LogIn
