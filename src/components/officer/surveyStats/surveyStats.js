@@ -354,8 +354,6 @@ function OfficerSurveyStats() {
   function filterPageResults(condition) {
     let returnAll = (
       <>
-        <h2>Survey Statistics</h2>
-        <p>Teacher's profiling task filling progress</p>
         {teachersID.map((id, index) => renderTeachers(id, index, condition))}
       </>
     );
@@ -376,9 +374,27 @@ function OfficerSurveyStats() {
   ) : (
     <div>
       {initializePage()}
-      <button onClick={() => filterPageResults('all')}>All</button>
-      <button onClick={() => filterPageResults('submitted')}>Submitted</button>
-      <button onClick={() => filterPageResults('unsubmitted')}>Unsubmitted</button>
+      <div style={{paddingLeft:'10px'}}>
+      <h2>Survey Statistics</h2>
+      <p>Teacher's profiling task filling progress</p>
+
+      <label>
+        Filter by &nbsp;
+      </label>
+      <select
+      onChange={e => 
+        {
+          filterPageResults(e.target.value);
+          console.log(e.target.value)
+        }}
+      >
+        <option value="all">All</option>
+        <option value="submitted">Submitted</option>
+        <option value="unsubmitted">Unsubmitted</option>
+
+      </select>
+      </div>
+
       {content}
       <Dialog
         title="Submission"
