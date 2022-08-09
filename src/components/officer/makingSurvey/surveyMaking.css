@@ -2,11 +2,11 @@
     width: 80%;
 }
 
-.survey-buttons{
+/* .survey-buttons{
     display: flex;
     flex-direction: column;
     gap: 3px;
-}
+} */
 
 .survey-sub-btns{
     width: 100%;
@@ -64,7 +64,7 @@
 }
 
 .option-button{
-    margin: 10px;
+    display: flex;
 }
 
 .template{
@@ -72,3 +72,11 @@
     width: 100%;
     justify-content: space-between;
 }
+
+.clear-button{
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

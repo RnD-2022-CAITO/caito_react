@@ -24,6 +24,7 @@ const OfficerSurveyMaking = () => {
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [templateDisplay, setTemplateDisplay] = useState("");
+  const [buttonDisplay, setButtonDisplay] = useState(false);
 
   const [showQuestion, setShowQuestion] = useState(false);
 
@@ -68,26 +69,36 @@ const OfficerSurveyMaking = () => {
     getTemplates();
   }, []);
 
+  const handleClean = event => {
+    //prevent page refresh
+    event.preventDefault(); 
+    // clear all input values in the form
+    setCurrentOption('');
+  };
+
   //Add answer options if the user choses multiple choice answer type
   useEffect(() => {
     if (optionVisible){
       var i = [];
       var num = 0;
+      var x = currentOption
       i.push(<p style={{borderTop:"0.2px solid black", paddingTop:"10px"}}>Add Options (at least 2)<br></br></p>);
       i.push(<p>You've added options:<br></br></p>);
       i.push(optionsConfirmed.map((o) => <p>{++num}. {o}<br></br></p>)); //run this only once each. 
-
-      i.push(<label style={{fontSize:"0.85em"}}>Option:<input type="text" placeholder='Type in your option...' onInput={e => setCurrentOption(e.target.value)} /><br></br></label>);
+      i.push(<label style={{fontSize:"0.85em"}}>Option:<input type="text" placeholder='Type in your option...' value= {currentOption}   onChange={e => setCurrentOption(e.target.value)} onClick={e =>e.target.select()}/><br></br></label>);     
       i.push(
-      <div style={{textAlign:"center"}}>
-      <button className='option-button' onClick={() => addOption(currentOption)}>Add</button>
+      <div className='option-button clear-button'>
+      <button type='submit'  disabled = {x.length <=0 ? !buttonDisplay : buttonDisplay} onClick={() => addOption(currentOption)} >Add</button>
+      <button  disabled = {x.length <=0 ? !buttonDisplay : buttonDisplay} onClick = {handleClean}>Clear</button>
       </div>
       );
       setOptions(i);
     } else{
       setOptions("");
     }
-  }, [optionVisible, optionsConfirmed, currentOption]);
+
+  }, [optionVisible, optionsConfirmed, currentOption, buttonDisplay]);
+
 
   //Show the questions the user has entered
   useEffect(() => {
@@ -122,8 +133,8 @@ const OfficerSurveyMaking = () => {
     i = currentOption;
     if (i.length > 0){
       setOptionsConfirmed(oldArray => [...oldArray, currentOption]);
-    }else{
-      alert("Option cannot be blank.");
+    }
+    else{
     }
   };
 
@@ -334,7 +345,8 @@ const OfficerSurveyMaking = () => {
               type="radio"
               value="checkbox"
               checked={questionType === "checkbox"}
-              onChange={e => {setQuestionType(e.target.value); setOptionVisible(true)}}
+              onChange={e => {setQuestionType(e.target.value); 
+              setOptionVisible(true)}}
             />
             Checkbox
           </label>
@@ -351,7 +363,7 @@ const OfficerSurveyMaking = () => {
         <label>
           {options}
         </label>
-        <div className='survey-buttons'>          
+        <div style = {{textAlign:"center"}}  className='survey-buttons'>          
             <button className='survey-sub-btns' onClick={() => addQuestion()}> {question === '' ? 'Create question' : 'Save question'}</button>
         </div>
 
