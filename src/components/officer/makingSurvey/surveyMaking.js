@@ -171,7 +171,7 @@ const OfficerSurveyMaking = () => {
   }
 
   useEffect(() => {
-    if(qType === 'number' || qType === 'radio'){
+    if(qType === 'number' || qType === 'text'){
       setOptionsQ("");
     }
     
@@ -302,7 +302,6 @@ const OfficerSurveyMaking = () => {
       return setEditErr("Options cannot be blank");
     }
 
-    console.log('clck')
     setOptionsQ(oldArray => [...oldArray, currentOptionQ]);
 
     //clear the option field
