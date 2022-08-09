@@ -76,3 +76,9 @@
 .dialog-box{
     padding: 10px;
 }
+
+.options-edit{
+    padding-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+}
