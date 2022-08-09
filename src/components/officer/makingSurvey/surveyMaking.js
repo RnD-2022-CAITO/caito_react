@@ -5,6 +5,7 @@ import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
+import { clear } from '@testing-library/user-event/dist/clear';
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const OfficerSurveyMaking = () => {
@@ -14,7 +15,7 @@ const OfficerSurveyMaking = () => {
 
   //Set title for the survey
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
   const [question, setQuestion] = useState("");
   const [questionType, setQuestionType] = useState("");
   const [optionVisible, setOptionVisible] = useState(false);
@@ -23,6 +24,8 @@ const OfficerSurveyMaking = () => {
   const [currentOption, setCurrentOption] = useState("");
   const [optionsConfirmed, setOptionsConfirmed] = useState([]);
   const [questionsConfirmed, setQuestionsConfirmed] = useState([]);
+
+  // eslint-disable-next-line
   const [templates, setTemplates] = useState([]);
   const [templateDisplay, setTemplateDisplay] = useState("");
 
@@ -30,6 +33,16 @@ const OfficerSurveyMaking = () => {
 
   //Edit question
   const [editBtn, setEditBtn] = useState(false);
+
+  //Display questions onto the dialog
+  const [dialogDisplay, setDialogDisplay] = useState();
+  const [editQ, setEditQ] = useState("");
+  const [qType, setQType] = useState("");
+  const [index, setIndex] = useState(0);
+  const [optionsQ, setOptionsQ] = useState("");
+  const [currentOptionQ, setCurrentOptionQ] = useState("");
+
+  const [editErr, setEditErr] = useState("");
 
   //Validate inputs
   const [error, setError] = useState("");
@@ -70,6 +83,8 @@ const OfficerSurveyMaking = () => {
 
   useEffect(() => {
     getTemplates();
+
+  // eslint-disable-next-line
   }, []);
 
   //Add answer options if the user choses multiple choice answer type
@@ -129,14 +144,190 @@ const OfficerSurveyMaking = () => {
       
       </div>
       ));
+  // eslint-disable-next-line
   }, [questionsConfirmed]);
 
   const editQuestion = (o, index) => {
-    console.log('clicked on edit');
+    setDialogDisplay([]);
 
+    console.log(o);
+
+    //Close the dialog
     setEditBtn(true);
-    
+
+    //Copy the question into the editQ var
+    setEditQ(o.question);
+    setQType(o.type);
+
+    if(o.type === "checkbox" || o.type === "radio"){
+      setOptionsQ(o.options);
+    }
+
+    //Set the edit index
+    setIndex(index);
+
+    //Render component
+    renderDialog(editQ, qType, index, optionsQ, currentOptionQ);
   }
+
+  useEffect(() => {
+    if(qType === 'number' || qType === 'radio'){
+      setOptionsQ("");
+    }
+    
+    renderDialog(editQ, qType, index, optionsQ, currentOptionQ)
+
+    if(editBtn === false){
+      clearDialog()
+    }
+
+  // eslint-disable-next-line
+  },[editQ, qType, editErr, currentOptionQ, optionsQ, editBtn])
+
+  const renderDialog = (q, qType, index, optionsQ, currentOptionQ) => {
+    setDialogDisplay(
+      <div className='dialog-box'>
+      <div className='input-field'>
+        <input type="text" value={q} //this value needs to be updated.
+        onChange={e => {
+          setEditQ(e.target.value);
+        }}/>
+        <label>
+          Question
+        </label>
+      </div>
+  
+      <div className='input-field'>    
+
+        <select       
+          value={qType}     
+          onChange={e => 
+              {
+                setQType(e.target.value);
+
+                if(e.target.value === 'text' || e.target.value === 'number'){
+                  setOptionsQ("");
+                }
+              }
+          }
+        >
+          <option value="" disabled>Select an answer type</option>
+          <option value="text">Text</option>
+          <option value="number">Number</option>
+          <option value="checkbox">Checkbox</option>
+          <option value="radio">Radio</option>
+
+        </select>
+  
+        <label>
+              Type of Answer:
+        </label>
+      </div> 
+
+      {optionsQ !== "" &&
+        optionsQ.map((o, index) => 
+          <div className='options-edit'>
+         
+          <label>
+            <input type={qType}/>
+            {o}
+          </label>
+
+          <button className='warning-btn' onClick={() => {removeOption(o, index)}}>X</button>
+          </div>)
+      }
+
+      {(qType === "checkbox" || qType === "radio") && 
+      <div>
+        <input placeholder='Add new option...' value={currentOptionQ} 
+        onChange={e => {setCurrentOptionQ(e.target.value)}}/>
+
+        <button onClick={addNewOptionEdit}>Add</button>
+        
+      </div>}
+      
+      {editErr && <p className='error'>{editErr}</p>}
+  
+      <div style={{textAlign:'center', marginTop:'30px'}}>
+        <button onClick={() => confirmEdit(index)}>Confirm</button>
+        <button className='warning-btn' onClick={() => {
+          setEditBtn(false)
+          clearDialog()
+          }
+          }>Cancel</button>
+      </div>
+      </div>
+      )
+  }
+
+  //Confirm all the edits
+  const confirmEdit = (index) =>{
+    setEditErr("");
+
+    if(editQ === ""){
+      return setEditErr("Question cannot be blank.");
+    }
+
+    if(qType === "radio" || qType === "checkbox"){
+      if(optionsQ.length < 2){
+        return setEditErr("Minimum 2 options for this type of question");
+      }
+    } 
+
+    //Copy the array
+    var questionArr = [...questionsConfirmed];
+
+    //Copy the new question to the object
+    questionArr[index].question = editQ;
+
+    questionArr[index].type = qType;
+    
+    if(questionArr[index].type === "radio" || questionArr[index].type === "checkbox")
+    {
+      questionArr[index].options = optionsQ;
+    }
+
+    //Update the new question
+    setQuestionsConfirmed(questionArr);
+
+    //Close dialog
+    setEditBtn(false);
+  
+    clearDialog();
+  }
+
+  //Add new question in the edit
+  const addNewOptionEdit = () => {
+    if(currentOptionQ === ""){
+      return setEditErr("Options cannot be blank");
+    }
+
+    console.log('clck')
+    setOptionsQ(oldArray => [...oldArray, currentOptionQ]);
+
+    //clear the option field
+    setCurrentOptionQ("");
+    setEditErr("")
+  }
+
+  //Remove option from multiple choice question type
+  const removeOption = (o, i) => {
+    console.log(o, i);
+
+    setOptionsQ((q) => q.filter((_, index) => index !== i));
+  }
+
+  //Clear dialog 
+  const clearDialog = () => {
+
+    setQType("");
+    setIndex(0);
+    setOptionsQ("");
+    setCurrentOptionQ("");
+    setEditErr("");
+  
+  }
+  
 
   const deleteQuestion = (o, i) => {
     //remove question from the array
@@ -188,6 +379,7 @@ const OfficerSurveyMaking = () => {
       setError("");
     }
   };
+  
 
   //Validate inputs and send to the cloud functions if all inputs are valid
   const addCurrentSurvey = async () => {
@@ -225,7 +417,7 @@ const OfficerSurveyMaking = () => {
   //The user doesn't want to save the form
   const refreshForm = () => {
     setTitle("");
-    setDescription("");
+    // setDescription("");
     setQuestionsConfirmed([]);
     setQuestion("");
     setQuestionType("");
@@ -235,6 +427,7 @@ const OfficerSurveyMaking = () => {
     setOptionsConfirmed([]);
     setError("");
     setShowQuestion(false);
+
   }
 
   //TODO
@@ -252,7 +445,10 @@ const OfficerSurveyMaking = () => {
       <select 
       onChange={e => {
       currentTargetValue = e.target.value;
-      {templates.map((template) => {
+
+      // eslint-disable-next-line
+      templates.map((template) => {
+
         if (currentTargetValue !== "Default"){
           setQuestionsConfirmed([]);
           setQuestionsConfirmed([...template.at(currentTargetValue).questions]);
@@ -265,13 +461,19 @@ const OfficerSurveyMaking = () => {
           setTitle("");
         }
       }
-      )}
+      )
+
       }} value={currentTargetValue}>
       <option key={0} value="">Default</option>
-    {templates.map((template) => 
+    {
+    // eslint-disable-next-line
+    templates.map((template) => 
+      // eslint-disable-next-line
       {template.map((i, index) => {
         options.push(<option key={`template ${index}`} value={index}>{i.title}</option>);
-      })}
+      })
+      }
+      
     )}
     {options}
     </select>
@@ -401,10 +603,7 @@ const OfficerSurveyMaking = () => {
                 onClose={() => setEditBtn(false)}
     >
                 <div>
-                    <p>
-                        Sample Dialog Content to display!
-                    </p>
-  
+                        {dialogDisplay}
                 </div>
     </Dialog>
     </>
