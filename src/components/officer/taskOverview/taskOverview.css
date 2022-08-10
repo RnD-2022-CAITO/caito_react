@@ -1,13 +1,4 @@
-.grid-layout{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
 
-}
-
-.select-display-survey{
-    grid-row-start: 1;
-    grid-row-end: 3;
-}
 
 .select-display, .select-display-survey{
     padding: 10px;

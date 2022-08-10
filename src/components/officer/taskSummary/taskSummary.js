@@ -6,7 +6,7 @@ import 'firebase/compat/app-check';
 import './taskSummary.css';
 import ReactDOMServer from 'react-dom/server';
 import { PieChart, Pie, Tooltip, Sector } from 'recharts';
-import {serverTimestamp} from 'firebase/firestore'
+import { serverTimestamp } from 'firebase/firestore'
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
     const { state } = useLocation();
@@ -49,27 +49,24 @@ const TaskSummary = () => {
     }, []);
 
     useEffect(() => {
+
         const retrieveSurvey = async () => {
             app.appCheck().activate(site_key, true);
             const getSurvey = func.httpsCallable('teacher-getAssignedSurvey_Questions');
             try {
                 const response = await getSurvey({
                     questionID: question.id,
-
                 });
 
                 if (response.data == null) {
                     setFound(false);
                 } else {
+                    setCreatedDate(new Date());
                     console.log(response.data.questions);
                     console.log(response.data.questions[0].options);
-                    //console.log(response.data.createdDate.toDate().toString());
-
                     setTitle(response.data.title);
                     setQuestions(response.data.questions);
                     setAnswers(response.data.questions);
-                    
-
                 }
 
             } catch (e) {
@@ -146,12 +143,9 @@ const TaskSummary = () => {
                 <Sector>endAngle={endAngle}
                     fill={fill}
                 </Sector>
-
             </g>
-
         )
     }
-
 
     // UI
     function renderAnswers(o, t, index) {
@@ -247,7 +241,6 @@ const TaskSummary = () => {
                     <h3>Completion rate</h3>
                     <div style={{ textAlign: 'center' }}>
                         {renderQuestion(question)}
-
                     </div>
                 </div>
 
@@ -266,14 +259,11 @@ const TaskSummary = () => {
                                             <p for={o}>{o}</p>
                                         </div>
 
-
                                     )}
 
                                 </div>)
                             }
                         </div>
-
-
                     </div>
 
                 </div>
@@ -286,8 +276,8 @@ const TaskSummary = () => {
         const complete = question.complete;
         const total = question.total;
         const uncomplete = total - complete;
-
-
+       // createdDate.setDate(createdDate.getDate());
+      //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
         const data = [
             { name: 'Uncomplete', value: uncomplete },
             { name: 'Complete', value: complete }
@@ -310,16 +300,13 @@ const TaskSummary = () => {
                     <Tooltip />
                 </PieChart>
                 <div style={{ textAlign: 'right' }}>
-                    <p>Scheduled date: {123}</p>
+                    <p>Scheduled date: {createdDate.getFullYear() + '-' + (createdDate.getMonth() + 1) + '-' + createdDate.getDate()}</p>
                     <p>Total sent out: {question.total}</p>
                     <p>Received: {question.complete}</p>
                 </div>
-
             </div>
         </div>;
     }
-
-
 }
 export default TaskSummary;
 
