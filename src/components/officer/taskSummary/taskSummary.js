@@ -248,7 +248,6 @@ const TaskSummary = () => {
                     <h3>Task Questions</h3>
                     <div style={{ textAlign: 'center' }}>
                         <div style={{ textAlign: 'left' }}>
-
                             {questions.map((q, index) =>
                                 <div className='sur-question' key={index}>
                                     <label>Question {index + 1}. {q.question}</label>
@@ -258,17 +257,12 @@ const TaskSummary = () => {
                                         <div>
                                             <p for={o}>{o}</p>
                                         </div>
-
                                     )}
-
                                 </div>)
                             }
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
     )
 
@@ -276,8 +270,8 @@ const TaskSummary = () => {
         const complete = question.complete;
         const total = question.total;
         const uncomplete = total - complete;
-       // createdDate.setDate(createdDate.getDate());
-      //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
+        // createdDate.setDate(createdDate.getDate());；。。。。。。。。。。。。。。。。。。。l
+        //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
         const data = [
             { name: 'Uncomplete', value: uncomplete },
             { name: 'Complete', value: complete }
