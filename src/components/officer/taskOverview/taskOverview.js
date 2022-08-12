@@ -98,7 +98,7 @@ const OfficerTaskOverview = () => {
                 <div className='select-display'>
                     <h3>Unscheduled tasks</h3>
                     <div style={{ textAlign: 'left' }}>
-                    {questionID.map(question => (
+                        {questionID.map(question => (
                             unscheduledTask(question, clickButton)
                         ))}
                     </div>
@@ -128,32 +128,32 @@ const OfficerTaskOverview = () => {
 export default OfficerTaskOverview
 
 function scheduledTask(question, clickButton) {
-    if(question.total!=0){
+    if (question.total != 0) {
         return <div key={question.id}>
-        <div className='summary-view'>
-        <h4>{question.title}</h4>
-        <p>Question ID: {question.id}</p>
-        <p>----------------------------------------------------------------</p>
-        <p>Total sent out: {question.total}</p>
-        <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
-        <button className='summary-btn' style={{marginRight:"auto"}} onClick={() => clickButton(question)}>Details</button>
-       </div>   
-           </div>;
+            <div className='summary-view'>
+                <h4>{question.title}</h4>
+                <p>Question ID: {question.id}</p>
+                <p>----------------------------------------------------------------</p>
+                <p>Total sent out: {question.total}</p>
+                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
+            </div>
+        </div>;
     }
-  
+
 }
 function unscheduledTask(question, clickButton) {
-    if(question.total==0){
+    if (question.total == 0) {
         return <div key={question.id}>
-        <div className='summary-view'>
-        <h4>{question.title}</h4>
-        <p>Question ID: {question.id}</p>
-        <p>----------------------------------------------------------------</p>
-        <p>Total sent out: {question.total}</p>
-        <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
-        <button className='summary-btn' style={{marginRight:"auto"}} onClick={() => clickButton(question)}>Details</button>
-       </div>   
-           </div>;
+            <div className='summary-view'>
+                <h4>{question.title}</h4>
+                <p>Question ID: {question.id}</p>
+                <p>----------------------------------------------------------------</p>
+                <p>Total sent out: {question.total}</p>
+                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
+            </div>
+        </div>;
     }
-  
+
 }
