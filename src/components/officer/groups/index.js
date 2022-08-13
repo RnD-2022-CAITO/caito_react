@@ -74,6 +74,9 @@ function Groups() {
   }
   const renderTeacherList = () => {
     const currentGroup = groups.find(group => group.id === currentGroupId);
+    if (!currentGroup) {
+      return <></>
+    }
     const teachers = [...currentGroup.teachers];
     return allTeachers.filter(teacher => !teachers.includes(teacher.id)).map(teacher => {
       return (
@@ -98,7 +101,7 @@ function Groups() {
     })
   }
   const renderCurrentGroup = () => {
-    if (currentGroup === null) {
+    if (!currentGroup) {
       return <></>;
     }
     const teachers = currentGroup.teachers;
@@ -173,6 +176,9 @@ function Groups() {
       });
       setRefreshGroup(!refreshGroup);
       setLoading(false);
+      if (groupId === currentGroupId) {
+        setCurrentGroup(null);
+      }
     } catch (err) {
       console.log(err);
     }
