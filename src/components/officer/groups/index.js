@@ -45,6 +45,18 @@ function Groups() {
       console.log(err);
     }
   }
+  const createTargetGroup = async () => {
+    //Redirect the user to the create group page
+    const group_name = window.prompt("Enter group name: ");
+    if (group_name) {
+      const createGroup = func.httpsCallable('group-createGroup');
+      await createGroup({
+        name: group_name
+      });
+      setRefreshGroup(!refreshGroup);
+      return;
+    }
+  }
   const handleGroupTeacher = async () => {
     const groupTeachers = func.httpsCallable('group-groupTeacher');
     setLoading(true);
@@ -200,7 +212,12 @@ function Groups() {
   return (
     <div>
       <h1 style={{textAlign:'center'}}>Groups</h1>
-      {loading && <h2 style={{width: '50%', margin: '10px auto'}}>Loading...</h2>}
+      <div style={{height: '30px'}}>
+        {loading && <h2 style={{width: '50%', margin: '10px auto'}}>Loading...</h2>}
+      </div>
+      <div style={{width: '50%', margin: 'auto'}}>
+        <button onClick={createTargetGroup} style={{margin: '10px 0'}}>Create Group</button>
+      </div>
       <div style={{width: '50%', margin: 'auto'}}>{renderCurrentGroup()}</div>
       <div style={{width: '50%', margin: 'auto'}}>
         {renderGroups()}
