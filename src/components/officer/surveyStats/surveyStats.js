@@ -104,21 +104,12 @@ function OfficerSurveyStats() {
     if (condition === 'all') {
       return (
         <div key={index}>
-          <div className="summary-view">
-            <h4>
-              {index + 1}
-              .
-              {teacher.firstName}
-              {' '}
-              {teacher.lastName}
-            </h4>
             {answers.map(
               (
                 o,
                 index, // list out all answer copies from the teacher
               ) => renderAnswers(o, teacher, index),
             )}
-          </div>
         </div>
       );
     }
@@ -133,21 +124,12 @@ function OfficerSurveyStats() {
       if (filteredArr.length > 0) {
         content = (
           <div key={index}>
-            <div className="summary-view">
-              <h4>
-                {index + 1}
-                .
-                {teacher.firstName}
-                {' '}
-                {teacher.lastName}
-              </h4>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
                 ) => renderAnswers(o, teacher, index),
               )}
-            </div>
           </div>
         );
       }
@@ -164,21 +146,12 @@ function OfficerSurveyStats() {
       if (filteredArr.length > 0) {
         content = (
           <div key={index}>
-            <div className="summary-view">
-              <h4>
-                {index + 1}
-                .
-                {teacher.firstName}
-                {' '}
-                {teacher.lastName}
-              </h4>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
                 ) => renderAnswers(o, teacher, index),
               )}
-            </div>
           </div>
         );
       }
@@ -190,22 +163,31 @@ function OfficerSurveyStats() {
   function renderAnswers(o, t, index) {
     if (o.teacherID === t.teacherID) {
       return (
-        <div key={index + t}>
-          <div>
-            <h4>
-              Total questions:
-              {question.questions.length}
-            </h4>
-            <h4>
-              Total answered questions:
-              {o.answers.length}
-            </h4>
-            <h4>
-              Submitted?
-              {o.isSubmitted ? 'Yes' : 'No'}
-            </h4>
-            {timeline(question, o)}
-            {setButton(o.answers, o.teacherID, o.id, o.isSubmitted)}
+        <div className="summary-view">
+          <h4>
+            {index + 1}
+            .
+            {t.firstName}
+            {' '}
+            {t.lastName}
+          </h4>
+          <div key={index + t}>
+            <div>
+              <h4>
+                Total questions:
+                {question.questions.length}
+              </h4>
+              <h4>
+                Total answered questions:
+                {o.answers.length}
+              </h4>
+              <h4>
+                Submitted?
+                {o.isSubmitted ? 'Yes' : 'No'}
+              </h4>
+              {timeline(question, o)}
+              {setButton(o.answers, o.teacherID, o.id, o.isSubmitted)}
+            </div>
           </div>
         </div>
       );
