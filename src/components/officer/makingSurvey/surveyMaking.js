@@ -129,7 +129,7 @@ const OfficerSurveyMaking = () => {
         <div key={`mutiple + ${i} + ${index}`}>
         <label>
         <input type={o.type} />
-        {i}
+        &nbsp; {i}
         </label>
         </div>)
         }
@@ -338,7 +338,7 @@ const OfficerSurveyMaking = () => {
     if (i.length > 0){
       setOptionsConfirmed(oldArray => [...oldArray, currentOption]);
     }else{
-      alert("Option cannot be blank.");
+      return setError("Option cannot be blank.");
     }
   };
 
@@ -346,13 +346,11 @@ const OfficerSurveyMaking = () => {
     var pass = true;
     if (questionType === "checkbox" || questionType === "radio"){
       if (optionsConfirmed.length < 2){
-        alert("Minimum 2 options.");
-        pass = false;
+        return setError("Minimum 2 options.");
       }
     }
     if (question.length < 1){
-      alert("Question cannot be blank.");
-      pass = false;
+      return setError("Question cannot be blank.");
     }
 
     if(questionType === ''){
@@ -496,7 +494,7 @@ const OfficerSurveyMaking = () => {
             value={title}
             onInput={e => setTitle(e.target.value)} />
             <label>
-              Profiling Task Title
+              Task Title
             </label>
         </div>
 
@@ -534,10 +532,7 @@ const OfficerSurveyMaking = () => {
             Question
           </label>
         </div>
-
-        <label>
-          Type of Answer:
-        </label>
+        <div className='input-field'>
         <select     
           value={questionType}        
           onChange={e => 
@@ -557,6 +552,11 @@ const OfficerSurveyMaking = () => {
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
         </select>
+
+        <label>
+          Type of Answer: &nbsp;
+        </label>
+        </div>
         <label>
           {options}
         </label>

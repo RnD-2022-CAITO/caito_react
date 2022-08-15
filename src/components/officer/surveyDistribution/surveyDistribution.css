@@ -9,6 +9,15 @@
     grid-column-start: 2;
 }
 
+@media screen and (max-width: 700px) {
+    .grid-layout{
+        display: block
+    }
+    .select-display-survey{
+        display: block;
+    }
+}
+
 .select-display, .select-display-survey{
     padding: 10px;
     border: 0.2px solid black;

@@ -237,7 +237,7 @@ const Survey = () => {
     <form className='survey' onSubmit={e => sendSurvey(e, true)}> 
        {!formLoading ? 
               <>
-              <h1>Survey: {surveyTitle}</h1>
+              <h1>{surveyTitle}</h1>
                {questions.map((q, index) => 
                <div className='sur-question' key={index}>
                <label>{index+1}. {q.question}</label>
@@ -260,6 +260,7 @@ const Survey = () => {
                }
                        
                 <button disabled={loading} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
+                <br/>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
               </>
        : <p>Loading...</p>}

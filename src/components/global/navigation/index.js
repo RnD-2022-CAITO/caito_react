@@ -104,12 +104,14 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
             <nav className='nav'>
-                <ul className='nav__wrapper'>
-                    <button class="nav__toggle" aria-expanded="false" type="button"
+                <button class="nav__toggle" aria-expanded="false" type="button"
                     onClick={openNavMenu}
                     >
                         <FiMenu />
-                    </button>
+                </button>
+
+                <ul className='nav__wrapper'>
+
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
                         home

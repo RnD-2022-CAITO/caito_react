@@ -4,6 +4,8 @@ import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
+import { Dialog } from '@blueprintjs/core';
+import '@blueprintjs/core/lib/css/blueprint.css';
 
 const OfficerSurveyDistribution = () => {
 // 1. select existing survey(s): get all existing surveys created by logged in officer
@@ -22,8 +24,15 @@ const OfficerSurveyDistribution = () => {
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
-  const navigate = useNavigate();
 
+  //Display dialog error message
+  const [error, setError] = useState("");
+
+  //Display confirmation message
+  const [confirmation, setConfirmation] = useState("");
+
+  //Navigate through another page
+  const navigate = useNavigate();
 
   async function assignTeachers(){
     let error = 0;
@@ -44,13 +53,11 @@ const OfficerSurveyDistribution = () => {
       })
       
 
-      alert('Successfully sent out the invitation to fill in the task!');
-
-      navigate('/');
+      setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     }
     else{
-      alert("Make sure there's at least one survey and one teacher checked. Date must be at least from today.");
+      setError("Make sure there's at least one survey and one teacher checked and date must be at least from today.");
     }
   }
 
@@ -129,6 +136,7 @@ const OfficerSurveyDistribution = () => {
     setSelectedTeachers([]);
     setScheduledDate(today.substring(0,10));
   }
+
 
   return (
     <>
@@ -235,6 +243,30 @@ const OfficerSurveyDistribution = () => {
 
         <button className='warning-btn' onClick={clearSchedule}>Discard changes</button>        
     </div>
+
+    {error!=="" && 
+    <Dialog
+      className='dialog'
+      title= "Unable to schedule survey"
+      isOpen={error !=="" ? true : false}
+      onClose={() => setError("")}
+    >
+      <p style={{padding:'10px'}}>
+       {error}
+      </p>
+    </Dialog>}
+
+    {confirmation!=="" && 
+    <Dialog
+      className='dialog'
+      title= "Confirmation"
+      isOpen={confirmation !=="" ? true : false}
+      onClose={() => navigate('/')}
+    >
+      <p style={{padding:'10px'}}>
+       {confirmation}
+      </p>
+    </Dialog>}
     </>
   )
 }
