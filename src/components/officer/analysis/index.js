@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import app, {func} from '../../../utils/firebase';
 import { db } from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
 
 import "./Analysis.css"
 
@@ -95,7 +96,9 @@ const OfficerSummary = () => {
 
   return (
     loading ? 
-    <p>Loading..</p>
+    <div>
+      <CommonLoading color='#fff' />
+    </div>
     :
     <div>
         <h1 style={{textAlign:'center'}}>Your Profiling Tasks</h1>

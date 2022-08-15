@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
 
 import "./teacherLanding.css";
 
@@ -95,7 +96,9 @@ const TeacherLanding = () => {
     return (
         <div>
            {loading ? 
-           <p style={{textAlign:"center"}}>Loading...</p> : 
+            <div>
+                <CommonLoading color='#fff' />
+            </div> : 
            renderSurveys()}
         </div>
 
