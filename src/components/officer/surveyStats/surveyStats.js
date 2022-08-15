@@ -35,6 +35,8 @@ function OfficerSurveyStats() {
   const [dialogContent, setDialogContent] = useState([]);
   const [pages, setPages] = useState([]);
   let currentPageIndex = 0;
+  let index = 1;
+  let moreIndex = 0;
 
   useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -93,7 +95,7 @@ function OfficerSurveyStats() {
   }
 
   // UI
-  function renderTeachers(id, index, condition) {
+  function renderTeachers(id, condition) {
     let teacher = '';
     teachers.map((o) => {
       if (o.teacherID === id) {
@@ -103,12 +105,11 @@ function OfficerSurveyStats() {
 
     if (condition === 'all') {
       return (
-        <div key={index}>
+        <div key={"all:"+index+"v:"+moreIndex}>
             {answers.map(
               (
-                o,
-                index, // list out all answer copies from the teacher
-              ) => renderAnswers(o, teacher, index),
+                o// list out all answer copies from the teacher
+              ) => renderAnswers(o, teacher, index), moreIndex++
             )}
         </div>
       );
@@ -123,12 +124,12 @@ function OfficerSurveyStats() {
       });
       if (filteredArr.length > 0) {
         content = (
-          <div key={index}>
+          <div key={"submitted:"+index+"v:"+moreIndex}>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
-                ) => renderAnswers(o, teacher, index),
+                ) => renderAnswers(o, teacher, index), moreIndex++
               )}
           </div>
         );
@@ -145,12 +146,12 @@ function OfficerSurveyStats() {
       });
       if (filteredArr.length > 0) {
         content = (
-          <div key={index}>
+          <div key={"unsubmitted:" + index+"v:"+moreIndex}>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
-                ) => renderAnswers(o, teacher, index),
+                ) => renderAnswers(o, teacher, index), moreIndex++
               )}
           </div>
         );
@@ -160,18 +161,18 @@ function OfficerSurveyStats() {
   }
 
   // UI
-  function renderAnswers(o, t, index) {
+  function renderAnswers(o, t) {
     if (o.teacherID === t.teacherID) {
       return (
         <div className="summary-view">
           <h4>
-            {index + 1}
+            {index++}
             .
             {t.firstName}
             {' '}
             {t.lastName}
           </h4>
-          <div key={index + t}>
+          <div key={index + t.firstName}>
             <div>
               <h4>
                 Total questions:
@@ -334,9 +335,11 @@ function OfficerSurveyStats() {
 
   // UI
   function filterPageResults(condition) {
+    index = 1;
     let returnAll = (
       <>
-        {teachersID.map((id, index) => renderTeachers(id, index, condition))}
+        {teachersID
+        .map((id) => renderTeachers(id, condition))}
       </>
     );
     if (!ReactDOMServer.renderToString(returnAll).includes('timeline-progress', 0)) {
