@@ -3,6 +3,9 @@
     padding: 20px;
     border: 0.1px solid black;
     border-radius: 5px;
+
+    background-color: var(--tertiary-color);
+
 }
 
 .sign-up-form h2{

@@ -5,8 +5,7 @@ import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
-import { clear } from '@testing-library/user-event/dist/clear';
-// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+
 
 const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
@@ -429,11 +428,6 @@ const OfficerSurveyMaking = () => {
 
   }
 
-  //TODO
-  const saveDraft = () => {
-    alert("This feature is being developed...");
-  }
-
   //UI
   const templateDropdown = () => {
     let options = [];
@@ -575,7 +569,6 @@ const OfficerSurveyMaking = () => {
 
       <div className='select-display create-btns'> 
           <button style={{backgroundColor:'var(--warning)'}} onClick={refreshForm}>Discard</button>
-          <button style={{backgroundColor:'var(--secondary-color)'}} onClick={saveDraft}>Save draft</button>
           <button  disabled={loading} onClick={()=> addCurrentSurvey()}>Create task</button>
       </div>
     </div>
@@ -597,6 +590,7 @@ const OfficerSurveyMaking = () => {
     }
     
     <Dialog
+                className="dialog"
                 title="Edit question"
                 isOpen={editBtn}
                 onClose={() => setEditBtn(false)}

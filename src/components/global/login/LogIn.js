@@ -3,7 +3,7 @@ import {React, useRef, useState} from 'react'
 import { useAuth } from '../auth/Authentication'
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorRoute from '../routes/ErrorRoute';
-import {ReactComponent as Logo} from '../../../assets/logo.svg';
+import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 
 import './Login.css'
 
