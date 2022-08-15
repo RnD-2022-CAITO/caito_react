@@ -51,7 +51,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/survey" element={    
+              <Route exact path="/survey/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.T}>
                           <Survey/>
@@ -123,7 +123,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/survey-stats" element={    
+              <Route exact path="/survey-stats/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyStats />
