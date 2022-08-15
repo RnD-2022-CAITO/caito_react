@@ -3,7 +3,7 @@ import {React, useRef, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
-import {ReactComponent as Logo} from '../../../assets/logo.svg';
+import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import app, {func, auth} from '../../../utils/firebase'
 
 

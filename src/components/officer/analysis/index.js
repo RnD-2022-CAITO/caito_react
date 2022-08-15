@@ -134,6 +134,8 @@ function renderQuestion(question, clickButton) {
   return <div key={question.id}>
     <div className='summary-view'>
       <h3>{question.title}</h3>
+      <hr/>
+      <br/>
       <h4>Question ID: {question.id}</h4>
       <p>Total surveys sent out: {question.total}</p>
       <p>Total teachers submitted: {question.complete}</p>
