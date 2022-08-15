@@ -26,9 +26,6 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
-import SurveyDistributionToGroups from "./components/officer/surveyDistributionToGroups";
-import Groups from "./components/officer/groups";
-
 
 //Roles to access paths
 const role = {
@@ -54,16 +51,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/groups" element={
-                <PrivateLandingRoute>
-                  <UserDataProvider>
-                    <Groups />
-                  </UserDataProvider>
-                </PrivateLandingRoute>
-              }
-              />
-
-              <Route exact path="/survey" element={    
+              <Route exact path="/survey/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.T}>
                           <Survey/>
@@ -135,16 +123,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/survey-distribution-group" element={
-                <UserDataProvider>
-                  <PrivateRoute role={role.O}>
-                    <SurveyDistributionToGroups />
-                  </PrivateRoute>
-                </UserDataProvider>
-              }
-              />
-
-              <Route exact path="/survey-stats" element={    
+              <Route exact path="/survey-stats/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyStats />

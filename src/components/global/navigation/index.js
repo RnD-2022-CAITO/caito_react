@@ -5,7 +5,7 @@ import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
-import {FiLogOut} from 'react-icons/fi';
+import {FiLogOut, FiMenu} from 'react-icons/fi';
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
@@ -54,76 +54,89 @@ const NavBar = () => {
     }, [currentUser])
 
 
-    const TeacherNav = () => (
-        <div className='navigation-bar'>
-        <div style={{textAlign:'center'}}>
-            <button onClick={navigateHome}>
-                <Logo className='brand-logo'/>
-            </button>
-        </div>
-        <div className='nav'>
-            <ul>
-                <li>
-                    <NavLink activeclassname='active' to="/">
-                    home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/profile">
-                    profile
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/downLoad/downLoadSurvey">
-                    download
-                    </NavLink>
-                </li>
-                <li>
-                    <button className='logout-btn-nav' onClick={handleLogOut}>
-                            <FiLogOut/>
-                    </button>
-                </li>
-            </ul>
-        </div>
-        </div>
-    )
+    //Open the navigation menu
+    const openNavMenu = () => {
+ 
+    }
 
-    const OfficerNav = () => (
-        <div className='navigation-bar'>
-            <div style={{textAlign:'center'}}>
-                <button onClick={navigateHome}>
+    const TeacherNav = () => (
+        <div className='wrapper site-header__wrapper'>
+            <button className='brand' onClick={navigateHome}>
                     <Logo className='brand-logo'/>
-                </button>
-            </div>
-            <div className='nav'>
-                <ul>
-                    <li>
+            </button>
+
+            <button class="nav__toggle" aria-expanded="false" type="button"
+            onClick={openNavMenu}
+            >
+                <FiMenu />
+            </button>
+
+            <nav className='nav'>
+                <ul className='nav__wrapper'>
+                    <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
                         home
                         </NavLink>
                     </li>
-                    <li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/profile">
+                        profile
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/downLoad/downLoadSurvey">
+                        download
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <button className='logout-btn-nav' onClick={handleLogOut}>
+                                <FiLogOut/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    )
+
+    const OfficerNav = () => (
+        <div className='wrapper site-header__wrapper'>
+            <button className='brand' onClick={navigateHome}>
+                    <Logo className='brand-logo'/>
+            </button>
+            <nav className='nav'>
+                <ul className='nav__wrapper'>
+                    <button class="nav__toggle" aria-expanded="false" type="button"
+                    onClick={openNavMenu}
+                    >
+                        <FiMenu />
+                    </button>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/">
+                        home
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-making">
                         create survey
                         </NavLink>
                     </li>
-                    <li>
+                    <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-distribution">
                         distribute survey
                         </NavLink>
                     </li>
-                    <li>
+                    <li className='nav__item'>
                         <NavLink activeclassname='active' to="/delete-account">
                         delete account
                         </NavLink>
                     </li>
-                    <li>
+                    <li className='nav__item'>
                         <button className='logout-btn-nav' onClick={handleLogOut}>
                             <FiLogOut/>
                         </button>
                     </li>
                 </ul>
-            </div>
+            </nav>
         </div>
     )
 
