@@ -4,17 +4,29 @@ Styles that can be applied globally to all elements with the same type are writt
 */
 
 :root {
-    --primary-color: #8CBCED;
-    --secondary-color: #D3E7FC;
+    --primary-color: 	#40445a;
+    --secondary-color: #323949;
+    --tertiary-color: 	#4c5265;
+    
     --primary-light: #fff;
-    --primary-dark: #272635;
+    --primary-dark: #212129;
     --warning: #ED8C8C;
     font-family: 'Questrial', sans-serif;
+}
+
+body{
+    background-color: var(--primary-dark);
 }
 
 *{
     font-family: 'Questrial', sans-serif;
     margin: 0;
+    color: var(--primary-light);
+
+}
+
+select, input{
+    color: var(--primary-dark);
 }
 
 .brand-logo{
@@ -73,17 +85,21 @@ a{
     transition: 0.5s;
 }
 
+a{
+    color: var(--primary-light); 
+}
+
 a:hover{
     color: var(--primary-light) !important;
     text-decoration: none !important;
-    border-bottom: 5px solid var(--primary-light);
-    padding: 1.2em;
 }
 
 
 input, textarea{
     border: none;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
+    margin-left: 1rem;
+    padding: 2px;
     transition: 0.5s;
 }
 
@@ -98,7 +114,7 @@ label{
 }
 
 input:focus + label{
-    color: var(--primary-color);
+    
 }
 
 .error{
