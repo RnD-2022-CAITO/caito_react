@@ -83,7 +83,7 @@ const TeacherLanding = () => {
         // alert('Redirect user to question ID: ' + e.target.id);
 
         //Pass the question ID to the next path
-        navigate('/survey', {
+        navigate(`/survey/${e.target.id}`, {
             state: {
                 questionID: e.target.id,
             }
