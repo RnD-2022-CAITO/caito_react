@@ -18,6 +18,7 @@ import 'firebase/compat/app-check';
 import './surveyStats.css';
 import ReactDOMServer from 'react-dom/server';
 import { Dialog } from '@blueprintjs/core';
+import { CommonLoading } from 'react-loadingg';
 // using node-style package resolution in a CSS file:
 // import "normalize.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
@@ -357,7 +358,9 @@ function OfficerSurveyStats() {
     }
   }
   return loading ? (
-    <p>Loading..</p>
+    <div>
+      <CommonLoading color='#fff' />
+    </div>
   ) : (
     <div>
       {initializePage()}
