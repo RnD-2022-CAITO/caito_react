@@ -33,7 +33,7 @@ function OfficerSurveyStats() {
   const [content, setContent] = useState('inital');
   const [dialog, setDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState([]);
-  const [pages, setPages] = useState([]);
+  let pages = [];
   let currentPageIndex = 0;
   let index = 1;
   let moreIndex = 0;
@@ -228,6 +228,7 @@ function OfficerSurveyStats() {
     //
     setDialog(true);
     setDialogContent([]);
+    pages = [];
     let dialogContentTemp = [];
     currentPageIndex = 0;
     let pageIndex = 1;
@@ -243,9 +244,10 @@ function OfficerSurveyStats() {
       if (answers[index] instanceof Object) {
         const j = Object.values(answers[index]);
         dialogContentTemp.push(<p>{j}</p>);
-        // console.log("answer j" + index + ": " + j); //display answer (array type)
+        //console.log("answer: " + j); //display answer (array type)
       } else {
         dialogContentTemp.push(<p>{answers[index]}</p>);
+        //console.log("answer: " + answers[index]); //display answer (not array type)
       }
       if ((index + 1) % 2 === 0) {
         if (pages.length > 0) {
