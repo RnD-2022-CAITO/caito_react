@@ -33,8 +33,10 @@ function OfficerSurveyStats() {
   const [content, setContent] = useState('inital');
   const [dialog, setDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState([]);
-  const [pages, setPages] = useState([]);
+  let pages = [];
   let currentPageIndex = 0;
+  let index = 1;
+  let moreIndex = 0;
 
   useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -93,7 +95,7 @@ function OfficerSurveyStats() {
   }
 
   // UI
-  function renderTeachers(id, index, condition) {
+  function renderTeachers(id, condition) {
     let teacher = '';
     teachers.map((o) => {
       if (o.teacherID === id) {
@@ -103,22 +105,12 @@ function OfficerSurveyStats() {
 
     if (condition === 'all') {
       return (
-        <div key={index}>
-          <div className="summary-view">
-            <h4>
-              {index + 1}
-              .
-              {teacher.firstName}
-              {' '}
-              {teacher.lastName}
-            </h4>
+        <div key={"all:"+index+"v:"+moreIndex}>
             {answers.map(
               (
-                o,
-                index, // list out all answer copies from the teacher
-              ) => renderAnswers(o, teacher, index),
+                o// list out all answer copies from the teacher
+              ) => renderAnswers(o, teacher, index), moreIndex++
             )}
-          </div>
         </div>
       );
     }
@@ -132,22 +124,13 @@ function OfficerSurveyStats() {
       });
       if (filteredArr.length > 0) {
         content = (
-          <div key={index}>
-            <div className="summary-view">
-              <h4>
-                {index + 1}
-                .
-                {teacher.firstName}
-                {' '}
-                {teacher.lastName}
-              </h4>
+          <div key={"submitted:"+index+"v:"+moreIndex}>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
-                ) => renderAnswers(o, teacher, index),
+                ) => renderAnswers(o, teacher, index), moreIndex++
               )}
-            </div>
           </div>
         );
       }
@@ -163,22 +146,13 @@ function OfficerSurveyStats() {
       });
       if (filteredArr.length > 0) {
         content = (
-          <div key={index}>
-            <div className="summary-view">
-              <h4>
-                {index + 1}
-                .
-                {teacher.firstName}
-                {' '}
-                {teacher.lastName}
-              </h4>
+          <div key={"unsubmitted:" + index+"v:"+moreIndex}>
               {filteredArr.map(
                 (
                   o,
                   index, // list out all completed answer copies from the teacher
-                ) => renderAnswers(o, teacher, index),
+                ) => renderAnswers(o, teacher, index), moreIndex++
               )}
-            </div>
           </div>
         );
       }
@@ -187,25 +161,34 @@ function OfficerSurveyStats() {
   }
 
   // UI
-  function renderAnswers(o, t, index) {
+  function renderAnswers(o, t) {
     if (o.teacherID === t.teacherID) {
       return (
-        <div key={index + t}>
-          <div>
-            <h4>
-              Total questions:
-              {question.questions.length}
-            </h4>
-            <h4>
-              Total answered questions:
-              {o.answers.length}
-            </h4>
-            <h4>
-              Submitted?
-              {o.isSubmitted ? 'Yes' : 'No'}
-            </h4>
-            {timeline(question, o)}
-            {setButton(o.answers, o.teacherID, o.id, o.isSubmitted)}
+        <div className="summary-view">
+          <h4>
+            {index++}
+            .
+            {t.firstName}
+            {' '}
+            {t.lastName}
+          </h4>
+          <div key={index + t.firstName}>
+            <div>
+              <h4>
+                Total questions:
+                {question.questions.length}
+              </h4>
+              <h4>
+                Total answered questions:
+                {o.answers.length}
+              </h4>
+              <h4>
+                Submitted?
+                {o.isSubmitted ? 'Yes' : 'No'}
+              </h4>
+              {timeline(question, o)}
+              {setButton(o.answers, o.teacherID, o.id, o.isSubmitted)}
+            </div>
           </div>
         </div>
       );
@@ -245,6 +228,7 @@ function OfficerSurveyStats() {
     //
     setDialog(true);
     setDialogContent([]);
+    pages = [];
     let dialogContentTemp = [];
     currentPageIndex = 0;
     let pageIndex = 1;
@@ -260,9 +244,10 @@ function OfficerSurveyStats() {
       if (answers[index] instanceof Object) {
         const j = Object.values(answers[index]);
         dialogContentTemp.push(<p>{j}</p>);
-        // console.log("answer j" + index + ": " + j); //display answer (array type)
+        //console.log("answer: " + j); //display answer (array type)
       } else {
         dialogContentTemp.push(<p>{answers[index]}</p>);
+        //console.log("answer: " + answers[index]); //display answer (not array type)
       }
       if ((index + 1) % 2 === 0) {
         if (pages.length > 0) {
@@ -352,9 +337,11 @@ function OfficerSurveyStats() {
 
   // UI
   function filterPageResults(condition) {
+    index = 1;
     let returnAll = (
       <>
-        {teachersID.map((id, index) => renderTeachers(id, index, condition))}
+        {teachersID
+        .map((id) => renderTeachers(id, condition))}
       </>
     );
     if (!ReactDOMServer.renderToString(returnAll).includes('timeline-progress', 0)) {

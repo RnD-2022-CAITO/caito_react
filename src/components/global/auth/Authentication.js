@@ -32,7 +32,8 @@ export const AuthProvider = ({children}) => {
     }
 
     function signOut(){
-        return auth.signOut();
+        auth.signOut();
+        setCurrentUser();
     }
 
     function resetPassword(email){

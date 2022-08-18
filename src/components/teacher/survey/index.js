@@ -54,17 +54,19 @@ const Survey = () => {
             //Clone the questions to the answers 
             setAnswers(response.data.questions);
 
+            let targetAnswerID = "";
             //Retrieve Answer ID
           await db.collection('survey-answer').where('questionID', '==', location.state.questionID).get()
           .then((res) => {
               return res.docs.map(doc => {
                   if(doc.data().teacherID === currentUser.uid){
                     setAnswerID(doc.id);
+                    targetAnswerID = doc.id;
                   }
-                  populateExistingAnswers(doc.id);
                   return doc.id;
               })
           });
+            populateExistingAnswers(targetAnswerID); 
 
             setFormLoading(false);
           }
