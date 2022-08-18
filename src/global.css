@@ -138,3 +138,8 @@ input:focus + label{
 .more-btn:hover{
     letter-spacing: normal;
 }
+
+.dialog{
+	background-color: var(--primary-dark);
+    border: 1px solid var(--primary-light);
+}
