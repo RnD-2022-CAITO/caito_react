@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom'
 import app, {db, func} from '../../../utils/firebase';
 import { useAuth } from '../../global/auth/Authentication';
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
+import { Dialog } from '@blueprintjs/core';
 
 import "./survey.css";
 
@@ -193,16 +195,20 @@ const Survey = () => {
     }
   }
 
+  //Set confirmation dialog state
+  const [dialog, setDialog] = useState("");
+
   //Submit survey to the server 
   const sendSurvey = async (e, boolean) => {
     e.preventDefault();
 
     updateSurvey(boolean);
 
-    alert('You have submitted/saved the survey!');
-
-    navigate('/');
-    
+    if(boolean){
+      setDialog("You have successfully submitted your task!");
+    }else{
+      setDialog("Task has been saved! You can continue to submit your task any time.");
+    }
   }
 
   const updateSurvey = (boolean) => {
@@ -265,8 +271,23 @@ const Survey = () => {
                 <br/>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
               </>
-       : <p>Loading...</p>}
-    </form> : <h1>Survey not found</h1>
+       :             
+        <div>
+            <CommonLoading color='#fff' />
+        </div> }
+
+    {dialog!=="" && 
+    <Dialog
+      className='dialog'
+      title= "Confirmation"
+      isOpen={dialog !=="" ? true : false}
+      onClose={() => navigate('/')}
+    >
+      <p style={{padding:'10px'}}>
+       {dialog}
+      </p>
+    </Dialog>}
+    </form> : <h1>Task not found</h1>
   )
 }
 
