@@ -50,6 +50,11 @@
 
 .dialog{
 	background-color: var(--primary-dark);
-    box-shadow: 0 3px 10px rgba(201, 201, 201, 0.2);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
 
+@media screen and (max-width: 700px) {
+	.dialog {
+		margin: 30px;
+	}
 }
