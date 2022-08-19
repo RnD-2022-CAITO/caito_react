@@ -6,6 +6,7 @@
     "@blueprintjs/core": "^4.9.3",
     "@blueprintjs/popover2": "^1.6.3",
     "@firebase/functions-compat": "^0.2.0",
+    "@mui/icons-material": "^5.8.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",

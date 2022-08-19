@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
-import app, {func, auth} from '../../../utils/firebase'
+import app, {func} from '../../../utils/firebase'
+import {getAuth,  sendEmailVerification, updateCurrentUser } from "firebase/auth";
 
 
 import './SignUp.css'
@@ -26,6 +27,8 @@ const SignUp = () => {
 
   //Loading to sign up
   const [loading, setLoading] = useState(false);
+
+
 
   const navigate = useNavigate();
 
@@ -62,6 +65,7 @@ const SignUp = () => {
       password: passwordRef.current.value,
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value,
+
     }
     try{
       await signUp(user);
@@ -94,7 +98,6 @@ const SignUp = () => {
     } catch (e) {
         console.error(e);
     }
-  }
 
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const addSchool = func.httpsCallable('teacher-addBioSection');
@@ -106,7 +109,29 @@ const SignUp = () => {
       } catch (e) {
     console.error(e);
     }
+
+  }
+
+  const auth = getAuth();
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+    // Email verification sent!
+        alert("Vertify email has been send");
+  } 
+ 
+  );
+
+//   var user = firebase.auth().currentUser;
+// var name, email, photoUrl, uid, emailVerified;
+
+// if (user != null) {
+//   name = user.displayName;
+//   email = user.email;
+//   photoUrl = user.photoURL;
+//   emailVerified = user.emailVerified;
+//   uid = user.uid; 
   
+
   return (
   !currentUser ?
   <div className='container'>
@@ -193,7 +218,7 @@ const SignUp = () => {
         </p>
       </div>
     </div>
-    : <ErrorRoute err='already-login'/>
+    : <ErrorRoute err='already-login or verfy your email'/>
   )
 }
 
