@@ -54,17 +54,19 @@ const Survey = () => {
             //Clone the questions to the answers 
             setAnswers(response.data.questions);
 
+            let targetAnswerID = "";
             //Retrieve Answer ID
           await db.collection('survey-answer').where('questionID', '==', location.state.questionID).get()
           .then((res) => {
               return res.docs.map(doc => {
                   if(doc.data().teacherID === currentUser.uid){
                     setAnswerID(doc.id);
+                    targetAnswerID = doc.id;
                   }
-                  populateExistingAnswers(doc.id);
                   return doc.id;
               })
           });
+            populateExistingAnswers(targetAnswerID); 
 
             setFormLoading(false);
           }
@@ -110,7 +112,7 @@ const Survey = () => {
   }
 
   //save the current answer to the answers array
-  const saveAnswer = (e, index, type) => { // TODO populate checkboxes and radio
+  const saveAnswer = (e, index, type) => {
     //Create a new temporary array to store the answers
     let newArr = [...answers];
     setIndex(index);
@@ -122,15 +124,20 @@ const Survey = () => {
           const newItem = e.target.value;
           let newArray = [];
           if (answers.at(index) !== checkboxVal){ // if initial saved answers and checkbox values are not the same
-            newArray.push(answers.at(index));
+            newArray.push(answers.at(index)); 
             newArray.forEach((i) => {
-            if (i.length === undefined){
-              newArray = Object.keys(i).map((key) => i[key]);
+              if (i.length === undefined){
+                newArray = Object.keys(i).map((key) => i[key]);
+              }
+            });
+            let question = questions[index].question;
+            if (newArray.includes(question)){ // check if the actual question is in the answer[index]
+              setCheckboxVal([]);
+            } else {
+              setCheckboxVal(newArray);
             }
-          });
-            setCheckboxVal(newArray);
           }
-          setCheckboxVal(oldArr => ([...oldArr, newItem]));
+            setCheckboxVal(oldArr => ([...oldArr, newItem]));
         }
       } else {
         //When user unchecks
