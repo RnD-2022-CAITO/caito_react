@@ -59,8 +59,9 @@
 }
 
 .task-questions{
-	width: 99%;
-	bottom: 11%;
-	position:absolute
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    grid-row-end: 3;
 }
 
