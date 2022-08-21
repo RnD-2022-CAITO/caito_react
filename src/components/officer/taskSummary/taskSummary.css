@@ -43,3 +43,10 @@
 	position: relative;
 	top: -10px;
 }
+
+.task-questions{
+	width: 99%;
+	bottom: 110px;
+	position:absolute
+}
+

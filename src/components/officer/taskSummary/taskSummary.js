@@ -227,42 +227,55 @@ const TaskSummary = () => {
             <p>Loading..</p>
             :
             <div className='grid-layout'>
-                <div className='select-display'>
-                    <h3>Task summary</h3>
-                    <div style={{ textAlign: 'left' }}>
-                        <h4 >Description</h4>
-                        <p>Coming soon...</p>
-                        <h4>Target groups</h4>
-                        <p>Coming soon...</p>
-
-                    </div>
-                </div>
-                <div className='select-display'>
-                    <h3>Completion rate</h3>
-                    <div style={{ textAlign: 'center' }}>
-                        {renderQuestion(question)}
-                    </div>
-                </div>
-
-                <div className='select-display'>
-                    <h3>Task Questions</h3>
-                    <div style={{ textAlign: 'center' }}>
+               
+                    <div className='select-display'>
+                        <h3>Task summary</h3>
                         <div style={{ textAlign: 'left' }}>
-                            {questions.map((q, index) =>
-                                <div className='sur-question' key={index}>
-                                    <label>Question {index + 1}. {q.question}</label>
-                                    <br />
-                                    <br />
-                                    {q.options.map((o) =>
-                                        <div>
-                                            <p for={o}>{o}</p>
-                                        </div>
-                                    )}
-                                </div>)
-                            }
+                            <h4 >Description</h4>
+                            <p>Coming soon...</p>
+                            <h4>Target groups</h4>
+                            <p>Coming soon...</p>
+
+                        </div>
+                    
+
+                </div>
+
+                
+                    <div className='select-display'>
+                        <h3>Completion rate</h3>
+                        <div style={{ textAlign: 'center' }}>
+                            {renderQuestion(question)}
                         </div>
                     </div>
-                </div>
+                
+
+
+              <div className='task-questions'>
+<div className='select-display'>
+                        <h3>Task Questions</h3>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ textAlign: 'left' }}>
+                                {questions.map((q, index) =>
+                                    <div className='sur-question' key={index}>
+                                        <label>Question {index + 1}. {q.question}</label>
+                                        <br />
+                                        <br />
+                                        {q.options.map((o) =>
+                                            <div>
+                                                <p for={o}>{o}</p>
+                                            </div>
+                                        )}
+                                    </div>)
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+              </div>
+                    
+                
+
             </div>
     )
 

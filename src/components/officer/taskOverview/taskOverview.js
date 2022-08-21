@@ -86,16 +86,19 @@ const OfficerTaskOverview = () => {
             <button onClick={() => navigateCreateSurvey()}>CREATE NEW PROFILING TASK</button>
 
 
-            <div className='grid-layout'>
-
-                <div className='select-display'>
+   
+            <div className='target-groups'>
+<div className='select-display'>
                     <h3>Target groups</h3>
                     <div style={{ textAlign: 'center' }}>
                         <p>Still developing...</p>
                         <button onClick={1}>Still in developing</button>
                     </div>
                 </div>
-                <div className='select-display'>
+
+            </div>
+                <div className='unscheduled-tasks'>
+                    <div className='select-display'>
                     <h3>Unscheduled tasks</h3>
                     <div style={{ textAlign: 'left' }}>
                         {questionID.map(question => (
@@ -103,15 +106,21 @@ const OfficerTaskOverview = () => {
                         ))}
                     </div>
                 </div>
-                <div className='select-display'>
+                </div>
+                
+                <div className='draft-tasks'>
+
+                    <div className='select-display'>
                     <h3>Draft tasks</h3>
                     <div style={{ textAlign: 'center' }}>
                         <p>Still developing...</p>
                         <button onClick={1}>Still in developing</button>
                     </div>
                 </div>
-
-                <div className='select-display' >
+                </div>
+                
+                <div className='scheduled-tasks'>
+                     <div className='select-display' >
                     <h3>Scheduled tasks summary</h3>
                     <div style={{ textAlign: 'left' }}>
                         {questionID.map(question => (
@@ -119,7 +128,9 @@ const OfficerTaskOverview = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+                </div>
+               
+      
         </>
     )
 
