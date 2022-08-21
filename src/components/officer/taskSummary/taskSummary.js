@@ -61,6 +61,7 @@ const TaskSummary = () => {
                 if (response.data == null) {
                     setFound(false);
                 } else {
+                    console.log(response.data.createdDate);  
                     setCreatedDate(new Date());
                     console.log(response.data.questions);
                     console.log(response.data.questions[0].options);

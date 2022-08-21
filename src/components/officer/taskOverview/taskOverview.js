@@ -108,16 +108,7 @@ const OfficerTaskOverview = () => {
                 </div>
                 </div>
                 
-                <div className='draft-tasks'>
 
-                    <div className='select-display'>
-                    <h3>Draft tasks</h3>
-                    <div style={{ textAlign: 'center' }}>
-                        <p>Still developing...</p>
-                        <button onClick={1}>Still in developing</button>
-                    </div>
-                </div>
-                </div>
                 
                 <div className='scheduled-tasks'>
                      <div className='select-display' >
