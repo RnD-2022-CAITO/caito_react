@@ -162,7 +162,7 @@ function unscheduledTask(question, clickButton) {
                 <p>----------------------------------------------------------------</p>
                 <p>Total sent out: {question.total}</p>
                 <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
-                <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
+                <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Schedule</button>
             </div>
         </div>;
     }

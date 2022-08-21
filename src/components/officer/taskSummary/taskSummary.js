@@ -227,32 +227,31 @@ const TaskSummary = () => {
             <p>Loading..</p>
             :
             <div className='grid-layout'>
-               
-                    <div className='select-display'>
-                        <h3>Task summary</h3>
-                        <div style={{ textAlign: 'left' }}>
-                            <h4 >Description</h4>
-                            <p>Coming soon...</p>
-                            <h4>Target groups</h4>
-                            <p>Coming soon...</p>
 
-                        </div>
-                    
+                <div className='select-display'>
+                    <h3>Task summary</h3>
+                    <div style={{ textAlign: 'left' }}>
+                        <h4 >Description</h4>
+                        <p>Coming soon...</p>
+                        <h4>Target groups</h4>
+                        <p>Coming soon...</p>
+
+                    </div>
+
 
                 </div>
 
-                
-                    <div className='select-display'>
-                        <h3>Completion rate</h3>
-                        <div style={{ textAlign: 'center' }}>
-                            {renderQuestion(question)}
-                        </div>
+
+                <div className='select-display'>
+                    <h3>Completion rate</h3>
+                    <div style={{ textAlign: 'center' }}>
+                        {renderQuestion(question)}
                     </div>
-                
+                </div>
 
 
-              <div className='task-questions'>
-<div className='select-display'>
+                <div className='task-questions'>
+                    <div className='select-display-questions'>
                         <h3>Task Questions</h3>
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ textAlign: 'left' }}>
@@ -272,9 +271,9 @@ const TaskSummary = () => {
                         </div>
                     </div>
 
-              </div>
-                    
-                
+                </div>
+
+
 
             </div>
     )
@@ -283,7 +282,7 @@ const TaskSummary = () => {
         const complete = question.complete;
         const total = question.total;
         const uncomplete = total - complete;
-        // createdDate.setDate(createdDate.getDate());；。。。。。。。。。。。。。。。。。。。l
+        // createdDate.setDate(createdDate.getDate());
         //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
         const data = [
             { name: 'Uncomplete', value: uncomplete },
