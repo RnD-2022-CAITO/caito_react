@@ -1,17 +1,3 @@
-
-.select-display-questions{
-    padding: 10px;
-    border: 0.2px solid black;
-    border-radius: 2px;
-    margin: 10px;
-}
-
-.select-display-questions h3{
-    border: 1px;
-    background-color: var(--secondary-color);
-    margin: -10px -10px 10px -10px;
-    padding: 10px;
-}
 .summary-view{
     padding: 10px;
     margin: 10px;
@@ -56,12 +42,12 @@
 	background-color: var(--primary-color);
 	position: relative;
 	top: -10px;
+
 }
 
 .task-questions{
     grid-column-start: 1;
     grid-column-end: 4;
-
     grid-row-end: 3;
 }
 
