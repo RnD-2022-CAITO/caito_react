@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import app, {db, func} from '../../../utils/firebase';
 import { useAuth } from '../../global/auth/Authentication';
 import { useNavigate } from 'react-router-dom';
+import * as toxicity from '@tensorflow-models/toxicity';
 
 import "./survey.css";
 
@@ -34,6 +35,9 @@ const Survey = () => {
 
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState('');
+ 
+  //The minimum prediction confidence
+  const threshold = 0.8;
 
 
   useEffect(() => {
@@ -197,13 +201,74 @@ const Survey = () => {
   const sendSurvey = async (e, boolean) => {
     e.preventDefault();
 
-    updateSurvey(boolean);
+    //TODO check toxicity before putting survey through.
+    await checkToxicityPrediction(boolean);
 
-    alert('You have submitted/saved the survey!');
+    //updateSurvey(boolean);
 
-    navigate('/');
+    //alert('You have submitted/saved the survey!');
+
+    //navigate('/');
     
   }
+
+  // uses TensorflowJS to predict if the submitted answers are appropriate or not (filters out insults/profanities).
+  const checkToxicityPrediction = async (boolean) => {
+    // Load the model. Users optionally pass in a threshold and an array of
+    // labels to include.
+    let index = 0;
+    let newArray = [];
+    let hasToxicResponse = false;
+    await toxicity.load(threshold).then(model => {
+
+      answers.map((answer) => {
+        // check if answer is an array because of checkboxes/radio
+        if (answer.length === undefined){
+          newArray = Object.keys(answer).map((key) => answer[key]);
+          newArray.map((arrAnswer) => {
+            model.classify(arrAnswer).then(predictions => {
+              // `predictions` is an array of objects, one for each prediction head,
+              // that contains the raw probabilities for each input along with the
+              // final prediction in `match` (either `true` or `false`).
+              // If neither prediction exceeds the threshold, `match` is `null`.
+              index = answers.indexOf(answer) + 1
+              if (predictions[6].results[0].match === true){
+                hasToxicResponse = true;
+                alert("Your " + index + "th answer is inappropriate. Please change it.");
+              }
+              if ((answers.indexOf(answer) === answers.length - 1) 
+              && (newArray.indexOf(arrAnswer) === newArray.length - 1) 
+              && (hasToxicResponse === false)){
+                updateSurvey(boolean);
+                alert('You have submitted/saved the survey!');
+                navigate('/');
+              }
+            });
+          })
+        } else{
+          model.classify(answer).then(predictions => {
+            // `predictions` is an array of objects, one for each prediction head,
+            // that contains the raw probabilities for each input along with the
+            // final prediction in `match` (either `true` or `false`).
+            // If neither prediction exceeds the threshold, `match` is `null`.
+            index = answers.indexOf(answer) + 1
+            if (predictions[6].results[0].match === true){
+              hasToxicResponse = true;
+              alert("Your " + index + "th answer is inappropriate. Please change it.");
+            }
+            if ((answers.indexOf(answer) === answers.length - 1) && (hasToxicResponse === false)){
+              updateSurvey(boolean);
+
+              alert('You have submitted/saved the survey!');
+
+              navigate('/');
+            }
+          });
+        }
+      })
+    });
+  }
+
 
   const updateSurvey = (boolean) => {
     app.appCheck().activate(site_key, true);
@@ -219,7 +284,7 @@ const Survey = () => {
     } catch (e) {
         console.error(e);
     }
-}
+  }
 
   //Placeholder for the inputs
   const displayPlaceHolder = (inputType ) => {
