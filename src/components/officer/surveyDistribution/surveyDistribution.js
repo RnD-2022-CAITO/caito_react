@@ -22,6 +22,8 @@ const OfficerSurveyDistribution = () => {
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
+
+
   const navigate = useNavigate();
 
 
@@ -115,13 +117,10 @@ const OfficerSurveyDistribution = () => {
 
   const selectTeachers = () => {
     //Select a group of teachers from the officer's created target group
-    alert("This feature is under development");
+    navigate('/survey-distribution-group')
   }
 
-  const createTargetGroup = () => {
-    //Redirect the user to the create group page
-    alert("This feature is under development");
-  }
+
 
   //Clear the form
   const clearSchedule = () => {
@@ -189,8 +188,9 @@ const OfficerSurveyDistribution = () => {
         <p>Select a group of teachers that you want to send the survey to</p>
         <button onClick={selectTeachers}>Select your target group</button>
         <p> or </p>
-        <button className='secondary-btn' onClick={createTargetGroup}>Create a new target group</button>
+        <button className='secondary-btn' onClick={() => navigate('/groups')}>Create a new target group</button>
         </div>
+
         
         <div style={{backgroundColor:'red', color:'white', textAlign:'center', padding:'10px'}}>
         <p>This is an old feature. It will be left here for debugging...</p>
