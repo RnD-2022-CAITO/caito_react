@@ -7,8 +7,11 @@ import './taskSummary.css';
 import ReactDOMServer from 'react-dom/server';
 import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom';
+
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
+    const navigate = useNavigate();
     const { state } = useLocation();
     const { question } = state; // Read values passed on state
     const [loading, setLoading] = useState(true);
@@ -61,7 +64,7 @@ const TaskSummary = () => {
                 if (response.data == null) {
                     setFound(false);
                 } else {
-                    console.log(response.data.createdDate);  
+                    console.log(response.data.createdDate);
                     setCreatedDate(new Date());
                     console.log(response.data.questions);
                     console.log(response.data.questions[0].options);
@@ -104,35 +107,7 @@ const TaskSummary = () => {
         }
     }
 
-    // UI
-    function renderTeachers(id, index, condition) {
-        let teacher = "";
-        teachers.map(o => {
-            if (o.teacherID === id) {
-                teacher = o;
-            }
-        })
-        if (condition === "unsubmitted") {
-            let filteredArr = [];
-            let content = "All submitted";
-            answers.map((o) => {
-                if (o.isSubmitted === false) {
-                    filteredArr.push(o);
-                }
-            });
-            if (filteredArr.length > 0) {
-                content = <div key={index}>
-                    <div className='summary-view'>
-                        <h4>{index + 1}. {teacher.firstName} {teacher.lastName}</h4>
-                        {filteredArr.map((o, index) => ( //list out all completed answer copies from the teacher
-                            renderAnswers(o, teacher, index)
-                        ))}
-                    </div>
-                </div>;
-            }
-            return content;
-        }
-    }
+
     const [activeIndex, setActiveIndex] = useState(0);
     const renderText = (props) => {
         const { cx, cy, endAngle, fill } = props;
@@ -148,80 +123,12 @@ const TaskSummary = () => {
         )
     }
 
-    // UI
-    function renderAnswers(o, t, index) {
-        if (o.teacherID === t.teacherID) {
-            return <div key={index + t}>
-                <div>
-                    {timeline(question, o)}
-                    {sendNotificationButton(o.teacherID, o.id, o.isSubmitted)}
-                </div>
 
-            </div>;
-        }
-    }
-
-    // set expiry date to 7 days from today so that officer can't spam the teacher
-    async function sendNotification(teacherID, answerID) {
-        let expiry = new Date();
-        expiry.setDate(expiry.getDate() + 7);
-        expiry = expiry.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
-        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-        const addReminder = func.httpsCallable('officer-addSurveyReminder');
-        try {
-            await addReminder({
-                teacherID: teacherID,
-                answerID: answerID,
-                expiryDate: expiry
-            }).then((i) => {
-                if (i.data === "doc exists") {
-                    alert("You have recently notified the teacher about this already.");
-                } else {
-                    alert("Successfully sent notification to " + teacherID);
-                }
-            }).catch(e => {
-                console.log(e);
-            });
-        } catch (e) {
-            console.error(e);
-        }
+    const clickButton = (question) => {
+        navigate('/survey-status', { state: { question: question } });
     }
 
 
-    // UI
-    function sendNotificationButton(teacherID, answerID, isSubmmited) {
-        if (isSubmmited === false) {
-            return <button type='button' onClick={e => sendNotification(teacherID, answerID)}>Send Reminder</button>
-        }
-    }
-
-    // UI
-    function timeline(question, answer) {
-        const totalItems = question.questions.length;
-        const numberOfActiveItems = answer.answers.length;
-        const progressBarWidth = totalItems > 0 ? (numberOfActiveItems) / (totalItems) * 100 : 1;
-
-        let arr = [];
-        question.questions.map((item) => (
-            arr.push(item)
-        ));
-        arr.push(1);
-
-        return (
-            <>
-                <p>Progress: {progressBarWidth}%</p>
-                <div className="timeline">
-                    <div className="timeline-progress" style={{ width: `${progressBarWidth}%` }}></div>
-                    <div className="timeline-items">
-                        {arr.map((item, i) => (
-                            <div key={i} className={"timeline-item" + (numberOfActiveItems >= i ? ' active' : '')}>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </>
-        )
-    }
 
     return (
         loading ?
@@ -270,12 +177,14 @@ const TaskSummary = () => {
                                 }
                             </div>
                         </div>
+
+                        <div>
+                            <button style={{ marginLeft: "auto" }} onClick={() => clickButton()}>View Individual Progress</button>
+
+                        </div>
                     </div>
 
                 </div>
-
-
-
             </div>
     )
 
