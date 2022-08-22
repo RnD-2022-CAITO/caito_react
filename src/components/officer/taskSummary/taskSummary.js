@@ -125,8 +125,9 @@ const TaskSummary = () => {
 
 
     const clickButton = (question) => {
-        navigate('/survey-status', { state: { question: question } });
-    }
+        navigate('/survey-stats', { state: { question: question} });
+      }
+    
 
 
 
@@ -177,16 +178,16 @@ const TaskSummary = () => {
                                 }
                             </div>
                         </div>
-
+         
                         <div>
-                            <button style={{ marginLeft: "auto" }} onClick={() => clickButton()}>View Individual Progress</button>
-
+                        <button style={{ marginLeft: "auto" }} onClick={() => clickButton(question)}>View Individual Progress</button>
                         </div>
                     </div>
 
                 </div>
             </div>
     )
+
 
     function renderQuestion(question) {
         const complete = question.complete;
