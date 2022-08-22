@@ -28,6 +28,7 @@ import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import OfficerTaskOverview from './components/officer/taskOverview/taskOverview';
 import TaskSummary from './components/officer/taskSummary/taskSummary'
+
 //Roles to access paths
 const role = {
   T: 'teacher',
@@ -52,6 +53,16 @@ const App = () => {
           }
           />
 
+
+              <Route exact path="/survey" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.T}>
+                          <Survey/>
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
           <Route exact path="/survey" element={
             <UserDataProvider>
               <PrivateRoute role={role.T}>
@@ -60,6 +71,7 @@ const App = () => {
             </UserDataProvider>
           }
           />
+
 
           <Route exact path="/profile" element={
             <UserDataProvider>
@@ -141,6 +153,17 @@ const App = () => {
           }
           />
 
+
+
+              <Route exact path="/survey-stats" element={    
+                    <UserDataProvider>
+                      <PrivateRoute role={role.O}>
+                          <OfficerSurveyStats />
+                      </PrivateRoute>
+                    </UserDataProvider>
+                    }
+              />
+
           <Route exact path="/survey-stats" element={
             <UserDataProvider>
               <PrivateRoute role={role.O}>
@@ -149,6 +172,7 @@ const App = () => {
             </UserDataProvider>
           }
           />
+
 
 
           <Route path="/signup" element={<SignUp />} />
