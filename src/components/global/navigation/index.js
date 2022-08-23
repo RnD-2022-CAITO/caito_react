@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import {FiLogOut, FiMenu} from 'react-icons/fi';
+import { Button, Classes } from '@blueprintjs/core';
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
@@ -75,17 +76,12 @@ const NavBar = () => {
                 <ul className='nav__wrapper'>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
-                        home
+                            <Button className={Classes.MINIMAL} icon="home" text="home" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/profile">
-                        profile
-                        </NavLink>
-                    </li>
-                    <li className='nav__item'>
-                        <NavLink activeclassname='active' to="/downLoad/downLoadSurvey">
-                        download
+                            <Button className={Classes.MINIMAL} icon="people" text="profile" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
@@ -114,28 +110,28 @@ const NavBar = () => {
 
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
-                        home
+                            <Button className={Classes.MINIMAL} icon="home" text="home" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-making">
-                        create survey
+                        <Button className={Classes.MINIMAL} icon="add" text="create task" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-distribution">
-                        distribute survey
+                        <Button className={Classes.MINIMAL} icon="send-message" text="distribute task" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/delete-account">
-                        delete account
+                        <Button className={Classes.MINIMAL} icon="people" text="admin" />
                         </NavLink>
                     </li>
                     <li className='nav__item'>
-                        <button className='logout-btn-nav' onClick={handleLogOut}>
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut}>
                             <FiLogOut/>
-                        </button>
+                        </Button>
                     </li>
                 </ul>
             </nav>
