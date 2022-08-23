@@ -1,4 +1,3 @@
-
 li a{
     color: var(--primary-light)
 }
@@ -21,13 +20,9 @@ li a{
     margin: 0;
 }
 
-.nav a:hover {
-    border-bottom: 5px solid var(--primary-light);
-    padding: 1.2em;
-}
 
 .nav ul li{
-    padding-left: 30px;
+    padding-left: 10px;
 }
 
 .site-header__wrapper {
@@ -70,7 +65,7 @@ li a{
     transform: translateY(0); } }
 
 .nav__item a {
-display: block;
+    display: block;
 }
 
 .nav__item button{
@@ -91,6 +86,5 @@ display: none;
 
 
 .nav .active{
-    border-bottom: 5px solid var(--primary-light);
-    padding: 1.2em;
+    background-color: var(--primary-dark);
 }

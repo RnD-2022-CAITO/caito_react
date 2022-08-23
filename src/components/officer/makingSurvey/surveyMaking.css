@@ -82,7 +82,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.edit-dialog{
-	background-color: var(--primary-dark);
-}

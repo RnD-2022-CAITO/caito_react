@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 import { Dialog } from '@blueprintjs/core';
-import '@blueprintjs/core/lib/css/blueprint.css';
 
 const OfficerSurveyDistribution = () => {
 // 1. select existing survey(s): get all existing surveys created by logged in officer

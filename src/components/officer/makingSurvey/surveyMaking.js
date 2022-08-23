@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
 import "./surveyMaking.css"
-import { Dialog } from '@blueprintjs/core';
-import '@blueprintjs/core/lib/css/blueprint.css';
+import { Dialog, HTMLSelect } from '@blueprintjs/core';
 
 
 const OfficerSurveyMaking = () => {
@@ -198,7 +197,7 @@ const OfficerSurveyMaking = () => {
   
       <div className='input-field'>    
 
-        <select       
+        <HTMLSelect       
           value={qType}     
           onChange={e => 
               {
@@ -216,7 +215,7 @@ const OfficerSurveyMaking = () => {
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
 
-        </select>
+        </HTMLSelect>
   
         <label>
               Type of Answer:
@@ -433,14 +432,14 @@ const OfficerSurveyMaking = () => {
     let currentTargetValue;
     content =         
       <div className='template input-field'>
-      <select 
+      <HTMLSelect className='select-bp'
       onChange={e => {
       currentTargetValue = e.target.value;
 
       // eslint-disable-next-line
       templates.map((template) => {
 
-        if (currentTargetValue !== "Default"){
+        if (currentTargetValue !== ""){
           setQuestionsConfirmed([]);
           setQuestionsConfirmed([...template.at(currentTargetValue).questions]);
           setTitle(template.at(currentTargetValue).title);
@@ -467,7 +466,7 @@ const OfficerSurveyMaking = () => {
       
     )}
     {options}
-    </select>
+    </HTMLSelect>
     <label>
       Task template
     </label>
@@ -533,7 +532,7 @@ const OfficerSurveyMaking = () => {
           </label>
         </div>
         <div className='input-field'>
-        <select     
+        <HTMLSelect className='select-bp'
           value={questionType}        
           onChange={e => 
               {
@@ -551,7 +550,7 @@ const OfficerSurveyMaking = () => {
           <option value="number">Number</option>
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
-        </select>
+        </HTMLSelect>
 
         <label>
           Type of Answer: &nbsp;

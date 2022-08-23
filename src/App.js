@@ -4,7 +4,10 @@ Two routes are used in this app: public route and private routes.
 */
 
 //styling
-import './global.css'
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import './global.css';
+
 //Routes 
 import React from 'react'
 import LogIn from './components/global/login/LogIn'

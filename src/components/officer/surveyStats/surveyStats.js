@@ -21,8 +21,6 @@ import { Dialog } from '@blueprintjs/core';
 import { CommonLoading } from 'react-loadingg';
 // using node-style package resolution in a CSS file:
 // import "normalize.css";
-import '@blueprintjs/core/lib/css/blueprint.css';
-import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 function OfficerSurveyStats() {
   const { state } = useLocation();

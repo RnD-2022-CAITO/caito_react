@@ -25,6 +25,10 @@ body{
 
 }
 
+.dialog{
+	background-color: var(--primary-dark);
+}
+
 select, input{
     color: var(--primary-dark);
 }
@@ -138,3 +142,4 @@ input:focus + label{
 .more-btn:hover{
     letter-spacing: normal;
 }
+
