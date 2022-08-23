@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import {FiLogOut, FiMenu} from 'react-icons/fi';
 import { Button, Classes } from '@blueprintjs/core';
+import { Tooltip2 } from "@blueprintjs/popover2";
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
@@ -76,12 +77,26 @@ const NavBar = () => {
                 <ul className='nav__wrapper'>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
-                            <Button className={Classes.MINIMAL} icon="home" text="home" />
+                            <Tooltip2
+                                    content={<span>Home</span>}
+                                    openOnTargetFocus={false}
+                                    placement="bottom"
+                                    usePortal={false}
+                            >
+                            <Button className={Classes.MINIMAL} icon="home" />
+                            </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/profile">
-                            <Button className={Classes.MINIMAL} icon="people" text="profile" />
+                            <Tooltip2
+                                    content={<span>Profile</span>}
+                                    openOnTargetFocus={false}
+                                    placement="bottom"
+                                    usePortal={false}
+                            >
+                                <Button className={Classes.MINIMAL} icon="people"/>
+                            </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
@@ -110,22 +125,50 @@ const NavBar = () => {
 
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
-                            <Button className={Classes.MINIMAL} icon="home" text="home" />
+                            <Tooltip2
+                                content={<span>Home</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                            >
+                                <Button className={Classes.MINIMAL} icon="home"/>
+                            </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-making">
-                        <Button className={Classes.MINIMAL} icon="add" text="create task" />
+                        <Tooltip2
+                                content={<span>Create new task</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon="add"/>
+                        </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/survey-distribution">
-                        <Button className={Classes.MINIMAL} icon="send-message" text="distribute task" />
+                        <Tooltip2
+                                content={<span>Distribute tasks</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon="send-message"/>
+                        </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/delete-account">
-                        <Button className={Classes.MINIMAL} icon="people" text="admin" />
+                        <Tooltip2
+                                content={<span>Admin</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                        <Button className={Classes.MINIMAL} icon="people"/>
+                        </Tooltip2>
                         </NavLink>
                     </li>
                     <li className='nav__item'>
