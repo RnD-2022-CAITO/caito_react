@@ -5,8 +5,7 @@ import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
-import {FiLogOut, FiMenu} from 'react-icons/fi';
-import { Button, Classes } from '@blueprintjs/core';
+import { Button, Classes, Navbar } from '@blueprintjs/core';
 import { Tooltip2 } from "@blueprintjs/popover2";
 
 const NavBar = () => {
@@ -135,7 +134,7 @@ const NavBar = () => {
             <button class="nav__toggle" aria-expanded="false" type="button"
             onClick={openNavMenu}
             >
-                <FiMenu />
+                <Button icon="menu" className={Classes.MINIMAL} />
             </button>
 
             <nav className='nav'>
@@ -164,10 +163,18 @@ const NavBar = () => {
                             </Tooltip2>
                         </NavLink>
                     </li>
+                    <li>
+                        <Navbar.Divider style={{backgroundColor:'white'}}/>
+                    </li>
                     <li className='nav__item'>
-                        <button className='logout-btn-nav' onClick={handleLogOut}>
-                                <FiLogOut/>
-                        </button>
+                        <Tooltip2
+                                    content={<span>Log out</span>}
+                                    openOnTargetFocus={false}
+                                    placement="left"
+                                    usePortal={false}
+                        >
+                            <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} icon="log-out" />
+                        </Tooltip2>
                     </li>
                 </ul>
             </nav>
@@ -182,11 +189,9 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
             <nav className='nav'>
-                <button class="nav__toggle" aria-expanded="false" type="button"
-                    onClick={openNavMenu}
-                    >
-                        <FiMenu />
-                </button>
+                <span class="nav__toggle" aria-expanded="false">
+                    <Button icon="menu" className={Classes.MINIMAL} onClick={openNavMenu}/>
+                </span>
 
                 <ul className='nav__wrapper'>
 
@@ -238,10 +243,18 @@ const NavBar = () => {
                         </Tooltip2>
                         </NavLink>
                     </li>
+                    <li>
+                        <Navbar.Divider style={{backgroundColor:'white'}}/>
+                    </li>
                     <li className='nav__item'>
-                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut}>
-                            <FiLogOut/>
-                        </Button>
+                        <Tooltip2
+                                content={<span>Log out</span>}
+                                openOnTargetFocus={false}
+                                placement="left"
+                                usePortal={false}
+                        >
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} icon="log-out" />
+                        </Tooltip2>
                     </li>
                 </ul>
             </nav>

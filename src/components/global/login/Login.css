@@ -33,4 +33,5 @@
     border: 0.1px solid black;
     border-radius: 5px;
     background-color: var(--tertiary-color);
+    box-shadow: rgba(0, 0, 0, 0.377) 0px 8px 24px;
 }

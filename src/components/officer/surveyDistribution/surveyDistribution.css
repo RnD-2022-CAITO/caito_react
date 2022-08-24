@@ -24,6 +24,7 @@
     border-radius: 2px;
     margin: 10px;
     background-color: var(--tertiary-color);
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 8px 24px;
 }
 
 .select-display h3, .select-display-survey h3{
