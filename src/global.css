@@ -53,7 +53,7 @@ button{
 }
 
 button:hover{
-    background-color: var(--primary-dark);
+    background-color: black;
     cursor: pointer;
 }
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { Dialog } from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 
@@ -22,8 +23,13 @@ const OfficerSurveyDistribution = () => {
   const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
   const [scheduledDate, setScheduledDate] = useState(today.substring(0,10));
 
+  //Display dialog error message
+  const [error, setError] = useState("");
 
+  //Display confirmation message
+  const [confirmation, setConfirmation] = useState("");
 
+  //Navigate through another page
   const navigate = useNavigate();
 
 
@@ -46,13 +52,13 @@ const OfficerSurveyDistribution = () => {
       })
       
 
-      alert('Successfully sent out the invitation to fill in the task!');
+      setConfirmation('Successfully sent out the invitation to fill in the task!');
 
       navigate('/');
 
     }
     else{
-      alert("Make sure there's at least one survey and one teacher checked. Date must be at least from today.");
+      setError("Make sure there's at least one survey and one teacher checked and date must be at least from today.");
     }
   }
 
@@ -157,29 +163,6 @@ const OfficerSurveyDistribution = () => {
         <p>
           <em>It may take a couple of seconds to load the tasks, please be patient.</em>
         </p>
-
-        {/* {surveyDisplay ?
-        
-        allSurveys.map((o, index) => 
-        <div key={index}>
-          <span>{++index}. Title: {o.title}</span>
-          <input
-            type="checkbox"
-            value={o.id}
-            checked={selectedSurveys.includes(o.id)}
-            onChange={e => 
-              {
-                if (selectedSurveys.includes(e.target.value)){
-                  setSelectedSurveys(selectedSurveys.filter(obj => obj !== e.target.value));
-                }else{
-                setSelectedSurveys(oldArray => [...oldArray, e.target.value])
-                }
-              }
-            }
-          />
-        </div>)
-        : <p>Loading...</p>
-        } */}
         </div>
 
         <div className='select-display-survey'>
@@ -235,6 +218,31 @@ const OfficerSurveyDistribution = () => {
 
         <button className='warning-btn' onClick={clearSchedule}>Discard changes</button>        
     </div>
+
+    
+{error!=="" && 
+     <Dialog
+       className='dialog'
+       title= "Unable to schedule survey"
+       isOpen={error !=="" ? true : false}
+       onClose={() => setError("")}
+     >
+       <p style={{padding:'10px'}}>
+        {error}
+       </p>
+     </Dialog>}
+
+     {confirmation!=="" && 
+     <Dialog
+       className='dialog'
+       title= "Confirmation"
+       isOpen={confirmation !=="" ? true : false}
+       onClose={() => navigate('/')}
+     >
+       <p style={{padding:'10px'}}>
+        {confirmation}
+       </p>
+     </Dialog>}
     </>
   )
 }

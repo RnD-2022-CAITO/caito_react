@@ -244,8 +244,8 @@ const Survey = () => {
     isFound ?
     <form className='survey' onSubmit={e => sendSurvey(e, true)}> 
        {!formLoading ? 
-              <>
-              <h1>{surveyTitle}</h1>
+              <div className='form'>
+              <h1 style={{textAlign:'center'}}>{surveyTitle}</h1>
                {questions.map((q, index) => 
                <div className='sur-question' key={index}>
                <label>{index+1}. {q.question}</label>
@@ -256,21 +256,23 @@ const Survey = () => {
                     { q.options.map((o) =>
                      <div key={o}>
                      <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
-                     <label htmlFor={o}>{o}</label>
+                     <label htmlFor={o}> &nbsp; {o}</label>
                      </div>
                      )}
                    </div>
                  : 
                  <div>
-                 <input required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+                 <input className='task-input' required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
                  </div>}
                </div>)
                }
                        
+                <div className='class-btn-group'>
                 <button disabled={loading} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
-                <br/>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
-              </>
+                </div>
+
+              </div>
        :             
         <div>
             <CommonLoading color='#fff' />
