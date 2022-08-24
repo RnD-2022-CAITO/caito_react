@@ -3,7 +3,7 @@ import { useAuth } from '../auth/Authentication'
 import { db } from '../../../utils/firebase';
 import './Nav.css';
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import { Button, Classes, Navbar } from '@blueprintjs/core';
 import { Tooltip2 } from "@blueprintjs/popover2";
@@ -18,6 +18,8 @@ const NavBar = () => {
 
 
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const handleLogOut = async () => {
 
@@ -37,6 +39,8 @@ const NavBar = () => {
         if(mobileMenu){
             setMobileMenu(false);
         }
+
+        scrollToTop('/');
     }
 
     const retrieveUserData = async () => {
@@ -65,6 +69,14 @@ const NavBar = () => {
     //Open the navigation menu
     const openNavMenu = () => {
         setMobileMenu(!mobileMenu);
+    }
+
+    //Scroll to the top of the page
+    const scrollToTop = (path) => {
+        if(location.pathname === path){
+            //Scroll to the top of the page
+            window.scroll({top: 0, left: 0, behavior: 'smooth' })
+        }
     }
 
     const renderOfficerMobileMenu = (
@@ -147,7 +159,8 @@ const NavBar = () => {
                                     placement="bottom"
                                     usePortal={false}
                             >
-                            <Button className={Classes.MINIMAL} icon="home" />
+                            <Button className={Classes.MINIMAL} icon="home" 
+                             onClick={()=>scrollToTop('/')}/>
                             </Tooltip2>
                         </NavLink>
                     </li>
@@ -159,7 +172,8 @@ const NavBar = () => {
                                     placement="bottom"
                                     usePortal={false}
                             >
-                                <Button className={Classes.MINIMAL} icon="people"/>
+                                <Button className={Classes.MINIMAL} icon="people"
+                                 onClick={()=>scrollToTop('/profile')}/>
                             </Tooltip2>
                         </NavLink>
                     </li>
@@ -185,7 +199,7 @@ const NavBar = () => {
 
     const OfficerNav = () => (
         <div className='wrapper site-header__wrapper'>
-            <button className='brand' onClick={navigateHome}>
+            <button className='brand' onClick={(navigateHome)}>
                     <Logo className='brand-logo'/>
             </button>
             <nav className='nav'>
@@ -203,7 +217,8 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                             >
-                                <Button className={Classes.MINIMAL} icon="home"/>
+                                <Button className={Classes.MINIMAL} icon="home"
+                                onClick={()=>scrollToTop('/')}/>
                             </Tooltip2>
                         </NavLink>
                     </li>
@@ -215,7 +230,8 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                         >
-                            <Button className={Classes.MINIMAL} icon="add"/>
+                            <Button className={Classes.MINIMAL} icon="add"
+                             onClick={()=>scrollToTop('/survey-making')}/>
                         </Tooltip2>
                         </NavLink>
                     </li>
@@ -227,7 +243,8 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                         >
-                            <Button className={Classes.MINIMAL} icon="send-message"/>
+                            <Button className={Classes.MINIMAL} icon="send-message"
+                            onClick={()=>scrollToTop('/survey-distribution')}/>
                         </Tooltip2>
                         </NavLink>
                     </li>
