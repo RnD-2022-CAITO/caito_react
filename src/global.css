@@ -109,8 +109,9 @@ input, textarea{
 
 input:focus, textarea:focus{
     outline: none;
-    border-radius: 10px;
-    padding: 3px;
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    border: 0.1px solid var(--primary-light);
 }
 
 label{
