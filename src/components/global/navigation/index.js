@@ -5,7 +5,7 @@ import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
-import { Button, Classes, Navbar } from '@blueprintjs/core';
+import { Button, Classes, Icon, Navbar } from '@blueprintjs/core';
 import { Tooltip2 } from "@blueprintjs/popover2";
 
 const NavBar = () => {
@@ -84,31 +84,43 @@ const NavBar = () => {
                 <ul className='mobile-list'>
                     <li>
                         <NavLink activeclassname='active' to="/">
-                            <Button className={Classes.MINIMAL} icon="home" text="Home"
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="home" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Home"
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li >
                         <NavLink activeclassname='active' to="/survey-making">
-                            <Button className={Classes.MINIMAL} icon="add" text="Create task"
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="add" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Create task"
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeclassname='active' to="/survey-distribution">
-                            <Button className={Classes.MINIMAL} icon="send-message" text="Distribute task"
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="send-message" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Distribute task"
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeclassname='active' to="/delete-account">
-                            <Button className={Classes.MINIMAL} icon="people" text="Admin"
+                            <Button className={Classes.MINIMAL} text="Admin"
+                            icon={<Icon icon="people" style={{color:'white'}}/>}
+                            style={{color:'white'}}
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
-                        icon = "log-out" text="Log out"/>
+                            style={{color:'white'}}
+                            icon = "log-out" text="Log out"/>
                     </li>
                     </ul>
         </div>
@@ -119,19 +131,26 @@ const NavBar = () => {
                 <ul className='mobile-list'>
                     <li>
                         <NavLink activeclassname='active' to="/">
-                            <Button className={Classes.MINIMAL} icon="home" text="Home"
+                            <Button className={Classes.MINIMAL}
+                            icon={<Icon icon="home" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Home"
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li >
                         <NavLink activeclassname='active' to="/profile">
-                            <Button className={Classes.MINIMAL} icon="people" text="Profile"
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="people" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Profile"
                             onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
-                        icon = "log-out" text="Log out"/>
+                        icon={<Icon icon="log-out"/>}
+                        style={{color:'white'}} text="Log out"/>
                     </li>
                     </ul>
         </div>
@@ -159,7 +178,7 @@ const NavBar = () => {
                                     placement="bottom"
                                     usePortal={false}
                             >
-                            <Button className={Classes.MINIMAL} icon="home" 
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="home" style={{color:'white'}}/>}
                              onClick={()=>scrollToTop('/')}/>
                             </Tooltip2>
                         </NavLink>
@@ -172,7 +191,7 @@ const NavBar = () => {
                                     placement="bottom"
                                     usePortal={false}
                             >
-                                <Button className={Classes.MINIMAL} icon="people"
+                                <Button className={Classes.MINIMAL} icon={<Icon icon="people" style={{color:'white'}}/>}
                                  onClick={()=>scrollToTop('/profile')}/>
                             </Tooltip2>
                         </NavLink>
@@ -204,11 +223,10 @@ const NavBar = () => {
             </button>
             <nav className='nav'>
                 <span class="nav__toggle" aria-expanded="false">
-                    <Button icon="menu" className={Classes.MINIMAL} onClick={openNavMenu}/>
+                    <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
                 </span>
 
                 <ul className='nav__wrapper'>
-
                     <li className='nav__item'>
                         <NavLink activeclassname='active' to="/">
                             <Tooltip2
@@ -217,7 +235,7 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                             >
-                                <Button className={Classes.MINIMAL} icon="home"
+                                <Button className={Classes.MINIMAL} icon={<Icon icon="home" style={{color:'white'}}/>}
                                 onClick={()=>scrollToTop('/')}/>
                             </Tooltip2>
                         </NavLink>
@@ -230,7 +248,7 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                         >
-                            <Button className={Classes.MINIMAL} icon="add"
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="add" style={{color:'white'}}/>}
                              onClick={()=>scrollToTop('/survey-making')}/>
                         </Tooltip2>
                         </NavLink>
@@ -243,7 +261,7 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                         >
-                            <Button className={Classes.MINIMAL} icon="send-message"
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="send-message" style={{color:'white'}}/>}
                             onClick={()=>scrollToTop('/survey-distribution')}/>
                         </Tooltip2>
                         </NavLink>
@@ -256,7 +274,7 @@ const NavBar = () => {
                                 placement="bottom"
                                 usePortal={false}
                         >
-                        <Button className={Classes.MINIMAL} icon="people"/>
+                        <Button className={Classes.MINIMAL} icon={<Icon icon="people" style={{color:'white'}}/>}/>
                         </Tooltip2>
                         </NavLink>
                     </li>

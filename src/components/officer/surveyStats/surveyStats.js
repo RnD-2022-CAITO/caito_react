@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyStats.css';
 import ReactDOMServer from 'react-dom/server';
-import { Dialog } from '@blueprintjs/core';
+import { Dialog, HTMLSelect } from '@blueprintjs/core';
 import { CommonLoading } from 'react-loadingg';
 // using node-style package resolution in a CSS file:
 // import "normalize.css";
@@ -357,7 +357,7 @@ function OfficerSurveyStats() {
   }
   return loading ? (
     <div>
-      <CommonLoading color='#fff' />
+      <CommonLoading color='#323547' />
     </div>
   ) : (
     <div>
@@ -369,7 +369,7 @@ function OfficerSurveyStats() {
       <label>
         Filter by &nbsp;
       </label>
-      <select
+      <HTMLSelect
       onChange={e => 
         {
           filterPageResults(e.target.value);
@@ -380,7 +380,7 @@ function OfficerSurveyStats() {
         <option value="submitted">Submitted</option>
         <option value="unsubmitted">Unsubmitted</option>
 
-      </select>
+      </HTMLSelect>
       </div>
 
       {content}

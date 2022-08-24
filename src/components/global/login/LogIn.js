@@ -3,7 +3,7 @@ import {React, useRef, useState} from 'react'
 import { useAuth } from '../auth/Authentication'
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorRoute from '../routes/ErrorRoute';
-import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
+import {ReactComponent as Logo} from '../../../assets/logo.svg';
 
 import './Login.css'
 
@@ -75,7 +75,7 @@ const LogIn = () => {
       </form>
 
       <div>
-        <p>
+        <p style={{color:'white'}}>
                 Don't have an account? &nbsp;
                 <Link to="/signup">
                      Sign Up

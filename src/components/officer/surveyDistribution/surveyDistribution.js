@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { Dialog } from '@blueprintjs/core';
+import { Dialog, HTMLSelect } from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 
@@ -138,10 +138,10 @@ const OfficerSurveyDistribution = () => {
   return (
     <>
     <div className='grid-layout'>
-        <div className='select-display'>
+        <div className='select-display-s'>
         <h3>Select your profiling task</h3>
         <div className=' template input-field'>
-          <select 
+          <HTMLSelect 
             value={selectedSurveys}
             onChange={e => 
               {
@@ -154,7 +154,7 @@ const OfficerSurveyDistribution = () => {
             <option value={o.id}>
               {o.title}
             </option>)}
-          </select>
+          </HTMLSelect>
           <label>
             Select a profiling task
           </label>
@@ -203,7 +203,7 @@ const OfficerSurveyDistribution = () => {
         </div>
 
         </div>
-        <div className='select-display'>
+        <div className='select-display-s'>
           <h3>Schedule your date to send the profiling task</h3>
           <input required className='question' type="date" 
           placeholder='Enter your title here..'
@@ -222,7 +222,6 @@ const OfficerSurveyDistribution = () => {
     
 {error!=="" && 
      <Dialog
-       className='dialog'
        title= "Unable to schedule survey"
        isOpen={error !=="" ? true : false}
        onClose={() => setError("")}
@@ -234,7 +233,6 @@ const OfficerSurveyDistribution = () => {
 
      {confirmation!=="" && 
      <Dialog
-       className='dialog'
        title= "Confirmation"
        isOpen={confirmation !=="" ? true : false}
        onClose={() => navigate('/')}

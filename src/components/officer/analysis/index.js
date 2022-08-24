@@ -97,7 +97,7 @@ const OfficerSummary = () => {
   return (
     loading ? 
     <div>
-      <CommonLoading color='#fff' />
+      <CommonLoading color='#323547' />
     </div>
     :
     <div>

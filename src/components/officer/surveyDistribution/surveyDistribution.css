@@ -18,18 +18,17 @@
     }
 }
 
-.select-display, .select-display-survey{
+.select-display-s, .select-display-survey{
     padding: 10px;
-    border: 0.2px solid black;
+    border: 0.2px solid rgba(0, 0, 0, 0.299);
     border-radius: 2px;
     margin: 10px;
-    background-color: var(--tertiary-color);
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 8px 24px;
 }
 
-.select-display h3, .select-display-survey h3{
+.select-display-s h3, .select-display-survey h3{
     border: 1px;
     background-color: var(--secondary-color);
+    color: var(--primary-light);
     margin: -10px -10px 10px -10px;
     padding: 10px;
 }

@@ -15,18 +15,13 @@ Styles that can be applied globally to all elements with the same type are writt
 }
 
 body{
-    background-color: var(--primary-dark);
+    background-color: var(--primary-light);
 }
 
 *{
     font-family: 'Questrial', sans-serif;
     margin: 0;
-    color: var(--primary-light);
 
-}
-
-.dialog{
-	background-color: var(--primary-dark);
 }
 
 select, input{
@@ -101,7 +96,7 @@ a:hover{
 
 input, textarea{
     border: none;
-    border: 1px solid var(--primary-color);
+    border: 0.2px solid var(--primary-color);
     margin-left: 1rem;
     padding: 2px;
     transition: 0.5s;
@@ -109,7 +104,7 @@ input, textarea{
 
 input:focus, textarea:focus{
     outline: none;
-    box-shadow: rgba(0, 0, 0, 0.576) 0px 3px 24px;
+    border: 1px solid var(--primary-color);
 }
 
 label{

@@ -97,7 +97,7 @@ const TeacherLanding = () => {
         <div>
            {loading ? 
             <div>
-                <CommonLoading color='#fff' />
+                <CommonLoading color='#323547' />
             </div> : 
            renderSurveys()}
         </div>

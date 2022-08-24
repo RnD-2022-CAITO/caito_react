@@ -275,7 +275,7 @@ const Survey = () => {
               </div>
        :             
         <div>
-            <CommonLoading color='#fff' />
+          <CommonLoading color='#323547' />
         </div> }
 
     {dialog!=="" && 

@@ -113,7 +113,7 @@ const OfficerSurveyMaking = () => {
 
       <div key={`confirmed ${index}`} className='task-question'>
 
-      <p>{++num} </p>
+      <p style={{color:"white"}}>{++num} </p>
       
       <div className='question'>
         <p><strong>Question: {o.question}</strong></p>
@@ -471,7 +471,6 @@ const OfficerSurveyMaking = () => {
       Task template
     </label>
     </div>;
-    //console.log(ReactDOMServer.renderToString(content));
     setTemplateDisplay(content);
     }
 
@@ -484,7 +483,7 @@ const OfficerSurveyMaking = () => {
     {error && <p className='error'>{error}</p>}
 
     <div className='grid-layout'>
-      <div className='select-display'>
+      <div className='select-display-s'>
         <h3>Task details</h3>
 
         <div className='input-field'>
@@ -497,23 +496,13 @@ const OfficerSurveyMaking = () => {
             </label>
         </div>
 
-        {/* To be developed */}
-        {/* <div style={{backgroundColor:'red'}} className='input-field'>
-            <input required  style={{width:'70%'}} type="text" 
-            placeholder='Enter your task description here..'
-            value={description}
-            onInput={e => setDescription(e.target.value)} />
-            <label>
-              Task description
-            </label>
-        </div> */}
 
         <div className='input-field'>
             {templateDisplay}
         </div>
       </div>
 
-      <div className='select-display'>
+      <div className='select-display-s'>
         <h3>Task questions</h3>
 
         {!showQuestion ?
@@ -566,7 +555,7 @@ const OfficerSurveyMaking = () => {
         </>}
       </div>
 
-      <div className='select-display create-btns'> 
+      <div className='select-display-s create-btns'> 
           <button style={{backgroundColor:'var(--warning)'}} onClick={refreshForm}>Discard</button>
           <button  disabled={loading} onClick={()=> addCurrentSurvey()}>Create task</button>
       </div>
@@ -589,7 +578,6 @@ const OfficerSurveyMaking = () => {
     }
     
     <Dialog
-                className="dialog"
                 title="Edit question"
                 isOpen={editBtn}
                 onClose={() => setEditBtn(false)}

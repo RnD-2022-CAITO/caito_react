@@ -1,5 +1,5 @@
 li a{
-    color: var(--primary-light)
+    color: var(--primary-light);
 }
 
 .brand {
@@ -30,7 +30,7 @@ li a{
     padding: 0px 10px 0px 10px;
     margin: 0;
     margin-bottom: 20px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.731);
+    box-shadow: 0 0.05px 10px rgba(0, 0, 0, 0.731);
     position: sticky;
     top: 0px;
     width: 100%;
