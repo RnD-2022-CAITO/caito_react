@@ -186,7 +186,7 @@ const OfficerSurveyMaking = () => {
     setDialogDisplay(
       <div className='dialog-box'>
       <div className='input-field'>
-        <input type="text" value={q} //this value needs to be updated.
+        <input className='input-dialog' type="text" value={q} 
         onChange={e => {
           setEditQ(e.target.value);
         }}/>
@@ -228,7 +228,7 @@ const OfficerSurveyMaking = () => {
          
           <label>
             <input type={qType}/>
-            {o}
+            &nbsp; {o} 
           </label>
 
           <button className='warning-btn' onClick={() => {removeOption(o, index)}}>X</button>
