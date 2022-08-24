@@ -15,6 +15,9 @@ const NavBar = () => {
 
     const [role, setRole] = useState('');
 
+    const [mobileMenu, setMobileMenu] = useState(false);
+
+
     const navigate = useNavigate();
 
     const handleLogOut = async () => {
@@ -31,6 +34,10 @@ const NavBar = () => {
 
     const navigateHome = () => {
         navigate('/');
+
+        if(mobileMenu){
+            setMobileMenu(false);
+        }
     }
 
     const retrieveUserData = async () => {
@@ -58,8 +65,66 @@ const NavBar = () => {
 
     //Open the navigation menu
     const openNavMenu = () => {
- 
+        setMobileMenu(!mobileMenu);
     }
+
+    const renderOfficerMobileMenu = (
+        <div className='mobile-menu'>
+                <ul className='mobile-list'>
+                    <li>
+                        <NavLink activeclassname='active' to="/">
+                            <Button className={Classes.MINIMAL} icon="home" text="Home"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li >
+                        <NavLink activeclassname='active' to="/survey-making">
+                            <Button className={Classes.MINIMAL} icon="add" text="Create task"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/survey-distribution">
+                            <Button className={Classes.MINIMAL} icon="send-message" text="Distribute task"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/delete-account">
+                            <Button className={Classes.MINIMAL} icon="people" text="Admin"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
+                        icon = "log-out" text="Log out"/>
+                    </li>
+                    </ul>
+        </div>
+    )
+
+    const renderTeacherMobileMenu = (
+        <div className='mobile-menu'>
+                <ul className='mobile-list'>
+                    <li>
+                        <NavLink activeclassname='active' to="/">
+                            <Button className={Classes.MINIMAL} icon="home" text="Home"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li >
+                        <NavLink activeclassname='active' to="/profile">
+                            <Button className={Classes.MINIMAL} icon="people" text="Profile"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
+                        icon = "log-out" text="Log out"/>
+                    </li>
+                    </ul>
+        </div>
+        )
 
     const TeacherNav = () => (
         <div className='wrapper site-header__wrapper'>
@@ -106,6 +171,8 @@ const NavBar = () => {
                     </li>
                 </ul>
             </nav>
+
+            {mobileMenu && renderTeacherMobileMenu}
         </div>
     )
 
@@ -178,6 +245,8 @@ const NavBar = () => {
                     </li>
                 </ul>
             </nav>
+
+            {mobileMenu && renderOfficerMobileMenu}
         </div>
     )
 
