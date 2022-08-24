@@ -6,17 +6,26 @@
 }
 
 .form{
-    border: 1px solid var(--primary-color);
+    background-color: var(--tetriary-color);
     padding: 10px;
 }
 
 .sur-question{
     width: 70vw;
-    padding: 10px;
+    padding-bottom: 15px;
     margin: 10px;
-    border: 0.2px solid black;
+    border: 0.2px solid rgba(0, 0, 0, 0.322);
     border-radius: 2px;
-    background-color: var(--tertiary-color);
+    background-color: var(--primary-light);
+}
+
+.question-label{
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--primary-light);
+    padding: 10px;
 }
 
 .task-input{

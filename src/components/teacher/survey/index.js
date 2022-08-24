@@ -248,8 +248,9 @@ const Survey = () => {
               <h1 style={{textAlign:'center'}}>{surveyTitle}</h1>
                {questions.map((q, index) => 
                <div className='sur-question' key={index}>
-               <label>{index+1}. {q.question}</label>
-               <br/>
+              <div className='question-label'> 
+                <label>{index+1}. {q.question}</label>
+              </div>
                <br/>
                  {q.options.length > 1 ?
                    <div >
@@ -268,7 +269,7 @@ const Survey = () => {
                }
                        
                 <div className='class-btn-group'>
-                <button disabled={loading} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
+                <button disabled={loading} style={{backgroundColor:'var(--tertiary-color)'}} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
                 </div>
 
