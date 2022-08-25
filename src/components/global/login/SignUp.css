@@ -3,6 +3,8 @@
     padding: 20px;
     border: 0.1px solid black;
     border-radius: 5px;
+    background-color: var(--primary-light);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
 }
 
 .sign-up-form h2{
@@ -13,8 +15,4 @@
 
 .sign-up-form button{
     width: 100%;
-}
-
-.auth-btn:hover{
-    letter-spacing: 10px;
 }

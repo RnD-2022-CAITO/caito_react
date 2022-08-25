@@ -3,8 +3,10 @@ import React, {useState, useEffect, useRef} from 'react'
 import app, {func} from '../../../utils/firebase';
 import { db } from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
 
 import "./Analysis.css"
+import { Pagination } from '../../teacher/landing/Pagination';
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -78,7 +80,7 @@ const OfficerSummary = () => {
   },[questionID]);
 
   const clickButton = (question) => {
-    navigate('/survey-stats', { state: { question: question} });
+    navigate(`/survey-stats/${question.id}`, { state: { question: question} });
   }
 
   const searchSurvey = (e) => {
@@ -93,9 +95,23 @@ const OfficerSummary = () => {
 
   }
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [taskPerPage] = useState(5);
+  
+  const indexOfLastTask = currentPage * taskPerPage;
+  const indexOfFirstTask = indexOfLastTask - taskPerPage;
+
+  const renderQuestions = questionID
+  .slice(indexOfFirstTask, indexOfLastTask).map((question) => (
+    renderQuestion(question, clickButton)
+  ));
+
   return (
     loading ? 
-    <p>Loading..</p>
+    <div>
+      <CommonLoading color='#323547' />
+    </div>
     :
     <div>
         <h1 style={{textAlign:'center'}}>Your Profiling Tasks</h1>
@@ -110,9 +126,14 @@ const OfficerSummary = () => {
         //Display all surveys
         <>
         <h5 style={{textAlign:'center'}}>You have {questionID.length} survey(s) in total</h5>
-        {questionID.map(question => (
-          renderQuestion(question, clickButton)
-        ) )}
+        <br></br>
+        <Pagination 
+            taskPerPage={taskPerPage} 
+            totalTasks={questionID.length} 
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+        />
+        {renderQuestions}
         </>
         :
         //display surveys that matches with the pattern on the search engine 
@@ -134,6 +155,8 @@ function renderQuestion(question, clickButton) {
   return <div key={question.id}>
     <div className='summary-view'>
       <h3>{question.title}</h3>
+      <hr/>
+      <br/>
       <h4>Question ID: {question.id}</h4>
       <p>Total surveys sent out: {question.total}</p>
       <p>Total teachers submitted: {question.complete}</p>

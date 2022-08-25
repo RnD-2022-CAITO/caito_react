@@ -3,9 +3,10 @@ import { useAuth } from '../auth/Authentication'
 import { db } from '../../../utils/firebase';
 import './Nav.css';
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
-import {FiLogOut} from 'react-icons/fi';
+import { Button, Classes, Icon, Navbar } from '@blueprintjs/core';
+import { Tooltip2 } from "@blueprintjs/popover2";
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();
@@ -13,7 +14,12 @@ const NavBar = () => {
 
     const [role, setRole] = useState('');
 
+    const [mobileMenu, setMobileMenu] = useState(false);
+
+
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const handleLogOut = async () => {
 
@@ -29,6 +35,12 @@ const NavBar = () => {
 
     const navigateHome = () => {
         navigate('/');
+
+        if(mobileMenu){
+            setMobileMenu(false);
+        }
+
+        scrollToTop('/');
     }
 
     const retrieveUserData = async () => {
@@ -54,76 +66,233 @@ const NavBar = () => {
     }, [currentUser])
 
 
-    const TeacherNav = () => (
-        <div className='navigation-bar'>
-        <div style={{textAlign:'center'}}>
-            <button onClick={navigateHome}>
-                <Logo className='brand-logo'/>
-            </button>
-        </div>
-        <div className='nav'>
-            <ul>
-                <li>
-                    <NavLink activeclassname='active' to="/">
-                    home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/profile">
-                    profile
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink activeclassname='active' to="/downLoad/downLoadSurvey">
-                    download
-                    </NavLink>
-                </li>
-                <li>
-                    <button className='logout-btn-nav' onClick={handleLogOut}>
-                            <FiLogOut/>
-                    </button>
-                </li>
-            </ul>
-        </div>
-        </div>
-    )
+    //Open the navigation menu
+    const openNavMenu = () => {
+        setMobileMenu(!mobileMenu);
+    }
 
-    const OfficerNav = () => (
-        <div className='navigation-bar'>
-            <div style={{textAlign:'center'}}>
-                <button onClick={navigateHome}>
-                    <Logo className='brand-logo'/>
-                </button>
-            </div>
-            <div className='nav'>
-                <ul>
+    //Scroll to the top of the page
+    const scrollToTop = (path) => {
+        if(location.pathname === path){
+            //Scroll to the top of the page
+            window.scroll({top: 0, left: 0, behavior: 'smooth' })
+        }
+    }
+
+    const renderOfficerMobileMenu = (
+        <div className='mobile-menu'>
+                <ul className='mobile-list'>
                     <li>
                         <NavLink activeclassname='active' to="/">
-                        home
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="home" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Home"
+                            onClick={openNavMenu}/>
                         </NavLink>
                     </li>
-                    <li>
+                    <li >
                         <NavLink activeclassname='active' to="/survey-making">
-                        create survey
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="add" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Create task"
+                            onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeclassname='active' to="/survey-distribution">
-                        distribute survey
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="send-message" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Distribute task"
+                            onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink activeclassname='active' to="/delete-account">
-                        delete account
+                            <Button className={Classes.MINIMAL} text="Admin"
+                            icon={<Icon icon="people" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            onClick={openNavMenu}/>
                         </NavLink>
                     </li>
                     <li>
-                        <button className='logout-btn-nav' onClick={handleLogOut}>
-                            <FiLogOut/>
-                        </button>
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
+                            style={{color:'white'}}
+                            icon = "log-out" text="Log out"/>
+                    </li>
+                    </ul>
+        </div>
+    )
+
+    const renderTeacherMobileMenu = (
+        <div className='mobile-menu'>
+                <ul className='mobile-list'>
+                    <li>
+                        <NavLink activeclassname='active' to="/">
+                            <Button className={Classes.MINIMAL}
+                            icon={<Icon icon="home" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Home"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li >
+                        <NavLink activeclassname='active' to="/profile">
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="people" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Profile"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} 
+                        icon={<Icon icon="log-out"/>}
+                        style={{color:'white'}} text="Log out"/>
+                    </li>
+                    </ul>
+        </div>
+        )
+
+    const TeacherNav = () => (
+        <div className='wrapper site-header__wrapper'>
+            <button className='brand' onClick={navigateHome}>
+                    <Logo className='brand-logo'/>
+            </button>
+
+            <span class="nav__toggle" aria-expanded="false">
+                    <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
+            </span>
+
+            <nav className='nav'>
+                <ul className='nav__wrapper'>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/">
+                            <Tooltip2
+                                    content={<span>Home</span>}
+                                    openOnTargetFocus={false}
+                                    placement="bottom"
+                                    usePortal={false}
+                            >
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="home" style={{color:'white'}}/>}
+                             onClick={()=>scrollToTop('/')}/>
+                            </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/profile">
+                            <Tooltip2
+                                    content={<span>Profile</span>}
+                                    openOnTargetFocus={false}
+                                    placement="bottom"
+                                    usePortal={false}
+                            >
+                                <Button className={Classes.MINIMAL} icon={<Icon icon="people" style={{color:'white'}}/>}
+                                 onClick={()=>scrollToTop('/profile')}/>
+                            </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Navbar.Divider style={{backgroundColor:'white'}}/>
+                    </li>
+                    <li className='nav__item'>
+                        <Tooltip2
+                                    content={<span>Log out</span>}
+                                    openOnTargetFocus={false}
+                                    placement="left"
+                                    usePortal={false}
+                        >
+                            <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} icon="log-out" />
+                        </Tooltip2>
                     </li>
                 </ul>
-            </div>
+            </nav>
+
+            {mobileMenu && renderTeacherMobileMenu}
+        </div>
+    )
+
+    const OfficerNav = () => (
+        <div className='wrapper site-header__wrapper'>
+            <button className='brand' onClick={(navigateHome)}>
+                    <Logo className='brand-logo'/>
+            </button>
+            <nav className='nav'>
+                <span class="nav__toggle" aria-expanded="false">
+                    <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
+                </span>
+
+                <ul className='nav__wrapper'>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/">
+                            <Tooltip2
+                                content={<span>Home</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                            >
+                                <Button className={Classes.MINIMAL} icon={<Icon icon="home" style={{color:'white'}}/>}
+                                onClick={()=>scrollToTop('/')}/>
+                            </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/survey-making">
+                        <Tooltip2
+                                content={<span>Create new task</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="add" style={{color:'white'}}/>}
+                             onClick={()=>scrollToTop('/survey-making')}/>
+                        </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/survey-distribution">
+                        <Tooltip2
+                                content={<span>Distribute tasks</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="send-message" style={{color:'white'}}/>}
+                            onClick={()=>scrollToTop('/survey-distribution')}/>
+                        </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/delete-account">
+                        <Tooltip2
+                                content={<span>Admin</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                        <Button className={Classes.MINIMAL} icon={<Icon icon="people" style={{color:'white'}}/>}/>
+                        </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Navbar.Divider style={{backgroundColor:'white'}}/>
+                    </li>
+                    <li className='nav__item'>
+                        <Tooltip2
+                                content={<span>Log out</span>}
+                                openOnTargetFocus={false}
+                                placement="left"
+                                usePortal={false}
+                        >
+                        <Button className={`logout-btn-nav ${Classes.MINIMAL}`} onClick={handleLogOut} icon="log-out" />
+                        </Tooltip2>
+                    </li>
+                </ul>
+            </nav>
+
+            {mobileMenu && renderOfficerMobileMenu}
         </div>
     )
 

@@ -57,7 +57,7 @@ const LogIn = () => {
         <h1 className='logo'>
           <Logo style={{width:'5em'}}/>
         </h1>
-        <h2>log in</h2>
+        <h2>Log In</h2>
         <div className='input-field'>
           <input id='email' type = 'email' ref={emailRef} required autoComplete='off'/>
           <label className='control-label' htmlFor='email'>Email</label>
@@ -75,7 +75,7 @@ const LogIn = () => {
       </form>
 
       <div>
-        <p>
+        <p style={{color:'white'}}>
                 Don't have an account? &nbsp;
                 <Link to="/signup">
                      Sign Up

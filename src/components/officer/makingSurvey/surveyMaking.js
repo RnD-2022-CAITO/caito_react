@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
 import "./surveyMaking.css"
-import { Dialog } from '@blueprintjs/core';
-import '@blueprintjs/core/lib/css/blueprint.css';
-import { clear } from '@testing-library/user-event/dist/clear';
-// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
+import { Dialog, HTMLSelect } from '@blueprintjs/core';
+
 
 const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
@@ -115,7 +113,7 @@ const OfficerSurveyMaking = () => {
 
       <div key={`confirmed ${index}`} className='task-question'>
 
-      <p>{++num} </p>
+      <p style={{color:"white"}}>{++num} </p>
       
       <div className='question'>
         <p><strong>Question: {o.question}</strong></p>
@@ -130,7 +128,7 @@ const OfficerSurveyMaking = () => {
         <div key={`mutiple + ${i} + ${index}`}>
         <label>
         <input type={o.type} />
-        {i}
+        &nbsp; {i}
         </label>
         </div>)
         }
@@ -188,7 +186,7 @@ const OfficerSurveyMaking = () => {
     setDialogDisplay(
       <div className='dialog-box'>
       <div className='input-field'>
-        <input type="text" value={q} //this value needs to be updated.
+        <input className='input-dialog' type="text" value={q} 
         onChange={e => {
           setEditQ(e.target.value);
         }}/>
@@ -199,7 +197,7 @@ const OfficerSurveyMaking = () => {
   
       <div className='input-field'>    
 
-        <select       
+        <HTMLSelect       
           value={qType}     
           onChange={e => 
               {
@@ -217,7 +215,7 @@ const OfficerSurveyMaking = () => {
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
 
-        </select>
+        </HTMLSelect>
   
         <label>
               Type of Answer:
@@ -230,7 +228,7 @@ const OfficerSurveyMaking = () => {
          
           <label>
             <input type={qType}/>
-            {o}
+            &nbsp; {o} 
           </label>
 
           <button className='warning-btn' onClick={() => {removeOption(o, index)}}>X</button>
@@ -339,7 +337,7 @@ const OfficerSurveyMaking = () => {
     if (i.length > 0){
       setOptionsConfirmed(oldArray => [...oldArray, currentOption]);
     }else{
-      alert("Option cannot be blank.");
+      return setError("Option cannot be blank.");
     }
   };
 
@@ -347,13 +345,11 @@ const OfficerSurveyMaking = () => {
     var pass = true;
     if (questionType === "checkbox" || questionType === "radio"){
       if (optionsConfirmed.length < 2){
-        alert("Minimum 2 options.");
-        pass = false;
+        return setError("Minimum 2 options.");
       }
     }
     if (question.length < 1){
-      alert("Question cannot be blank.");
-      pass = false;
+      return setError("Question cannot be blank.");
     }
 
     if(questionType === ''){
@@ -429,11 +425,6 @@ const OfficerSurveyMaking = () => {
 
   }
 
-  //TODO
-  const saveDraft = () => {
-    alert("This feature is being developed...");
-  }
-
   //UI
   const templateDropdown = () => {
     let options = [];
@@ -441,14 +432,14 @@ const OfficerSurveyMaking = () => {
     let currentTargetValue;
     content =         
       <div className='template input-field'>
-      <select 
+      <HTMLSelect className='select-bp'
       onChange={e => {
       currentTargetValue = e.target.value;
 
       // eslint-disable-next-line
       templates.map((template) => {
 
-        if (currentTargetValue !== "Default"){
+        if (currentTargetValue !== ""){
           setQuestionsConfirmed([]);
           setQuestionsConfirmed([...template.at(currentTargetValue).questions]);
           setTitle(template.at(currentTargetValue).title);
@@ -475,12 +466,11 @@ const OfficerSurveyMaking = () => {
       
     )}
     {options}
-    </select>
+    </HTMLSelect>
     <label>
       Task template
     </label>
     </div>;
-    //console.log(ReactDOMServer.renderToString(content));
     setTemplateDisplay(content);
     }
 
@@ -493,7 +483,7 @@ const OfficerSurveyMaking = () => {
     {error && <p className='error'>{error}</p>}
 
     <div className='grid-layout'>
-      <div className='select-display'>
+      <div className='select-display-s'>
         <h3>Task details</h3>
 
         <div className='input-field'>
@@ -502,27 +492,17 @@ const OfficerSurveyMaking = () => {
             value={title}
             onInput={e => setTitle(e.target.value)} />
             <label>
-              Profiling Task Title
+              Task Title
             </label>
         </div>
 
-        {/* To be developed */}
-        {/* <div style={{backgroundColor:'red'}} className='input-field'>
-            <input required  style={{width:'70%'}} type="text" 
-            placeholder='Enter your task description here..'
-            value={description}
-            onInput={e => setDescription(e.target.value)} />
-            <label>
-              Task description
-            </label>
-        </div> */}
 
         <div className='input-field'>
             {templateDisplay}
         </div>
       </div>
 
-      <div className='select-display'>
+      <div className='select-display-s'>
         <h3>Task questions</h3>
 
         {!showQuestion ?
@@ -540,11 +520,8 @@ const OfficerSurveyMaking = () => {
             Question
           </label>
         </div>
-
-        <label>
-          Type of Answer:
-        </label>
-        <select     
+        <div className='input-field'>
+        <HTMLSelect className='select-bp'
           value={questionType}        
           onChange={e => 
               {
@@ -562,7 +539,12 @@ const OfficerSurveyMaking = () => {
           <option value="number">Number</option>
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
-        </select>
+        </HTMLSelect>
+
+        <label>
+          Type of Answer: &nbsp;
+        </label>
+        </div>
         <label>
           {options}
         </label>
@@ -573,9 +555,8 @@ const OfficerSurveyMaking = () => {
         </>}
       </div>
 
-      <div className='select-display create-btns'> 
+      <div className='select-display-s create-btns'> 
           <button style={{backgroundColor:'var(--warning)'}} onClick={refreshForm}>Discard</button>
-          <button style={{backgroundColor:'var(--secondary-color)'}} onClick={saveDraft}>Save draft</button>
           <button  disabled={loading} onClick={()=> addCurrentSurvey()}>Create task</button>
       </div>
     </div>
