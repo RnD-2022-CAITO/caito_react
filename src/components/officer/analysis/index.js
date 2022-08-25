@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 
 import "./Analysis.css"
+import { Pagination } from '../../teacher/landing/Pagination';
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -94,6 +95,18 @@ const OfficerSummary = () => {
 
   }
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [taskPerPage] = useState(5);
+  
+  const indexOfLastTask = currentPage * taskPerPage;
+  const indexOfFirstTask = indexOfLastTask - taskPerPage;
+
+  const renderQuestions = questionID
+  .slice(indexOfFirstTask, indexOfLastTask).map((question) => (
+    renderQuestion(question, clickButton)
+  ));
+
   return (
     loading ? 
     <div>
@@ -113,9 +126,14 @@ const OfficerSummary = () => {
         //Display all surveys
         <>
         <h5 style={{textAlign:'center'}}>You have {questionID.length} survey(s) in total</h5>
-        {questionID.map(question => (
-          renderQuestion(question, clickButton)
-        ) )}
+        <br></br>
+        <Pagination 
+            taskPerPage={taskPerPage} 
+            totalTasks={questionID.length} 
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+        />
+        {renderQuestions}
         </>
         :
         //display surveys that matches with the pattern on the search engine 

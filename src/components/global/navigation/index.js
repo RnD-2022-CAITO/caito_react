@@ -162,11 +162,9 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
 
-            <button class="nav__toggle" aria-expanded="false" type="button"
-            onClick={openNavMenu}
-            >
-                <Button icon="menu" className={Classes.MINIMAL} />
-            </button>
+            <span class="nav__toggle" aria-expanded="false">
+                    <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
+            </span>
 
             <nav className='nav'>
                 <ul className='nav__wrapper'>

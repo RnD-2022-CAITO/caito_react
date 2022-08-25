@@ -4,6 +4,7 @@ import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
+import { Pagination  } from './Pagination';
 
 import "./teacherLanding.css";
 
@@ -27,8 +28,12 @@ const TeacherLanding = () => {
             const getSurvey = func.httpsCallable('teacher-getAllAssignedSurveys_Answers');
             try {
                 const response = await getSurvey();
-                
-                setUpcomingSurvey(response.data);
+
+                const undoneSurvey = response.data.filter((survey) => {
+                    return survey.isSubmitted === false;
+                });
+
+                setUpcomingSurvey(undoneSurvey);
 
                 setLoading(false);
             } catch (e) {
@@ -58,27 +63,6 @@ const TeacherLanding = () => {
 
     }, [upcomingSurvey])
 
-    const renderSurveys = () => (
-        <div className='survey-display'>
-            <div>
-            <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
-            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{totalSurvey}</span> new 
-            {(totalSurvey < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
-            </div>
-
-            <div className='survey-box'>
-            {//Render surveys
-            upcomingSurvey.map((sur, index) => 
-            sur.isSubmitted === false &&
-            <section className='new-survey' key={index}>
-                <h3 >{sur.questionTitle}</h3>
-                <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
-            </section>
-            )
-            }
-            </div>
-        </div>
-    )
 
     const openSurvey = (e) => {
         // alert('Redirect user to question ID: ' + e.target.id);
@@ -90,8 +74,43 @@ const TeacherLanding = () => {
             }
         })
     }
-        
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [taskPerPage] = useState(5);
+    
+    const indexOfLastTask = currentPage * taskPerPage;
+    const indexOfFirstTask = indexOfLastTask - taskPerPage;
+
+    
+    const currentTask = upcomingSurvey
+    .slice(indexOfFirstTask, indexOfLastTask).map((sur, index) => (
+            sur.isSubmitted === false &&
+            <section className='new-survey' key={index}>
+                <h3 >{sur.questionTitle}</h3>
+                <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
+            </section>
+    ));
+        
+    const renderSurveys = () => (
+        <div className='survey-display'>
+            <div>
+            <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
+            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{totalSurvey}</span> new 
+            {(totalSurvey < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
+            </div>
+
+            <div className='survey-box'>
+            {//Render surveys
+            currentTask
+            }
+            <Pagination 
+            taskPerPage={taskPerPage} 
+            totalTasks={upcomingSurvey.length} 
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}/>
+            </div>
+        </div>
+    )
 
     return (
         <div>
