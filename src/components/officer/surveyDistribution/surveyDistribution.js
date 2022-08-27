@@ -49,7 +49,7 @@ const OfficerSurveyDistribution = () => {
       return (
         <div>
           <h4>{selectedGroupNames.join(', ')}</h4>
-          <button>ADD MORE TARGET GROUPS</button>
+          <button onClick={() => setSelectGroupsVisible(true)}>ADD MORE TARGET GROUPS</button>
         </div>
       )
     }
@@ -150,9 +150,9 @@ const OfficerSurveyDistribution = () => {
     setSelectGroupsVisible(true);
   }
 
-  const handleConfirmSelectGroups = (groupNames) => {
-    if (groupNames.length > 0) {
-      setSelectedGroupNames(groupNames);
+  const handleConfirmSelectGroups = (names) => {
+    if (names.length > 0) {
+      setSelectedGroupNames([...names]);
       setDistributeToGroupsState(DistributeToGroupsSteps.ADD_MORE_TEACHERS);
     }
     setSelectGroupsVisible(false);
@@ -168,7 +168,7 @@ const OfficerSurveyDistribution = () => {
 
   return (
     <>
-      {selectGroupsVisible && <Modal onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
+      {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
           <h3>Select your profiling task</h3>

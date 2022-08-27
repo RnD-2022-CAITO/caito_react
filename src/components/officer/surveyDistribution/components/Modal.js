@@ -1,10 +1,10 @@
 import style from './style.module.css';
 import {createRef, useEffect, useState} from "react";
 import {func} from "../../../../utils/firebase";
-function Modal({onClose, onConfirm}) {
+function Modal({onClose, onConfirm, defaultGroups = []}) {
   const ref = createRef();
   const [groups, setGroups] = useState([]);
-  const [selectedGroups, setSelectedGroups] = useState([]);
+  const [selectedGroups, setSelectedGroups] = useState(defaultGroups);
   const handleClick = (e) => {
     if (ref.current === e.target) {
       onClose && onClose();
@@ -27,7 +27,7 @@ function Modal({onClose, onConfirm}) {
     return groups.map(group => {
       return (
         <div key={group.id} className={style.option}>
-          <input value={group.name} onChange={handleChange} id={group.id} type={'checkbox'} />
+          <input checked={selectedGroups.includes(group.name)} value={group.name} onChange={handleChange} id={group.id} type={'checkbox'} />
           <label htmlFor={group.id}>{group.name}</label>
         </div>
       )
