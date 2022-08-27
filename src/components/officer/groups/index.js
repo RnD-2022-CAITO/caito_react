@@ -1,5 +1,6 @@
 import app, {func} from "../../../utils/firebase";
 import {useState, useEffect} from 'react';
+import GroupCreator from "./components/GroupCreator";
 function Groups() {
   const [loading, setLoading] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
@@ -30,6 +31,9 @@ function Groups() {
   const [addVisible, setAddVisible] = useState(false);
   const [refreshCurrentGroup, setRefreshCurrentGroup] = useState(true);
   const [selectedGroupTeachers, setSelectedGroupTeachers] = useState([]);
+  const [createGroupVisible, setCreateGroupVisible] = useState(false);
+  const [groupName, setGroupName] = useState('');
+  const [groupDescription, setGroupDescription] = useState('');
   const handleRemoveTeacherFromGroup = async (teacherId) => {
     const removeTeacherFromGroup = func.httpsCallable('group-removeTeacherFromGroup');
     setLoading(true);
@@ -47,13 +51,19 @@ function Groups() {
   }
   const createTargetGroup = async () => {
     //Redirect the user to the create group page
-    const group_name = window.prompt("Enter group name: ");
-    if (group_name) {
+    setCreateGroupVisible(true);
+
+  }
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    if (groupName) {
       const createGroup = func.httpsCallable('group-createGroup');
       await createGroup({
-        name: group_name
+        name: groupName,
+        description: groupDescription
       });
       setRefreshGroup(!refreshGroup);
+      setCreateGroupVisible(false);
       return;
     }
   }
@@ -223,6 +233,32 @@ function Groups() {
       </div>
       <div style={{width: '50%', margin: 'auto'}}>
         <button onClick={createTargetGroup} style={{margin: '10px 0'}}>Create Group</button>
+      </div>
+      <div style={{width: '50%', margin: 'auto'}}>
+        {createGroupVisible && (
+          <form onSubmit={handleCreate}>
+            <div style={{marginBottom: '20px'}}>
+              <GroupCreator
+                onChange={val => setGroupName(val)}
+                required
+                type={'input'}
+                placeholder={'Lorem ipsum...'}
+                subTitle={'Set the name for the group'}
+                title={'Group Name'}/>
+            </div>
+            <div style={{marginBottom: '20px'}}>
+              <GroupCreator
+                onChange={val => setGroupDescription(val)}
+                type={'textarea'}
+                placeholder={'Lorem ipsum...'}
+                subTitle={'Set the group description'}
+                title={'Group Description'}/>
+            </div>
+            <div style={{marginBottom: '20px'}}>
+              <button>Submit</button>
+            </div>
+          </form>
+        )}
       </div>
       <div style={{width: '50%', margin: 'auto'}}>{renderCurrentGroup()}</div>
       <div style={{width: '50%', margin: 'auto'}}>

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^4.8.0",
+    "@blueprintjs/core": "^4.9.2",
+    "@blueprintjs/popover2": "^1.6.2",
     "@firebase/functions-compat": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",

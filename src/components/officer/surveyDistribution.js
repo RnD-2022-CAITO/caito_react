@@ -281,6 +281,10 @@ const OfficerSurveyDistribution = () => {
     alert("This feature is under development");
   }
 
+  const selectGroups = () => {
+
+  }
+
   const createTargetGroup = async () => {
     //Redirect the user to the create group page
     const group_name = window.prompt("Enter group name: ");
