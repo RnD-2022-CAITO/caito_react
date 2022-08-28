@@ -9,16 +9,26 @@
     grid-column-start: 2;
 }
 
-.select-display, .select-display-survey{
+@media screen and (max-width: 700px) {
+    .grid-layout{
+        display: block
+    }
+    .select-display-survey{
+        display: block;
+    }
+}
+
+.select-display-s, .select-display-survey{
     padding: 10px;
-    border: 0.2px solid black;
+    border: 0.2px solid rgba(0, 0, 0, 0.299);
     border-radius: 2px;
     margin: 10px;
 }
 
-.select-display h3, .select-display-survey h3{
+.select-display-s h3, .select-display-survey h3{
     border: 1px;
     background-color: var(--secondary-color);
+    color: var(--primary-light);
     margin: -10px -10px 10px -10px;
     padding: 10px;
 }

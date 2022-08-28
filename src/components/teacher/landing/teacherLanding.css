@@ -1,15 +1,16 @@
 .new-survey{
-    border: 0.2px solid black;
+    border: 0.2px solid rgba(0, 0, 0, 0.505);
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 5em;
 }
 
 .new-sur{
-    color: var(--primary-color);
+    color: var(--primary-dark);
 }
 
 .survey-display{
@@ -20,4 +21,29 @@
 
 .survey-box{
     min-width: 50vw;
+}
+
+@media screen and (max-width: 700px){
+    .survey-display{
+        display: block;
+    }
+}
+    
+.pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination button{
+    background-color: var(--primary-light);
+    border: 0.2px solid var(--tertiary-color);
+    color: var(--primary-dark);
+    transition: 0.5s;
+}
+
+.pagination .active{
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
 }

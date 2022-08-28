@@ -4,22 +4,33 @@ Styles that can be applied globally to all elements with the same type are writt
 */
 
 :root {
-    --primary-color: #8CBCED;
-    --secondary-color: #D3E7FC;
+    --primary-color: 	#323547;
+    --secondary-color: #323949;
+    --tertiary-color: 	#4c5265;
+    
     --primary-light: #fff;
-    --primary-dark: #272635;
+    --primary-dark: #212129;
     --warning: #ED8C8C;
     font-family: 'Questrial', sans-serif;
 }
 
+body{
+    background-color: var(--primary-light);
+}
+
 *{
     font-family: 'Questrial', sans-serif;
+    margin: 0;
+
+}
+
+select, input{
+    color: var(--primary-dark);
 }
 
 .brand-logo{
     width: 7em;
     height: auto;
-    padding-bottom: 10px;
 }
 
 button, input, label{
@@ -37,7 +48,7 @@ button{
 }
 
 button:hover{
-    background-color: var(--primary-dark);
+    background-color: black;
     cursor: pointer;
 }
 
@@ -73,29 +84,27 @@ a{
     transition: 0.5s;
 }
 
-a:hover{
-    color: var(--primary-dark);
-    letter-spacing: 1px;
+a{
+    color: var(--primary-light); 
 }
 
-.active{
-    color: var(--primary-color);
-    background-color: var(--primary-light);
-    padding: 10px;
-    border-radius: 5px 5px 0px 0px;
+a:hover{
+    color: var(--primary-light) !important;
+    text-decoration: none !important;
 }
 
 
 input, textarea{
     border: none;
-    border: 2px solid var(--primary-color);
+    border: 0.2px solid var(--primary-color);
+    margin-left: 1rem;
+    padding: 2px;
     transition: 0.5s;
 }
 
 input:focus, textarea:focus{
     outline: none;
-    border-radius: 10px;
-    padding: 3px;
+    border: 1px solid var(--primary-color);
 }
 
 label{
@@ -103,7 +112,7 @@ label{
 }
 
 input:focus + label{
-    color: var(--primary-color);
+    
 }
 
 .error{
@@ -127,3 +136,4 @@ input:focus + label{
 .more-btn:hover{
     letter-spacing: normal;
 }
+

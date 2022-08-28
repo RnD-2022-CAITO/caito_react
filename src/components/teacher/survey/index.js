@@ -4,6 +4,8 @@ import app, {db, func} from '../../../utils/firebase';
 import { useAuth } from '../../global/auth/Authentication';
 import { useNavigate } from 'react-router-dom';
 import * as toxicity from '@tensorflow-models/toxicity';
+import { CommonLoading } from 'react-loadingg';
+import { Dialog } from '@blueprintjs/core';
 
 import "./survey.css";
 
@@ -197,6 +199,9 @@ const Survey = () => {
     }
   }
 
+  //Set confirmation dialog state
+  const [dialog, setDialog] = useState("");
+
   //Submit survey to the server 
   const sendSurvey = async (e, boolean) => {
     e.preventDefault();
@@ -210,6 +215,11 @@ const Survey = () => {
 
     //navigate('/');
     
+    if(boolean){
+      setDialog("You have successfully submitted your task!");
+    }else{
+      setDialog("Task has been saved! You can continue to submit your task any time.");
+    }
   }
 
   // uses TensorflowJS to predict if the submitted answers are appropriate or not (filters out insults/profanities).
@@ -303,34 +313,53 @@ const Survey = () => {
     isFound ?
     <form className='survey' onSubmit={e => sendSurvey(e, true)}> 
        {!formLoading ? 
-              <>
-              <h1>Survey: {surveyTitle}</h1>
+              <div className='form'>
+              <h1 style={{textAlign:'center'}}>{surveyTitle}</h1>
                {questions.map((q, index) => 
                <div className='sur-question' key={index}>
-               <label>{index+1}. {q.question}</label>
-               <br/>
+              <div className='question-label'> 
+                <label>{index+1}. {q.question}</label>
+              </div>
                <br/>
                  {q.options.length > 1 ?
                    <div >
                     { q.options.map((o) =>
                      <div key={o}>
                      <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
-                     <label htmlFor={o}>{o}</label>
+                     <label htmlFor={o}> &nbsp; {o}</label>
                      </div>
                      )}
                    </div>
                  : 
                  <div>
-                 <input required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+                 <input className='task-input' required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
                  </div>}
                </div>)
                }
                        
-                <button disabled={loading} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
+                <div className='class-btn-group'>
+                <button disabled={loading} style={{backgroundColor:'var(--tertiary-color)'}} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
-              </>
-       : <p>Loading...</p>}
-    </form> : <h1>Survey not found</h1>
+                </div>
+
+              </div>
+       :             
+        <div>
+          <CommonLoading color='#323547' />
+        </div> }
+
+    {dialog!=="" && 
+    <Dialog
+      className='dialog'
+      title= "Confirmation"
+      isOpen={dialog !=="" ? true : false}
+      onClose={() => navigate('/')}
+    >
+      <p style={{padding:'10px'}}>
+       {dialog}
+      </p>
+    </Dialog>}
+    </form> : <h1>Task not found</h1>
   )
 }
 

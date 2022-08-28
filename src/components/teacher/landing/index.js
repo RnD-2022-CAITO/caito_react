@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useUserData } from '../../global/auth/UserData'
 import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
+import { Pagination  } from './Pagination';
 
 import "./teacherLanding.css";
 
@@ -26,8 +28,12 @@ const TeacherLanding = () => {
             const getSurvey = func.httpsCallable('teacher-getAllAssignedSurveys_Answers');
             try {
                 const response = await getSurvey();
-                
-                setUpcomingSurvey(response.data);
+
+                const undoneSurvey = response.data.filter((survey) => {
+                    return survey.isSubmitted === false;
+                });
+
+                setUpcomingSurvey(undoneSurvey);
 
                 setLoading(false);
             } catch (e) {
@@ -57,6 +63,34 @@ const TeacherLanding = () => {
 
     }, [upcomingSurvey])
 
+
+    const openSurvey = (e) => {
+        // alert('Redirect user to question ID: ' + e.target.id);
+
+        //Pass the question ID to the next path
+        navigate(`/survey/${e.target.id}`, {
+            state: {
+                questionID: e.target.id,
+            }
+        })
+    }
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [taskPerPage] = useState(5);
+    
+    const indexOfLastTask = currentPage * taskPerPage;
+    const indexOfFirstTask = indexOfLastTask - taskPerPage;
+
+    
+    const currentTask = upcomingSurvey
+    .slice(indexOfFirstTask, indexOfLastTask).map((sur, index) => (
+            sur.isSubmitted === false &&
+            <section className='new-survey' key={index}>
+                <h3 >{sur.questionTitle}</h3>
+                <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
+            </section>
+    ));
+        
     const renderSurveys = () => (
         <div className='survey-display'>
             <div>
@@ -67,35 +101,23 @@ const TeacherLanding = () => {
 
             <div className='survey-box'>
             {//Render surveys
-            upcomingSurvey.map((sur, index) => 
-            sur.isSubmitted === false &&
-            <section className='new-survey' key={index}>
-                <h3 >{sur.questionTitle}</h3>
-                <button id={sur.questionID} className = "view-survey-btn" onClick={openSurvey}>View Survey</button>
-            </section>
-            )
+            currentTask
             }
+            <Pagination 
+            taskPerPage={taskPerPage} 
+            totalTasks={upcomingSurvey.length} 
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}/>
             </div>
         </div>
     )
 
-    const openSurvey = (e) => {
-        // alert('Redirect user to question ID: ' + e.target.id);
-
-        //Pass the question ID to the next path
-        navigate('/survey', {
-            state: {
-                questionID: e.target.id,
-            }
-        })
-    }
-        
-
-
     return (
         <div>
            {loading ? 
-           <p style={{textAlign:"center"}}>Loading...</p> : 
+            <div>
+                <CommonLoading color='#323547' />
+            </div> : 
            renderSurveys()}
         </div>
 

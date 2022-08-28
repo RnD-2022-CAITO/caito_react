@@ -132,7 +132,7 @@ const SignUp = () => {
       </form>
 
       <div>
-        <p>
+        <p style={{color:'white'}}>
           Already have an account?  &nbsp;
           <Link to="/login">
               Log in

@@ -4,7 +4,11 @@ Two routes are used in this app: public route and private routes.
 */
 
 //styling
-import './global.css'
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
+import './global.css';
+
 //Routes 
 import React from 'react'
 import LogIn from './components/global/login/LogIn'
@@ -16,7 +20,8 @@ import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
 import NavBar from './components/global/navigation'
-import OfficerSummary from './components/officer/analysis'
+import SurveyDistributionToGroups from './components/officer/surveyDistributionToGroups';
+import Groups from './components/officer/groups';
 import OfficerSurveyMaking from './components/officer/makingSurvey/surveyMaking'
 import OfficerSurveyDistribution from './components/officer/surveyDistribution/surveyDistribution';
 import OfficerSurveyStats from './components/officer/surveyStats/surveyStats';
@@ -51,7 +56,7 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/survey" element={    
+              <Route exact path="/survey/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.T}>
                           <Survey/>
@@ -123,13 +128,32 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/survey-stats" element={    
+              <Route exact path="/survey-stats/:id" element={    
                     <UserDataProvider>
                       <PrivateRoute role={role.O}>
                           <OfficerSurveyStats />
                       </PrivateRoute>
                     </UserDataProvider>
                     }
+              />
+
+              <Route exact path="/survey-distribution-group" element={
+                <UserDataProvider>
+                  <PrivateRoute role={role.O}>
+                    <SurveyDistributionToGroups />
+                  </PrivateRoute>
+                </UserDataProvider>
+              }
+              />
+
+
+              <Route exact path="/groups" element={
+                <PrivateLandingRoute>
+                  <UserDataProvider>
+                    <Groups />
+                  </UserDataProvider>
+                </PrivateLandingRoute>
+              }
               />
 
 
