@@ -32,6 +32,9 @@ const Survey = () => {
   //Set loading state for the form
   const [formLoading, setFormLoading] = useState(true);
 
+  //Set loading state for the form submission
+  const [submissionLoading, setSubmissionLoading] = useState(false);
+
   //Loading state when submit the form
   const [loading, setLoading] = useState(false);
 
@@ -206,7 +209,6 @@ const Survey = () => {
   const sendSurvey = async (e, boolean) => {
     e.preventDefault();
 
-    //TODO check toxicity before putting survey through.
     await checkToxicityPrediction(boolean);
 
     //updateSurvey(boolean);
@@ -215,11 +217,11 @@ const Survey = () => {
 
     //navigate('/');
     
-    if(boolean){
+    /*if(boolean){
       setDialog("You have successfully submitted your task!");
     }else{
       setDialog("Task has been saved! You can continue to submit your task any time.");
-    }
+    }*/
   }
 
   // uses TensorflowJS to predict if the submitted answers are appropriate or not (filters out insults/profanities).
@@ -229,6 +231,7 @@ const Survey = () => {
     let index = 0;
     let newArray = [];
     let hasToxicResponse = false;
+    setSubmissionLoading(true);
     await toxicity.load(threshold).then(model => {
 
       answers.map((answer) => {
@@ -244,14 +247,21 @@ const Survey = () => {
               index = answers.indexOf(answer) + 1
               if (predictions[6].results[0].match === true){
                 hasToxicResponse = true;
-                alert("Your " + index + "th answer is inappropriate. Please change it.");
+                setSubmissionLoading(false);
+                setDialog("Your " + index + "th answer is inappropriate. Please change it.");
               }
               if ((answers.indexOf(answer) === answers.length - 1) 
               && (newArray.indexOf(arrAnswer) === newArray.length - 1) 
               && (hasToxicResponse === false)){
+                setSubmissionLoading(false);
+                if(boolean){
+                  setDialog("You have successfully submitted your task!");
+                }else{
+                  setDialog("Task has been saved! You can continue to submit your task any time.");
+                }
                 updateSurvey(boolean);
-                alert('You have submitted/saved the survey!');
-                navigate('/');
+                // alert('You have submitted/saved the survey!');
+                // navigate('/');
               }
             });
           })
@@ -264,14 +274,21 @@ const Survey = () => {
             index = answers.indexOf(answer) + 1
             if (predictions[6].results[0].match === true){
               hasToxicResponse = true;
-              alert("Your " + index + "th answer is inappropriate. Please change it.");
+              setSubmissionLoading(false);
+              setDialog("Your " + index + "th answer is inappropriate. Please change it.");
             }
             if ((answers.indexOf(answer) === answers.length - 1) && (hasToxicResponse === false)){
               updateSurvey(boolean);
 
-              alert('You have submitted/saved the survey!');
+              setSubmissionLoading(false);
+              if(boolean){
+                setDialog("You have successfully submitted your task!");
+              }else{
+                setDialog("Task has been saved! You can continue to submit your task any time.");
+              }
+              //alert('You have submitted/saved the survey!');
 
-              navigate('/');
+              //navigate('/');
             }
           });
         }
@@ -348,17 +365,26 @@ const Survey = () => {
           <CommonLoading color='#323547' />
         </div> }
 
-    {dialog!=="" && 
-    <Dialog
-      className='dialog'
-      title= "Confirmation"
-      isOpen={dialog !=="" ? true : false}
-      onClose={() => navigate('/')}
-    >
-      <p style={{padding:'10px'}}>
-       {dialog}
-      </p>
-    </Dialog>}
+    {submissionLoading ? 
+      <div>
+        <CommonLoading color='#000000' />
+      </div> :
+      <Dialog
+        title= "Confirmation"
+        isOpen={dialog !==""? true : false}
+        onClose={() => {
+          if (!dialog.includes("inappropriate")){
+            navigate('/')
+          }else {
+            setDialog("");
+          }
+        }}
+      >
+        <p style={{padding:'10px'}}>
+         {dialog}
+        </p>
+      </Dialog>
+    }
     </form> : <h1>Task not found</h1>
   )
 }
