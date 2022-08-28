@@ -385,7 +385,6 @@ function OfficerSurveyStats() {
 
       {content}
       <Dialog
-        className="dialog"
         title="Submission"
         isOpen={dialog}
         onClose={() => {
