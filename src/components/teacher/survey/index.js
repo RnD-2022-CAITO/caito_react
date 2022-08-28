@@ -77,7 +77,7 @@ const Survey = () => {
           });
             populateExistingAnswers(targetAnswerID); 
 
-            setFormLoading(false);
+            //setFormLoading(false);
           }
           
       } catch (e) {
@@ -112,6 +112,7 @@ const Survey = () => {
         if (newArr.length > 0){
           setAnswers(newArr);
         }
+        setFormLoading(false);
       }).catch(e => {
         console.log(e);
       });
