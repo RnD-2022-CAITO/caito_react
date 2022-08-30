@@ -110,8 +110,9 @@ export const Admin = () => {
             groupId: groupID.id
         });
         setRefreshData(!refreshData);
-        setLoading(false);
         setTargetGroupDetails(null);
+        setGroupID('');
+        setLoading(false);
         } catch (err) {
         console.log(err);
         }
@@ -129,7 +130,6 @@ export const Admin = () => {
           setRefreshData(!refreshData);
           setDetailLoading(false);
           setTargetGroupDetails(null);
-          setGroupID('');
         } catch (err) {
           console.log(err);
         }
