@@ -222,11 +222,9 @@ const OfficerSurveyDistribution = () => {
           </div>
 
 
-          <div>
+          {/* <div>
             <p>This is an old feature. It will be left here for debugging...</p>
             <button onClick={() => setTeacherDisplay(!teacherDisplay)}>Select teachers</button>
-
-            {/* old feature */}
             <div className='teacher-card'>
             {teacherDisplay &&
               allTeachers.map((o, index) =>
@@ -250,7 +248,7 @@ const OfficerSurveyDistribution = () => {
                 <label className='input-btn' for={o.id}>{o.firstName} {o.lastName} </label>
                 </div>)}
                 </div>
-          </div>
+          </div> */}
 
         </div>
         <div className='select-display-s'>
