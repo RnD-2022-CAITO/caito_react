@@ -110,7 +110,7 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink activeclassname='active' to="/delete-account">
+                        <NavLink activeclassname='active' to="/admin">
                             <Button className={Classes.MINIMAL} text="Admin"
                             icon={<Icon icon="people" style={{color:'white'}}/>}
                             style={{color:'white'}}

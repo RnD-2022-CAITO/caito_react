@@ -90,7 +90,6 @@ a:hover{
     color: var(--primary-light) !important;
     text-decoration: none !important;
     text-shadow:  0 1px 3px black;
-    font-weight: 900;
 }
 
 

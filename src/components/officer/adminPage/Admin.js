@@ -8,6 +8,7 @@ import './Admin.css'
 import { Button, Classes, Dialog, Icon } from '@blueprintjs/core'
 import { CommonLoading } from 'react-loadingg'
 import { Tooltip2 } from '@blueprintjs/popover2'
+import { TargetGroupDialog } from '../dialogs/TargetGroupDialog'
 
 export const Admin = () => {
     //Retrive user's information
@@ -25,6 +26,10 @@ export const Admin = () => {
 
     const [allTeachers, setAllTeachers] = useState([]);
     const [selectedGroupTeachers, setSelectedGroupTeachers] = useState([]);
+
+    //Open target group dialog
+    const [openTargetDialog, setOpenTargetDialog] = useState(false);
+    const openTargetGroupDialog = () => setOpenTargetDialog(!openTargetDialog);
 
     //navigate to different pages
     const navigate = useNavigate();
@@ -124,6 +129,7 @@ export const Admin = () => {
           setRefreshData(!refreshData);
           setDetailLoading(false);
           setTargetGroupDetails(null);
+          setGroupID('');
         } catch (err) {
           console.log(err);
         }
@@ -144,6 +150,8 @@ export const Admin = () => {
             <CommonLoading color='#323547'/>
         :
         <>
+        {targetGroupDetails &&
+        <>
         <h3>Group {groupID.name}</h3>
         <div className="target-group">
             <p>Group name: {groupID.name}</p>
@@ -153,7 +161,7 @@ export const Admin = () => {
         <h3>Teachers in group {groupID.name}</h3>
         <div className='target-group'>
         <ul>
-            {targetGroupDetails.map((teacher) => {
+            { targetGroupDetails.map((teacher) => {
                 return (
                     <li key={teacher.id}>
                         <div>
@@ -187,6 +195,7 @@ export const Admin = () => {
             onClick={openDialog}
             >Delete this group</button>
         </div>
+        </>}
         </>}
 
         </div>
@@ -263,7 +272,12 @@ export const Admin = () => {
                     <button onClick={() => navigate('/edit-password')}>Change password</button>
                 </div>
                 <div className='admin-item admin-actions'>
-                    <h3>Your target group</h3>
+                    <h3>Your target group
+                      <Button className={Classes.MINIMAL} 
+                      icon={<Icon icon="help" style={{color:'var(--primary)'}}/>}
+                      onClick={openTargetGroupDialog}
+                      ></Button>
+                    </h3>
                     <div className='target-group'>
                         {groups.map(group => {
                             return <Button 
@@ -303,9 +317,11 @@ export const Admin = () => {
                       <div className={`dialog-card`}>
                         {groupID && renderTeacherList()}
                       </div>
-                      <button onClick={addNewTeachers}>Add</button>
+                      <button disabled={selectedGroupTeachers.length>0?false:true} onClick={addNewTeachers}>Add</button>
                     </div>
                 </Dialog>
+
+                <TargetGroupDialog isOpen={openTargetDialog} openDialog={openTargetGroupDialog} />
             </div>
         </div>
         }

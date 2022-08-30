@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useUserData } from '../global/auth/UserData';
 import { useNavigate } from 'react-router-dom';
 import targetGroup from '../../assets/targetGroup.svg';
 import survey from '../../assets/survey.svg';
 import schedule from '../../assets/schedule.svg'
 import './index.css'
+import { TargetGroupDialog } from './dialogs/TargetGroupDialog';
+import { Button, Classes } from '@blueprintjs/core';
 
 export const LandingOfficer = () => {
     const {userData} = useUserData();
+
+    //Open dialog
+    const [isOpen, setIsOpen] = useState(false);
+    const openDialog = () => setIsOpen(!isOpen);
 
     const navigate = useNavigate();
 
@@ -68,7 +74,10 @@ export const LandingOfficer = () => {
                         <h1>Customise "My Target Groups"</h1>
                         <p>Manage your target group to make the task distribution process much easier.</p>
                         <button onClick={()=>navigate('/admin')}>View Groups</button>
-                        <a href='#' style={{textAlign:'center', padding:'10px'}}>What is a target group?</a>
+                        <p className={Classes.MINIMAL}
+                        style={{textAlign:'center', padding:'10px', color:'var(--secondary-color)', cursor:'pointer'}}
+                        onClick={openDialog}
+                        >What is a target group?</p>
                     </div>
                     <div className='grid-item-right'>
                         <div style={{textAlign:'center'}}> 
@@ -83,7 +92,7 @@ export const LandingOfficer = () => {
                 <div className='footer'>
                     <div className='footer-left'>
                         <h1>enlight</h1>
-                        <p>© 2021 enlight. All rights reserved.</p>
+                        <p>© 2022 enlight. All rights reserved.</p>
                     </div>
                     <div className='footer-right'>
                         <a href='#'>Terms of Service</a>
@@ -92,6 +101,8 @@ export const LandingOfficer = () => {
                     </div>
                 </div>
             </footer>
+
+            <TargetGroupDialog isOpen={isOpen} openDialog={openDialog} />
         </>
   )
 }
