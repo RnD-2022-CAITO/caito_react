@@ -7,6 +7,7 @@ import { CommonLoading } from 'react-loadingg';
 import { Pagination  } from './Pagination';
 
 import "./teacherLanding.css";
+import { Footer } from '../../global/Footer';
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -118,7 +119,10 @@ const TeacherLanding = () => {
             <div>
                 <CommonLoading color='#323547' />
             </div> : 
-           renderSurveys()}
+            <>
+           {renderSurveys()}
+           <Footer />
+           </>}
         </div>
 
     )

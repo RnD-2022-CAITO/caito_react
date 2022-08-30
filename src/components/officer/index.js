@@ -7,6 +7,7 @@ import schedule from '../../assets/schedule.svg'
 import './index.css'
 import { TargetGroupDialog } from './dialogs/TargetGroupDialog';
 import { Button, Classes } from '@blueprintjs/core';
+import { Footer } from '../global/Footer';
 
 export const LandingOfficer = () => {
     const {userData} = useUserData();
@@ -87,22 +88,9 @@ export const LandingOfficer = () => {
                     </div>
                 </div>
             </section>
-
-            <footer>
-                <div className='footer'>
-                    <div className='footer-left'>
-                        <h1>enlight</h1>
-                        <p>© 2022 enlight. All rights reserved.</p>
-                    </div>
-                    <div className='footer-right'>
-                        <a href='#'>Terms of Service</a>
-                        <a href='#'>Privacy Policy</a>
-                        <a href='#'>Contact Us</a>
-                    </div>
-                </div>
-            </footer>
-
             <TargetGroupDialog isOpen={isOpen} openDialog={openDialog} />
+
+            <Footer />
         </>
   )
 }

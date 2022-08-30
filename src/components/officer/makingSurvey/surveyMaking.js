@@ -5,6 +5,7 @@ import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog, HTMLSelect } from '@blueprintjs/core';
 import { CommonLoading } from 'react-loadingg';
+import { Footer } from '../../global/Footer';
 
 
 const OfficerSurveyMaking = () => {
@@ -480,8 +481,11 @@ const OfficerSurveyMaking = () => {
 
   //Render component
   return (
+    <>
+    {initialLoading ? <CommonLoading color='#323547' /> :
+    <>
     <div className='main-wrapper'>
-      {initialLoading ? <CommonLoading color='#323547' /> :
+      
       <>
     {!complete ?
     <>
@@ -594,10 +598,12 @@ const OfficerSurveyMaking = () => {
                         {dialogDisplay}
                 </div>
     </Dialog>
-    </>
-      }
-  
+    </>      
     </div>
+    <Footer/>
+    </>
+    }
+    </>
   )
 }
 export default OfficerSurveyMaking;

@@ -9,6 +9,7 @@ import { Button, Classes, Dialog, Icon } from '@blueprintjs/core'
 import { CommonLoading } from 'react-loadingg'
 import { Tooltip2 } from '@blueprintjs/popover2'
 import { TargetGroupDialog } from '../dialogs/TargetGroupDialog'
+import { Footer } from '../../global/Footer'
 
 export const Admin = () => {
     //Retrive user's information
@@ -250,6 +251,7 @@ export const Admin = () => {
         {loading ?
         <CommonLoading color='#323547'/>
         :
+        <>
         <div className='admin-wrapper'>
             <div className='admin-container'>
                 <div className='admin-item profile'>
@@ -324,6 +326,8 @@ export const Admin = () => {
                 <TargetGroupDialog isOpen={openTargetDialog} openDialog={openTargetGroupDialog} />
             </div>
         </div>
+        <Footer />
+        </>
         }
         </>
   )

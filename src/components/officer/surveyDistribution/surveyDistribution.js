@@ -8,6 +8,7 @@ import './surveyDistribution.css';
 import Modal from "./components/Modal";
 import { Tooltip2 } from '@blueprintjs/popover2';
 import { CommonLoading } from 'react-loadingg';
+import { Footer } from '../../global/Footer';
 const DistributeToGroupsSteps = {
   SELECT_GROUPS: 0,
   ADD_MORE_TEACHERS: 1
@@ -169,7 +170,8 @@ const OfficerSurveyDistribution = () => {
     <div>
     <CommonLoading color='#323547'/>
     </div> :
-      <div className='main-wrapper'>
+    <>
+    <div className='main-wrapper'>
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
@@ -290,6 +292,8 @@ const OfficerSurveyDistribution = () => {
           </p>
         </Dialog>}
     </div>
+    <Footer/>
+    </>
     }
     </>
   )

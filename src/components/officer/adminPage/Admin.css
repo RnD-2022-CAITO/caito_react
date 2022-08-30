@@ -1,5 +1,6 @@
 .admin-wrapper{
     margin: 2em;
+    min-height: 70vh;
 }
 
 .admin-wrapper>h1{

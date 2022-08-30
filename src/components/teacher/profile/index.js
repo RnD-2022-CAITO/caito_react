@@ -8,6 +8,7 @@ import AddProfileSection from './AddProfileSection/AddProfileSection'
 
 import "./Profile.css"
 import { Button, Classes } from '@blueprintjs/core'
+import { Footer } from '../../global/Footer'
 
 
 
@@ -61,6 +62,8 @@ const TeacherProfile = () => {
 
             </div>
         </div>
+
+        <Footer />
     </div>
   )
 }

@@ -32,6 +32,7 @@ import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
+import { Foooter } from './components/global/Footer';
 
 //Roles to access paths
 const role = {
@@ -171,6 +172,7 @@ const App = () => {
               <Route path="/login" element={<LogIn/>}/>
               <Route path="/error" element={<ErrorRoute/>}/>
             </Routes>
+
           </AuthProvider>
         </Router>
   )
