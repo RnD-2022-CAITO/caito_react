@@ -1,0 +1,103 @@
+.admin-wrapper{
+    margin: 2em;
+}
+
+.admin-wrapper>h1{
+    text-align: center;
+}
+
+.admin-container{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+}
+
+.profile{
+    padding: 10px;
+}
+
+.admin-image{
+    width: 20vw;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px black;
+}
+
+.admin-actions{
+    padding: 10px;
+}
+
+.target-group{
+    padding: 12px;
+    border: 0.2px solid rgba(0, 0, 0, 0.322);
+    border-radius: 3px;
+    margin-bottom: 20px ;
+}
+
+.active-target{
+    background-color: rgba(0, 0, 0, 0.322);
+}
+
+.target-group ul{
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.target-group ul li{
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    gap: 20px;
+    transition: 0.5s;
+}
+
+.target-group ul li:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-light);
+    cursor: pointer;
+}
+
+.dialog-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.dialog-card{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+input.chk-btn {
+    display: none;
+}
+
+input.chk-btn + .input-btn {
+    border: 1px solid grey;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+input.chk-btn:not(:checked) + .input-btn:hover {
+    box-shadow: 0px 0.5px 3px;
+}
+
+input.chk-btn + .input-btn:active,
+input.chk-btn:checked + .input-btn {
+    background: var(--primary-dark);
+    color: white;
+}
+
+
+@media screen and (max-width: 700px){
+    .admin-container{
+        display: block;
+    }
+}

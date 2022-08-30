@@ -4,28 +4,25 @@ Styles that can be applied globally to all elements with the same type are writt
 */
 
 :root {
-    --primary-color: 	#323547;
-    --secondary-color: #323949;
+    --primary-color: 	#212129;
+    --secondary-color: #64b27b;
     --tertiary-color: 	#4c5265;
     
     --primary-light: #fff;
-    --primary-dark: #212129;
+    --primary-dark: #64b27b;
     --warning: #ED8C8C;
     font-family: 'Questrial', sans-serif;
 }
 
 body{
     background-color: var(--primary-light);
+    color: var(--primary-color);
 }
 
 *{
     font-family: 'Questrial', sans-serif;
     margin: 0;
 
-}
-
-select, input{
-    color: var(--primary-dark);
 }
 
 .brand-logo{
@@ -38,9 +35,9 @@ button, input, label{
 }
 
 button{
-    text-transform: uppercase;
-    background-color: var(--primary-color);
-    color: white;
+    text-transform:capitalize;
+    background-color: var(--secondary-color);
+    color: var(--primary-light);
     padding: 5px 15px;
     border: none;
     border-radius: 3px;
@@ -86,11 +83,14 @@ a{
 
 a{
     color: var(--primary-light); 
+    font-style: italic;
 }
 
 a:hover{
     color: var(--primary-light) !important;
     text-decoration: none !important;
+    text-shadow:  0 1px 3px black;
+    font-weight: 900;
 }
 
 
@@ -137,3 +137,6 @@ input:focus + label{
     letter-spacing: normal;
 }
 
+.main-wrapper{
+    margin: 5em;
+}

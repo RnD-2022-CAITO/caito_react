@@ -31,6 +31,7 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
+import { Admin } from './components/officer/adminPage/Admin';
 
 //Roles to access paths
 const role = {
@@ -74,9 +75,9 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/profile/edit" element={   
+              <Route exact path="/edit-password" element={   
                     <UserDataProvider>
-                      <PrivateRoute role={role.T}>
+                      <PrivateRoute role={role.A}>
                           <EditAccount />
                       </PrivateRoute>   
                     </UserDataProvider>                     
@@ -151,6 +152,15 @@ const App = () => {
                 <PrivateLandingRoute>
                   <UserDataProvider>
                     <Groups />
+                  </UserDataProvider>
+                </PrivateLandingRoute>
+              }
+              />
+
+              <Route exact path="/admin" element={
+                <PrivateLandingRoute>
+                  <UserDataProvider>
+                    <Admin />
                   </UserDataProvider>
                 </PrivateLandingRoute>
               }

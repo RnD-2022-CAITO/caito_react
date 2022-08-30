@@ -476,7 +476,7 @@ const OfficerSurveyMaking = () => {
 
   //Render component
   return (
-    <>
+    <div className='main-wrapper'>
     {!complete ?
     <>
     <h2 style={{textAlign:'center'}}>Profiling task creator</h2>
@@ -567,7 +567,9 @@ const OfficerSurveyMaking = () => {
           <h4>Survey title: {title}</h4>
           <h5>What to do next?</h5>
           <p>To distrubute your survey to your designated group of teachers,
-            simply go to &nbsp;<a href='/surveyDistribution'>Distribute survey</a>&nbsp;
+            simply go to &nbsp;<a href='/surveyDistribution'
+            style={{color:'var(--primary-dark'}}
+            >Distribute survey</a>&nbsp;
             tab, and select a group of teachers
             you want to send this survey to.
           </p>
@@ -586,7 +588,7 @@ const OfficerSurveyMaking = () => {
                         {dialogDisplay}
                 </div>
     </Dialog>
-    </>
+    </div>
   )
 }
 export default OfficerSurveyMaking;

@@ -9,7 +9,7 @@ const AccountInfo = (props) => {
             <h3>{data.firstName} {data.lastName}</h3>
             <h5 style={{textTransform:'capitalize'}}>{data.role}</h5>
             <p>Email: {user.email}</p>
-            <Link to='/profile/edit'>
+            <Link to='/edit-password'>
             <button className='edit-btn'> 
                 Change password
             </button>

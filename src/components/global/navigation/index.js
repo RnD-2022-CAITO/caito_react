@@ -265,7 +265,7 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li className='nav__item'>
-                        <NavLink activeclassname='active' to="/delete-account">
+                        <NavLink activeclassname='active' to="/admin">
                         <Tooltip2
                                 content={<span>Admin</span>}
                                 openOnTargetFocus={false}

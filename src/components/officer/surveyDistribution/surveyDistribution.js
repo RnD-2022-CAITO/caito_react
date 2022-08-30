@@ -2,10 +2,11 @@
 import React, {useState, useEffect} from 'react';
 import app, {func} from '../../../utils/firebase';
 import {useNavigate} from 'react-router-dom';
-import {Dialog, HTMLSelect} from '@blueprintjs/core';
+import {Button, Classes, Dialog, HTMLSelect, Icon} from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 import Modal from "./components/Modal";
+import { Tooltip2 } from '@blueprintjs/popover2';
 const DistributeToGroupsSteps = {
   SELECT_GROUPS: 0,
   ADD_MORE_TEACHERS: 1
@@ -76,8 +77,6 @@ const OfficerSurveyDistribution = () => {
 
 
       setConfirmation('Successfully sent out the invitation to fill in the task!');
-
-      navigate('/');
 
     } else {
       setError("Make sure there's at least one survey and one teacher checked and date must be at least from today.");
@@ -167,7 +166,7 @@ const OfficerSurveyDistribution = () => {
   }
 
   return (
-    <>
+    <div className='main-wrapper'>
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
@@ -197,27 +196,43 @@ const OfficerSurveyDistribution = () => {
         </div>
 
         <div className='select-display-survey'>
-          <h3>Select your target groups</h3>
+          <h3>Select your target groups
+          <Tooltip2
+                                content={<span>Target group contains a group of teachers that the survey will be sent to. 
+                                  <br></br>
+                                  Manage your target groups in your admin page,
+                                  <br></br>or you can create a new target group by
+                                  clicking on the button below
+                                </span>}
+                                openOnTargetFocus={false}
+                                placement="top"
+                                usePortal={false}
+          >
+          <Button className={Classes.MINIMAL} icon={<Icon icon="help" style={{color:'white'}}/>}></Button>
+          </Tooltip2>
+          </h3>
           <div style={{textAlign: 'center'}}>
-            <p>Select a group of teachers that you want to send the survey to</p>
+            <p>Select a group of teachers that you want to send the survey to </p>
             {renderState()}
             <p> or </p>
             <button className='secondary-btn' onClick={() => navigate('/groups')}>Create a new target group</button>
           </div>
 
 
-          <div style={{backgroundColor: 'red', color: 'white', textAlign: 'center', padding: '10px'}}>
+          <div>
             <p>This is an old feature. It will be left here for debugging...</p>
             <button onClick={() => setTeacherDisplay(!teacherDisplay)}>Select teachers</button>
 
             {/* old feature */}
+            <div className='teacher-card'>
             {teacherDisplay &&
               allTeachers.map((o, index) =>
-                <div key={index}>
-                  <span> {index + 1} Teacher's Name: {o.firstName} {o.lastName} </span>
+                <div className='card' key={index}>
                   <input
+                    className='chk-btn'
                     type="checkbox"
                     value={o.id}
+                    id={o.id}
                     checked={selectedTeachers.includes(o.id)}
                     onChange={e => {
                       if (selectedTeachers.includes(e.target.value)) {
@@ -228,8 +243,10 @@ const OfficerSurveyDistribution = () => {
                     }
                     }
                   />
-                </div>)}
 
+                <label className='input-btn' for={o.id}>{o.firstName} {o.lastName} </label>
+                </div>)}
+                </div>
           </div>
 
         </div>
@@ -271,7 +288,7 @@ const OfficerSurveyDistribution = () => {
             {confirmation}
           </p>
         </Dialog>}
-    </>
+    </div>
   )
 }
 export default OfficerSurveyDistribution;
