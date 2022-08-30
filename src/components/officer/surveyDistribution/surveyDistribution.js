@@ -7,6 +7,7 @@ import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 import Modal from "./components/Modal";
 import { Tooltip2 } from '@blueprintjs/popover2';
+import { CommonLoading } from 'react-loadingg';
 const DistributeToGroupsSteps = {
   SELECT_GROUPS: 0,
   ADD_MORE_TEACHERS: 1
@@ -21,7 +22,7 @@ const OfficerSurveyDistribution = () => {
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveyDisplay, setSurveyDisplay] = useState(false);
 
-  const [selectedSurveys, setSelectedSurveys] = useState([]);
+  const [selectedSurveys, setSelectedSurveys] = useState('');
   const [selectedTeachers, setSelectedTeachers] = useState([]);
 
   //Set dates
@@ -41,6 +42,9 @@ const OfficerSurveyDistribution = () => {
 
   //Navigate through another page
   const navigate = useNavigate();
+
+  //loading state
+  const [loading, setLoading] = useState(true);
 
   const renderState = () => {
     if (distributeToGroupsState === DistributeToGroupsSteps.SELECT_GROUPS) {
@@ -102,14 +106,13 @@ const OfficerSurveyDistribution = () => {
   //Get all teachers from the database
 
   useEffect(() => {
-    console.log(surveyDisplay);
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-
     const retrieveSurveyInfo = async () => {
       const getSurveys = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
       try {
         await getSurveys().then((result) => {
           setAllSurveys(result.data);
+          setLoading(false);
         });
       } catch (e) {
         console.error(e);
@@ -140,11 +143,6 @@ const OfficerSurveyDistribution = () => {
     retrieveTeachersInfo();
   }, [])
 
-  const selectTeachers = () => {
-    //Select a group of teachers from the officer's created target group
-    //navigate('/survey-distribution-group')
-  }
-
   const selectGroups = () => {
     setSelectGroupsVisible(true);
   }
@@ -166,22 +164,28 @@ const OfficerSurveyDistribution = () => {
   }
 
   return (
-    <div className='main-wrapper'>
+    <>
+    {loading ? 
+    <div>
+    <CommonLoading color='#323547'/>
+    </div> :
+      <div className='main-wrapper'>
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
           <h3>Select your profiling task</h3>
           <div className=' template input-field'>
             <HTMLSelect
+              multiple={false}
               value={selectedSurveys}
               onChange={e => {
                 setSelectedSurveys(e.target.value);
               }
               }
             >
-              <option value="" disabled selected>Select a task</option>
+              <option value="" disabled>Select a task</option>
               {allSurveys.map((o) =>
-                <option value={o.id}>
+                <option key={o.id} value={o.id}>
                   {o.title}
                 </option>)}
             </HTMLSelect>
@@ -190,9 +194,6 @@ const OfficerSurveyDistribution = () => {
             </label>
           </div>
 
-          <p>
-            <em>It may take a couple of seconds to load the tasks, please be patient.</em>
-          </p>
         </div>
 
         <div className='select-display-survey'>
@@ -289,6 +290,8 @@ const OfficerSurveyDistribution = () => {
           </p>
         </Dialog>}
     </div>
+    }
+    </>
   )
 }
 export default OfficerSurveyDistribution;

@@ -162,7 +162,7 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
 
-            <span class="nav__toggle" aria-expanded="false">
+            <span className="nav__toggle" aria-expanded="false">
                     <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
             </span>
 
@@ -220,7 +220,7 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
             <nav className='nav'>
-                <span class="nav__toggle" aria-expanded="false">
+                <span className="nav__toggle" aria-expanded="false">
                     <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
                 </span>
 

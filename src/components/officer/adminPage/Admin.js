@@ -42,6 +42,7 @@ export const Admin = () => {
           try {
             const res = await getGroups();
             setGroups(res.data);
+            setLoading(false);
           } catch (err) {
             console.log(err);
           }
@@ -54,7 +55,6 @@ export const Admin = () => {
               await getTeachers().then((result) =>
               {
                 setAllTeachers(result.data);
-                setLoading(false);
               });
             } catch (e) {
               console.error(e);

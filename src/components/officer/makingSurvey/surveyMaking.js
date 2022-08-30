@@ -4,6 +4,7 @@ import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
 import "./surveyMaking.css"
 import { Dialog, HTMLSelect } from '@blueprintjs/core';
+import { CommonLoading } from 'react-loadingg';
 
 
 const OfficerSurveyMaking = () => {
@@ -51,6 +52,8 @@ const OfficerSurveyMaking = () => {
   //loading state for the buttons
   const [loading, setLoading] = useState(false);
 
+  const [initialLoading, setInitialLoading] = useState(true);
+
   //Add survey to the database
   async function addSurvey(survey, title){
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -73,6 +76,7 @@ const OfficerSurveyMaking = () => {
         await getTemplates().then(i => {
           templates.push(i.data);
           templateDropdown();
+          setInitialLoading(false);
         });
     } catch (e) {
         console.error(e);
@@ -477,6 +481,8 @@ const OfficerSurveyMaking = () => {
   //Render component
   return (
     <div className='main-wrapper'>
+      {initialLoading ? <CommonLoading color='#323547' /> :
+      <>
     {!complete ?
     <>
     <h2 style={{textAlign:'center'}}>Profiling task creator</h2>
@@ -588,6 +594,9 @@ const OfficerSurveyMaking = () => {
                         {dialogDisplay}
                 </div>
     </Dialog>
+    </>
+      }
+  
     </div>
   )
 }
