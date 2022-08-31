@@ -23,8 +23,8 @@
 
 .container-hero{
     height: 50vh;
-    /* background-image: url('../../assets/hero.svg');
-    background-size: cover; */
+    background-image: url('../../assets/hero.svg');
+    background-size: cover;
 }
 
 .container-light{
