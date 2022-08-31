@@ -535,7 +535,7 @@ const OfficerSurveyMaking = () => {
       <>
     {!complete ?
     <>
-    <h2 style={{textAlign:'center'}}>Profiling task creator</h2>
+    <h1 style={{textAlign:'center'}}>Profiling task creator</h1>
     {error && <p className='error'>{error}</p>}
     <Divider />
     <br></br>

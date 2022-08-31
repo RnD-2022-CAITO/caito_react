@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import app, {func} from '../../../utils/firebase';
 import {useNavigate} from 'react-router-dom';
-import {Button, Classes, Dialog, HTMLSelect, Icon} from '@blueprintjs/core';
+import {Button, Classes, Dialog, Divider, HTMLSelect, Icon} from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 import Modal from "./components/Modal";
@@ -172,6 +172,8 @@ const OfficerSurveyDistribution = () => {
     </div> :
     <>
     <div className='main-wrapper'>
+      <h1 style={{textAlign:'center'}}>Distribute task</h1>
+      <Divider />
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
