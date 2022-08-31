@@ -26,13 +26,13 @@ export const LandingOfficer = () => {
             </section>
             <section className='container-hero'>
                 <div className='hero'>
-                    <h1>Welcome, {userData.firstName} {userData.lastName} </h1>
+                    <h1>Welcome, <span style={{color:'var(--caito-purple)'}}>{userData.firstName} {userData.lastName}</span> </h1>
                     <p>Let's get started by creating a new profiling task.</p>
                     <button onClick={()=>navigate('/survey-making')}>Create a new Profiling task</button>
                 </div>
             </section>
 
-            <section className='wrapper-hero'>
+            <section className='wrapper-hero explore'>
                 <h1>Explore enlight</h1>
                 <p>enlight offers a wide variety of features to make your data collecting process easier.</p>
             </section>
@@ -62,7 +62,7 @@ export const LandingOfficer = () => {
                         </div>
                     </div>
                     <div className='grid-item-right'>
-                        <h1>View your previous profiling tasks</h1>
+                        <h1>View your profiling tasks</h1>
                         <p>Keep track of all the tasks you have or have not sent out here</p>
                         <button>View Tasks</button>
                     </div>

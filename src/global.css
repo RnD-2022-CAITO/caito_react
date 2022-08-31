@@ -5,13 +5,15 @@ Styles that can be applied globally to all elements with the same type are writt
 
 :root {
     --primary-color: 	#212129;
-    --secondary-color: #64b27b;
+    --secondary-color: #7cafd1;
     --tertiary-color: 	#4c5265;
     
     --primary-light: #fff;
-    --primary-dark: #64b27b;
+    --primary-dark: #7cafd1;
     --warning: #ED8C8C;
-    font-family: 'Questrial', sans-serif;
+
+    --caito-blue: #7cafd1;
+    --caito-purple: #745c93;
 }
 
 body{
@@ -20,7 +22,8 @@ body{
 }
 
 *{
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
     margin: 0;
 
 }
@@ -35,17 +38,18 @@ button, input, label{
 }
 
 button{
-    text-transform:capitalize;
     background-color: var(--secondary-color);
     color: var(--primary-light);
     padding: 5px 15px;
     border: none;
     border-radius: 3px;
     transition: 0.5s;
+    font-weight: 200;
+    text-transform: uppercase;
 }
 
 button:hover{
-    background-color: black;
+    background-color: var(--caito-purple);
     cursor: pointer;
 }
 
@@ -82,12 +86,11 @@ a{
 }
 
 a{
-    color: var(--primary-light); 
-    font-style: italic;
+    color: var(--caito-blue); 
 }
 
 a:hover{
-    color: var(--primary-light) !important;
+    color: var(--caito-purple);
     text-decoration: none !important;
     text-shadow:  0 1px 3px black;
 }

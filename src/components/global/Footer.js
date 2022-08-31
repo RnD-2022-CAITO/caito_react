@@ -1,5 +1,6 @@
 import { Divider } from '@blueprintjs/core'
 import React from 'react'
+import {ReactComponent as Logo} from '../../assets/logo.svg';
 import './Footer.css'
 
 export const Footer = () => {
@@ -8,7 +9,7 @@ export const Footer = () => {
         <Divider style={{margin:'0 20px'}}/>
         <div className='footer'>
             <div className='footer-left'>
-                <h1>enlight</h1>
+                <Logo className='brand-logo'/>
                 <p>© 2022 enlight. All rights reserved.</p>
             </div>
             <div className='footer-right'>

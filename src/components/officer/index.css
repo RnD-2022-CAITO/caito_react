@@ -23,8 +23,8 @@
 
 .container-hero{
     height: 50vh;
-    background-image: url('../../assets/hero.svg');
-    background-size: cover;
+    /* background-image: url('../../assets/hero.svg');
+    background-size: cover; */
 }
 
 .container-light{
@@ -40,12 +40,24 @@
     align-items: center;
     justify-content: center;
     color: white;
+    overflow: hidden;
 }
 
-.wrapper-hero>h1{
+.wrapper-hero h1{
     font-size: 2rem;
-    font-weight: 700;
-    margin: 30px;
+    font-weight: 400;
+}
+
+.explore{
+    padding: 20px;
+}
+
+.grid-item-left h1, .grid-item-right h1{
+    white-space: nowrap; 
+}
+
+.grid-item-left h1, .grid-item-left p{
+    text-align: right;
 }
 
 .wrapper-hero>p{
@@ -68,13 +80,21 @@
     margin: 0 3em;
 }
 
+.grid-item-left{
+    align-items:flex-end;
+}
+
+.grid-item-right{
+    align-items: flex-start;
+}
+
 .hero{
     text-align: center;
 }
 
 .hero>h1{
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 4rem;
+    font-weight: 500;
     margin-bottom: 1rem;
 }
 
@@ -92,7 +112,16 @@
     .container-dark{
         display: block;
         width: 90vw;
-        margin-top: 10rem;
+        height: fit-content;
+        margin-top: 5rem;
+    }
+
+    .grid-item-left h1, .grid-item-left p, .grid-item-right h1, .grid-item-right p{
+        text-align: center;
+    }
+
+    .grid-item-left, .grid-item-right{
+        align-items: center;
     }
     
     .img{

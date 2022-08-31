@@ -153,13 +153,13 @@ export const Admin = () => {
         <>
         {targetGroupDetails &&
         <>
-        <h3>Group {groupID.name}</h3>
+        <h3>Group <strong>{groupID.name}</strong></h3>
         <div className="target-group">
-            <p>Group name: {groupID.name}</p>
-            <p>Group bio: {groupID.description? groupID.description : 'This group has no description yet.'}</p>
+            <p><strong>Group name:</strong> {groupID.name}</p>
+            <p><strong>Group bio:</strong> {groupID.description? groupID.description : 'This group has no description yet.'}</p>
             {!groupID.description && <button>Add a description</button>}
         </div>
-        <h3>Teachers in group {groupID.name}</h3>
+        <h3>Teachers in group <strong>{groupID.name}</strong></h3>
         <div className='target-group'>
         <ul>
             { targetGroupDetails.map((teacher) => {
@@ -280,6 +280,7 @@ export const Admin = () => {
                       onClick={openTargetGroupDialog}
                       ></Button>
                     </h3>
+                    <h5>Click on a group to view their details</h5>
                     <div className='target-group'>
                         {groups.map(group => {
                             return <Button 
