@@ -88,3 +88,27 @@
     display: flex;
     justify-content: space-between;
 }
+
+.form-creator{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.creator{
+    width: 60vw;
+}
+
+.steps-progress{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+@media screen and (max-width: 700px) {
+    .creator{
+        width: 80vw;
+    }
+}
+    
