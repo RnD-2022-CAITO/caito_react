@@ -1,9 +1,41 @@
-.profile-title{
+.profile-wrapper{
+    margin: 2em;
+    min-height: 70vh;
+}
+
+.profile-wrapper>h1{
     text-align: center;
 }
 
-.profile-section{
-    border: 0.1px solid black;
+.profile-container{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+}
+
+.profile{
     padding: 10px;
-    border-radius: 5px;
+}
+
+.profile-image{
+    width: 20vw;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px black;
+}
+
+.profile-actions{
+    padding: 10px;
+}
+
+.profile-section{
+    padding: 12px;
+    border: 0.2px solid rgba(0, 0, 0, 0.322);
+    border-radius: 3px;
+    margin-bottom: 20px ;
+}
+
+@media screen and (max-width: 700px){
+    .profile-container{
+        display: block;
+    }
 }

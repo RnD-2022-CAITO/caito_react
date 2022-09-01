@@ -3,7 +3,12 @@ import React, { useState, useEffect } from 'react';
 import app, {func} from '../../../utils/firebase';
 import 'firebase/compat/app-check';
 import "./surveyMaking.css"
-import { Dialog, HTMLSelect } from '@blueprintjs/core';
+import { Button, Classes, Dialog, Divider, HTMLSelect, Icon } from '@blueprintjs/core';
+import { CommonLoading } from 'react-loadingg';
+import { Footer } from '../../global/Footer';
+import { Title } from './Title';
+import { Questions } from './Questions';
+import { Tooltip2 } from '@blueprintjs/popover2';
 
 
 const OfficerSurveyMaking = () => {
@@ -51,6 +56,8 @@ const OfficerSurveyMaking = () => {
   //loading state for the buttons
   const [loading, setLoading] = useState(false);
 
+  const [initialLoading, setInitialLoading] = useState(true);
+
   //Add survey to the database
   async function addSurvey(survey, title){
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -73,6 +80,7 @@ const OfficerSurveyMaking = () => {
         await getTemplates().then(i => {
           templates.push(i.data);
           templateDropdown();
+          setInitialLoading(false);
         });
     } catch (e) {
         console.error(e);
@@ -422,7 +430,7 @@ const OfficerSurveyMaking = () => {
     setOptionsConfirmed([]);
     setError("");
     setShowQuestion(false);
-
+    setPage(1);
   }
 
   //UI
@@ -450,6 +458,9 @@ const OfficerSurveyMaking = () => {
           setQuestionsConfirmed([]);
           setTitle("");
         }
+
+        //Move to question page
+        setPage(2);
       }
       )
 
@@ -468,98 +479,104 @@ const OfficerSurveyMaking = () => {
     {options}
     </HTMLSelect>
     <label>
-      Task template
+      Task template 
+      <Tooltip2
+        content={<span>Contains a set of pre-defined questions for a specific topic. 
+          <br/>
+          You can set the template into default if you want to create your own set of questions.
+        </span>}
+        openOnTargetFocus={false}
+        placement="right"
+      >
+        <Button className={Classes.MINIMAL} icon="help" />
+      </Tooltip2>
     </label>
     </div>;
     setTemplateDisplay(content);
     }
 
+
+  //Multi step form
+  const [page, setPage] = useState(1);
+
+  //Toggle between different pages in the multi step form
+  const togglePage = () => {
+    switch(page){
+      case 1:
+       return <Title title={title} setTitle={setTitle} templateDisplay={templateDisplay}/>;
+      case 2:
+        return <Questions 
+        showQuestion={showQuestion} 
+        showInputField={showInputField}
+        questionList={questionList}
+        question={question}
+        setQuestion={setQuestion}
+        questionType={questionType}
+        setOptionVisible={setOptionVisible}
+        setQuestionType={setQuestionType}
+        options={options}
+        addCurrentSurvey={addCurrentSurvey}
+        addQuestion={addQuestion}
+        loading={loading}
+        refreshForm={refreshForm}
+      />
+      default:
+       return <Title title={title} setTitle={setTitle} templateDisplay={templateDisplay}/>;
+    }
+  }
+
   //Render component
   return (
     <>
+    {initialLoading ? <CommonLoading color='#323547' /> :
+    <>
+    <div className='main-wrapper'>
+      
+      <>
     {!complete ?
     <>
-    <h2 style={{textAlign:'center'}}>Profiling task creator</h2>
+    <h1 style={{textAlign:'center'}}>Profiling task creator</h1>
     {error && <p className='error'>{error}</p>}
+    <Divider />
+    <br></br>
+    <div className='steps-progress'>
+      <Button
+        className={Classes.MINIMAL}
+        disabled={page === 1}
+        icon={title !== '' ? <Icon icon='confirm' color='var(--caito-blue)' />:null}
+        onClick={() => setPage(1)}
+      >
+        1. Title
+      </Button>
 
-    <div className='grid-layout'>
-      <div className='select-display-s'>
-        <h3>Task details</h3>
+      <Button
+        className={Classes.MINIMAL}
+        disabled={page === 2}
+        icon={questionsConfirmed.length>0 ? <Icon icon='confirm' color='var(--caito-blue)' />:null}
+        onClick={() => setPage(2)}
+      >
+        2. Questions
+      </Button>
 
-        <div className='input-field'>
-            <input required  style={{width:'77.25%'}} type="text" 
-            placeholder='Enter your title here..'
-            value={title}
-            onInput={e => setTitle(e.target.value)} />
-            <label>
-              Task Title
-            </label>
-        </div>
-
-
-        <div className='input-field'>
-            {templateDisplay}
-        </div>
-      </div>
-
-      <div className='select-display-s'>
-        <h3>Task questions</h3>
-
-        {!showQuestion ?
-        <button style={{width:'100%'}} onClick={showInputField}>Add question</button>
-        :
-        <>
-
-        <div id="created_questions">{questionList}</div>
-        <div className='input-field'>
-          <input style={{width:"80%"}} required type="text" 
-          placeholder='Enter your question here...'
-          value={question}
-          onInput={e => setQuestion(e.target.value)} />
-          <label>
-            Question
-          </label>
-        </div>
-        <div className='input-field'>
-        <HTMLSelect className='select-bp'
-          value={questionType}        
-          onChange={e => 
-              {
-                setQuestionType(e.target.value); 
-                if(e.target.value==='radio' || e.target.value ==='checkbox'){
-                  setOptionVisible(true);
-                }else{
-                  setOptionVisible(false);
-                }
-              }
-          }
-        >
-          <option value="" disabled>Select an answer type</option>
-          <option value="text">Text</option>
-          <option value="number">Number</option>
-          <option value="checkbox">Checkbox</option>
-          <option value="radio">Radio</option>
-        </HTMLSelect>
-
-        <label>
-          Type of Answer: &nbsp;
-        </label>
-        </div>
-        <label>
-          {options}
-        </label>
-        <div className='survey-buttons'>          
-            <button className='survey-sub-btns' onClick={() => addQuestion()}> {question === '' ? 'Create question' : 'Save question'}</button>
-        </div>
-
-        </>}
-      </div>
-
-      <div className='select-display-s create-btns'> 
-          <button style={{backgroundColor:'var(--warning)'}} onClick={refreshForm}>Discard</button>
-          <button  disabled={loading} onClick={()=> addCurrentSurvey()}>Create task</button>
-      </div>
     </div>
+
+    <div className='form-creator'>
+      {togglePage()}
+    </div>
+
+    <div className='steps-progress'>
+    <Button
+    icon="arrow-left"
+    disabled={page === 1 ? true : false}
+    onClick={()=>setPage(page-1)}/>
+
+    <Button
+    icon="arrow-right"
+    disabled={page === 2 ? true : false}
+    onClick={()=>setPage(page+1)}
+    />
+    </div>
+
     </>
         :
         <div className='confirmation-box'>
@@ -567,7 +584,9 @@ const OfficerSurveyMaking = () => {
           <h4>Survey title: {title}</h4>
           <h5>What to do next?</h5>
           <p>To distrubute your survey to your designated group of teachers,
-            simply go to &nbsp;<a href='/surveyDistribution'>Distribute survey</a>&nbsp;
+            simply go to &nbsp;<a href='/surveyDistribution'
+            style={{color:'var(--primary-dark'}}
+            >Distribute survey</a>&nbsp;
             tab, and select a group of teachers
             you want to send this survey to.
           </p>
@@ -586,6 +605,11 @@ const OfficerSurveyMaking = () => {
                         {dialogDisplay}
                 </div>
     </Dialog>
+    </>      
+    </div>
+    <Footer/>
+    </>
+    }
     </>
   )
 }

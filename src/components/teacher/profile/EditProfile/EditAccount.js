@@ -65,7 +65,7 @@ const EditAccount = () => {
     }
 
     return (
-        <div className='container'>
+        <div className='container light'>
             <form className='edit-acc-form' onSubmit={handleSubmit}>
                 <h1 style={{textAlign:'center'}}>Account Management</h1>
 

@@ -281,7 +281,6 @@ const Survey = () => {
 
     {dialog!=="" && 
     <Dialog
-      className='dialog'
       title= "Confirmation"
       isOpen={dialog !=="" ? true : false}
       onClose={() => navigate('/')}

@@ -1,0 +1,130 @@
+.instruction-banner{
+    background-color: var(--primary-dark);
+    color: white;
+    height: 6vh;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.instruction-banner>button{
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.container-light, .container-hero{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-hero{
+    height: 50vh;
+    background-image: url('../../assets/hero.svg');
+    background-size: cover;
+}
+
+.container-light{
+    height: 100vh;
+    color: var(--primary-dark);
+    background-color: var(--primary-light);
+}
+
+.wrapper-hero{
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    overflow: hidden;
+}
+
+.wrapper-hero h1{
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.explore{
+    padding: 20px;
+}
+
+.grid-item-left h1, .grid-item-right h1{
+    white-space: nowrap; 
+}
+
+.grid-item-left h1, .grid-item-left p{
+    text-align: right;
+}
+
+.wrapper-hero>p{
+    margin: 0 30px;
+    text-align: center;
+}
+
+.container-dark{
+    height: 50vh;
+    width: 70vw;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-item-left, .grid-item-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 3em;
+}
+
+.grid-item-left{
+    align-items:flex-end;
+}
+
+.grid-item-right{
+    align-items: flex-start;
+}
+
+.hero{
+    text-align: center;
+}
+
+.hero>h1{
+    font-size: 4rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.img{
+    width: 25vw;
+    height: auto;
+}
+
+.img:hover{
+    background-color: transparent;
+}
+
+@media screen and (max-width: 700px){
+
+    .container-dark{
+        display: block;
+        width: 90vw;
+        height: fit-content;
+        margin-top: 5rem;
+    }
+
+    .grid-item-left h1, .grid-item-left p, .grid-item-right h1, .grid-item-right p{
+        text-align: center;
+    }
+
+    .grid-item-left, .grid-item-right{
+        align-items: center;
+    }
+    
+    .img{
+        width: 15em;
+    }
+}

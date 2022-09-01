@@ -4,10 +4,12 @@ Two routes are used in this app: public route and private routes.
 */
 
 //styling
+
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 import './global.css';
+import "normalize.css";  
 
 //Routes 
 import React from 'react'
@@ -31,6 +33,8 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
+import { Admin } from './components/officer/adminPage/Admin';
+import { Foooter } from './components/global/Footer';
 
 //Roles to access paths
 const role = {
@@ -74,9 +78,9 @@ const App = () => {
                     }
               />
 
-              <Route exact path="/profile/edit" element={   
+              <Route exact path="/edit-password" element={   
                     <UserDataProvider>
-                      <PrivateRoute role={role.T}>
+                      <PrivateRoute role={role.A}>
                           <EditAccount />
                       </PrivateRoute>   
                     </UserDataProvider>                     
@@ -156,11 +160,21 @@ const App = () => {
               }
               />
 
+              <Route exact path="/admin" element={
+                <PrivateLandingRoute>
+                  <UserDataProvider>
+                    <Admin />
+                  </UserDataProvider>
+                </PrivateLandingRoute>
+              }
+              />
+
 
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/login" element={<LogIn/>}/>
               <Route path="/error" element={<ErrorRoute/>}/>
             </Routes>
+
           </AuthProvider>
         </Router>
   )
