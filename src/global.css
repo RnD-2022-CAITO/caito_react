@@ -34,7 +34,7 @@ body{
 }
 
 button, input, label{
-    font-size: 1.25em;
+    font-size: 1.15em !important;
 }
 
 button{
@@ -45,7 +45,7 @@ button{
     border-radius: 3px;
     transition: 0.5s;
     font-weight: 200;
-    text-transform: uppercase;
+    text-transform: uppercase !important;
 }
 
 button:hover{

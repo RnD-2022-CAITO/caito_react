@@ -98,6 +98,10 @@ input.chk-btn:checked + .input-btn {
     color: white;
 }
 
+.bp4-tab-list{
+    color: red;
+}
+
 
 @media screen and (max-width: 700px){
     .admin-container{

@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import app, { func } from '../../../utils/firebase'
 
 import './Admin.css'
-import { Button, Classes, Dialog, Icon } from '@blueprintjs/core'
+import { Button, Classes, Dialog, Icon, Tab, Tabs } from '@blueprintjs/core'
 import { CommonLoading } from 'react-loadingg'
 import { Tooltip2 } from '@blueprintjs/popover2'
 import { TargetGroupDialog } from '../dialogs/TargetGroupDialog'
 import { Footer } from '../../global/Footer'
+import { AdminProfile } from './AdminProfile'
+import { TargetGroup } from './TargetGroup'
+import DeleteAccount from '../deleteAccount'
 
 export const Admin = () => {
     //Retrive user's information
@@ -254,44 +257,33 @@ export const Admin = () => {
         <>
         <div className='admin-wrapper'>
             <div className='admin-container'>
-                <div className='admin-item profile'>
-                    <div style={{textAlign:'center'}}>
-                    <img 
-                    className='admin-image'
-                    src="https://freerangestock.com/sample/120140/business-man-profile-vector.jpg" 
-                    alt="profile pic"/>
-                    </div>
-                    <h2>
-                        {userData && 
-                        userData.firstName + ' ' + userData.lastName}
-                    </h2>
-                    <h3>
-                    <Button icon="envelope" className={Classes.MINIMAL}></Button>    
-                    {currentUser.email}</h3>
-                    <br></br>
-                    <hr></hr>
-                    <br></br>
-                    <button onClick={() => navigate('/edit-password')}>Change password</button>
-                </div>
-                <div className='admin-item admin-actions'>
-                    <h3>Your target group
-                      <Button className={Classes.MINIMAL} 
-                      icon={<Icon icon="help" style={{color:'var(--primary)'}}/>}
-                      onClick={openTargetGroupDialog}
-                      ></Button>
-                    </h3>
-                    <h5>Click on a group to view their details</h5>
-                    <div className='target-group'>
-                        {groups.map(group => {
-                            return <Button 
-                            style={{margin:'10px'}} key={group.id}
-                            onClick={() => openTargetGroup(group)}
-                            >{group.name}
-                            </Button>
-                        })}
-                    </div>
-                    {targetGroupDetails !== null && renderTargetGroupDetail}
-                </div>
+                <AdminProfile userData={userData} currentUser={currentUser} navigate={navigate} />
+
+                <TargetGroup 
+                  openTargetGroup={openTargetGroup} 
+                  groups={groups} 
+                  openTargetGroupDialog={openTargetGroupDialog}
+                  targetGroupDetails={targetGroupDetails}
+                  renderTargetGroupDetail={renderTargetGroupDetail}
+                />
+
+              
+                {/* <Tabs
+                className='tabs-container'
+                animate={true}
+                large={true}
+                >
+                  <Tab id="target-group" title="Target group" 
+                  panel={<TargetGroup 
+                  openTargetGroup={openTargetGroup} 
+                  groups={groups} 
+                  openTargetGroupDialog={openTargetGroupDialog}
+                  targetGroupDetails={targetGroupDetails}
+                  renderTargetGroupDetail={renderTargetGroupDetail}
+                  />} />
+                  <Tab id="task-overview" title="Task overview" panel={<DeleteAccount/>} />
+                </Tabs> */}
+
 
                 <Dialog
                 title="Confirmation"
@@ -333,3 +325,5 @@ export const Admin = () => {
         </>
   )
 }
+
+
