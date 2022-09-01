@@ -47,6 +47,9 @@ const OfficerSurveyDistribution = () => {
   //loading state
   const [loading, setLoading] = useState(true);
 
+  //Get groups info
+  const [groups, setGroups] = useState("");
+
   const renderState = () => {
     if (distributeToGroupsState === DistributeToGroupsSteps.SELECT_GROUPS) {
       return <button onClick={selectGroups}>Select your target group</button>;
@@ -84,7 +87,7 @@ const OfficerSurveyDistribution = () => {
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     } else {
-      setError("Make sure there's at least one survey and one teacher checked and date must be at least from today.");
+      setError("Make sure your task and your target group should not be empty; and your schedule date must be at least from today.");
     }
   }
 
@@ -153,9 +156,31 @@ const OfficerSurveyDistribution = () => {
       setSelectedGroupNames([...names]);
       setDistributeToGroupsState(DistributeToGroupsSteps.ADD_MORE_TEACHERS);
     }
+    
     setSelectGroupsVisible(false);
   }
 
+  //Update selected teachers
+  useEffect(() => {
+    selectedGroupNames.forEach(groupName => {
+      const group = groups.find(group => group.name === groupName);
+      setSelectedTeachers(oldArray => [...oldArray, ...group.teachers]);
+    });
+
+  }, [selectedGroupNames, groups])
+
+  useEffect(() => {
+    const retrieveGroups = async () => {
+      const getGroups = func.httpsCallable('group-findGroups');
+      try {
+        const res = await getGroups();
+        setGroups(res.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    retrieveGroups();
+  }, []);
 
   //Clear the form
   const clearSchedule = () => {
