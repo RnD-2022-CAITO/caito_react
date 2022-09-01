@@ -87,7 +87,7 @@ const OfficerSurveyDistribution = () => {
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     } else {
-      setError("Make sure your task and your target group should not be empty; and your schedule date must be at least from today.");
+      setError("Make sure your task and your target group should not be empty;   and your schedule date must be at least from today.");
     }
   }
 
