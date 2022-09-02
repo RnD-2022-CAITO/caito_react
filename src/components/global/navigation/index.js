@@ -110,6 +110,15 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li>
+                        <NavLink activeclassname='active' to="/task-overview">
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="history" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Task overview"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
                         <NavLink activeclassname='active' to="/admin">
                             <Button className={Classes.MINIMAL} text="Admin"
                             icon={<Icon icon="people" style={{color:'white'}}/>}
@@ -261,6 +270,19 @@ const NavBar = () => {
                         >
                             <Button className={Classes.MINIMAL} icon={<Icon icon="send-message" style={{color:'white'}}/>}
                             onClick={()=>scrollToTop('/survey-distribution')}/>
+                        </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/task-overview">
+                        <Tooltip2
+                                content={<span>Task overview</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="history" style={{color:'white'}}/>}
+                            onClick={()=>scrollToTop('/task-overview')}/>
                         </Tooltip2>
                         </NavLink>
                     </li>

@@ -1,0 +1,52 @@
+.summary-view{
+    padding: 10px;
+    margin: 10px;
+    border: 0.2px solid black;
+    border-radius: 10px;
+}
+
+.timeline {
+  margin: 50px 60px;
+  height: 4px;
+  background-color: #ccc;
+}
+
+.timeline-progress {
+	width: 0;
+	height: 100%;
+	background-color: var(--primary-color);
+}
+
+.timeline-items {
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-top: -12px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.timeline-item {
+	position: relative;
+}
+
+.timeline-item::before {
+	content: '';
+	width: 20px;
+	height: 20px;
+	background-color: #ccc;
+	display: block;
+	border-radius: 100%;
+}
+
+.timeline-item.active::before {
+	background-color: var(--primary-color);
+	position: relative;
+	top: -10px;
+
+}
+
+.task-questions{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-end: 3;
+}
