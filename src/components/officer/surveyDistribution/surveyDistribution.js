@@ -1,7 +1,7 @@
 //put survey distribution process here
 import React, {useState, useEffect} from 'react';
 import app, {func} from '../../../utils/firebase';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, Classes, Dialog, Divider, HTMLSelect, Icon} from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
@@ -49,6 +49,8 @@ const OfficerSurveyDistribution = () => {
 
   //Get groups info
   const [groups, setGroups] = useState("");
+
+  const location = useLocation();
 
   const renderState = () => {
     if (distributeToGroupsState === DistributeToGroupsSteps.SELECT_GROUPS) {
@@ -127,6 +129,11 @@ const OfficerSurveyDistribution = () => {
 
     setSurveyDisplay(true);
 
+    //Check if the path has previous state (taskID) that is being passed through or not
+    if(location.state!==null){
+        setSelectedSurveys(location.state.question.id);
+    }
+      
     // eslint-disable-next-line
   }, [])
 
@@ -197,7 +204,7 @@ const OfficerSurveyDistribution = () => {
     </div> :
     <>
     <div className='main-wrapper'>
-      <h1 style={{textAlign:'center'}}>Distribute task</h1>
+      <h1 style={{textAlign:'center'}}>Distribute Task</h1>
       <Divider />
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>

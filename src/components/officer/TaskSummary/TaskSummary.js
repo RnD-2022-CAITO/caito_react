@@ -8,6 +8,7 @@ import ReactDOMServer from 'react-dom/server';
 import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
@@ -134,7 +135,7 @@ const TaskSummary = () => {
 
     return (
         loading ?
-            <p>Loading..</p>
+            <CommonLoading color='#323547'/>
             :
             <div className='grid-layout'>
 
