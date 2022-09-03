@@ -129,7 +129,9 @@ const TaskOverview = () => {
                     <h4><strong>{question.title}</strong></h4>
                     <p>Question ID: {question.id}</p>
                     <Divider />
+                    <div style={{textAlign:'right'}}>
                     <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButtonSchedule(question)}>Schedule</button>
+                    </div>
                 </div>
             </div>;
         } 
@@ -150,7 +152,9 @@ const TaskOverview = () => {
                 <Divider />
                 <p>Total sent out: {question.total}</p>
                 <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <div style={{textAlign:'right'}}>
                 <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
+                </div>
             </div>
         </div>;
     });

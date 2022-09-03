@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './surveyStats.css';
 import ReactDOMServer from 'react-dom/server';
-import { Dialog, HTMLSelect } from '@blueprintjs/core';
+import { Dialog, Divider, HTMLSelect } from '@blueprintjs/core';
 import { CommonLoading } from 'react-loadingg';
 // using node-style package resolution in a CSS file:
 // import "normalize.css";
@@ -344,7 +344,7 @@ function OfficerSurveyStats() {
       </>
     );
     if (!ReactDOMServer.renderToString(returnAll).includes('timeline-progress', 0)) {
-      returnAll = <h2>There is nothing here!</h2>;
+      returnAll = <h3 style={{textAlign:'center'}}>There is nothing here!</h3>;
     }
     setContent(returnAll);
   }
@@ -360,13 +360,15 @@ function OfficerSurveyStats() {
       <CommonLoading color='#323547' />
     </div>
   ) : (
-    <div>
+    <div className='main-wrapper' >
       {initializePage()}
       <div style={{paddingLeft:'10px'}}>
-      <h2>Survey Statistics</h2>
-      <p>Teacher's profiling task filling progress</p>
+      <h1 style={{textAlign:'center'}}>Individual Task Statistics</h1>
+      <Divider />
+      <br />
 
-      <label>
+      <div style={{paddingLeft:'10px'}}>
+      <label >
         Filter by &nbsp;
       </label>
       <HTMLSelect
@@ -382,7 +384,7 @@ function OfficerSurveyStats() {
 
       </HTMLSelect>
       </div>
-
+      </div>
       {content}
       <Dialog
         title="Submission"
