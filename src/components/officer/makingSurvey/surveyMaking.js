@@ -580,11 +580,13 @@ const OfficerSurveyMaking = () => {
     </>
         :
         <div className='confirmation-box'>
-          <h2>Your survey has been created. </h2>
-          <h4>Survey title: {title}</h4>
-          <h5>What to do next?</h5>
+          <h1>Your survey has been created. </h1>
+          <Divider />
+          <h2>Survey title: {title}</h2>
+          <Divider />
+          <h3>What to do next?</h3>
           <p>To distrubute your survey to your designated group of teachers,
-            simply go to &nbsp;<a href='/surveyDistribution'
+            simply go to &nbsp;<a href='/survey-distribution'
             style={{color:'var(--primary-dark'}}
             >Distribute survey</a>&nbsp;
             tab, and select a group of teachers
