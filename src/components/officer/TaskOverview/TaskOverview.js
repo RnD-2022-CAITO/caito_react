@@ -129,8 +129,6 @@ const TaskOverview = () => {
                     <h4><strong>{question.title}</strong></h4>
                     <p>Question ID: {question.id}</p>
                     <Divider />
-                    <p>Total sent out: {question.total}</p>
-                    <p>Completion rate: {question.total !== 0 ? Math.round(question.complete / question.total * 100).toFixed(2) + " %" : "You haven't distribute this survey yet"}</p>
                     <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButtonSchedule(question)}>Schedule</button>
                 </div>
             </div>;
