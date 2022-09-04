@@ -51,6 +51,9 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
+
+    setLoading(true);
+
     const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -80,9 +83,13 @@ const SignUp = () => {
             lastName: user.lastName,
         });
 
-        navigate('/');
+        setLoading(false);
 
-        window.location.reload();
+        if(!loading){
+          navigate('/');
+        }
+
+        // window.location.reload();
 
     } catch (e) {
         console.error(e);
@@ -90,7 +97,6 @@ const SignUp = () => {
   }
 
   return (
-  !currentUser ?
   <div className='container'>
       <form className='sign-up-form' onSubmit={handleSubmit}>
         <h1 className='logo'>
@@ -147,7 +153,6 @@ const SignUp = () => {
         </p>
       </div>
     </div>
-    : <ErrorRoute err='already-login'/>
   )
 }
 
