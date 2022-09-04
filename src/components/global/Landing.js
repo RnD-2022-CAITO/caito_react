@@ -1,5 +1,5 @@
 import React from 'react'
-import OfficerLanding from '../officer/analysis';
+import { LandingOfficer } from '../officer';
 import TeacherLanding from '../teacher/landing';
 import { useUserData } from './auth/UserData'
 
@@ -13,7 +13,7 @@ const Landing = () => {
       {
       //render component based on the user's role
       userData.role === 'teacher' ? 
-      <TeacherLanding/> : <OfficerLanding/>}
+      <TeacherLanding/> : <LandingOfficer/>}
     </div>
   )
 }

@@ -8,6 +8,7 @@ import app, {func, auth} from '../../../utils/firebase'
 
 
 import './SignUp.css'
+import { Divider } from '@blueprintjs/core';
 
 const SignUp = () => {
   const emailRef = useRef();
@@ -129,6 +130,12 @@ const SignUp = () => {
 
           </button>
         </div>
+        <Divider />
+        <h5 style={{textAlign:'center'}}>If you're and officer in charge of creating profiling tasks, 
+          <br> 
+          </br>please &nbsp;
+          <a href = "mailto: bcis.caito@gmail.com">contact us</a> &nbsp;
+          or your administrator to provide you an account.</h5>
       </form>
 
       <div>

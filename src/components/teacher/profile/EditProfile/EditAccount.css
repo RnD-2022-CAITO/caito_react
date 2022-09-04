@@ -1,8 +1,12 @@
 .edit-acc-form{
     min-width: 25vw;
     padding: 20px;
-    border: 0.1px solid black;
+    border: 0.1px solid rgba(0, 0, 0, 0.308);
     border-radius: 5px;
+}
+
+.light{
+    background-color: var(--primary-light);
 }
 
 .edit-submit{

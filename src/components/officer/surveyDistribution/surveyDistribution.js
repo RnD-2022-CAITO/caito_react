@@ -1,11 +1,14 @@
 //put survey distribution process here
 import React, {useState, useEffect} from 'react';
 import app, {func} from '../../../utils/firebase';
-import {useNavigate} from 'react-router-dom';
-import {Dialog, HTMLSelect} from '@blueprintjs/core';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {Button, Classes, Dialog, Divider, HTMLSelect, Icon} from '@blueprintjs/core';
 import 'firebase/compat/app-check';
 import './surveyDistribution.css';
 import Modal from "./components/Modal";
+import { Tooltip2 } from '@blueprintjs/popover2';
+import { CommonLoading } from 'react-loadingg';
+import { Footer } from '../../global/Footer';
 const DistributeToGroupsSteps = {
   SELECT_GROUPS: 0,
   ADD_MORE_TEACHERS: 1
@@ -20,7 +23,7 @@ const OfficerSurveyDistribution = () => {
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveyDisplay, setSurveyDisplay] = useState(false);
 
-  const [selectedSurveys, setSelectedSurveys] = useState([]);
+  const [selectedSurveys, setSelectedSurveys] = useState('');
   const [selectedTeachers, setSelectedTeachers] = useState([]);
 
   //Set dates
@@ -40,6 +43,14 @@ const OfficerSurveyDistribution = () => {
 
   //Navigate through another page
   const navigate = useNavigate();
+
+  //loading state
+  const [loading, setLoading] = useState(true);
+
+  //Get groups info
+  const [groups, setGroups] = useState("");
+
+  const location = useLocation();
 
   const renderState = () => {
     if (distributeToGroupsState === DistributeToGroupsSteps.SELECT_GROUPS) {
@@ -77,10 +88,8 @@ const OfficerSurveyDistribution = () => {
 
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
-      navigate('/');
-
     } else {
-      setError("Make sure there's at least one survey and one teacher checked and date must be at least from today.");
+      setError("Make sure your task and your target group should not be empty;   and your schedule date must be at least from today.");
     }
   }
 
@@ -103,14 +112,13 @@ const OfficerSurveyDistribution = () => {
   //Get all teachers from the database
 
   useEffect(() => {
-    console.log(surveyDisplay);
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-
     const retrieveSurveyInfo = async () => {
       const getSurveys = func.httpsCallable('officer-getAllCreatedSurveys_Questions');
       try {
         await getSurveys().then((result) => {
           setAllSurveys(result.data);
+          setLoading(false);
         });
       } catch (e) {
         console.error(e);
@@ -121,6 +129,11 @@ const OfficerSurveyDistribution = () => {
 
     setSurveyDisplay(true);
 
+    //Check if the path has previous state (taskID) that is being passed through or not
+    if(location.state!==null){
+        setSelectedSurveys(location.state.question.id);
+    }
+      
     // eslint-disable-next-line
   }, [])
 
@@ -141,11 +154,6 @@ const OfficerSurveyDistribution = () => {
     retrieveTeachersInfo();
   }, [])
 
-  const selectTeachers = () => {
-    //Select a group of teachers from the officer's created target group
-    //navigate('/survey-distribution-group')
-  }
-
   const selectGroups = () => {
     setSelectGroupsVisible(true);
   }
@@ -155,9 +163,31 @@ const OfficerSurveyDistribution = () => {
       setSelectedGroupNames([...names]);
       setDistributeToGroupsState(DistributeToGroupsSteps.ADD_MORE_TEACHERS);
     }
+    
     setSelectGroupsVisible(false);
   }
 
+  //Update selected teachers
+  useEffect(() => {
+    selectedGroupNames.forEach(groupName => {
+      const group = groups.find(group => group.name === groupName);
+      setSelectedTeachers(oldArray => [...oldArray, ...group.teachers]);
+    });
+
+  }, [selectedGroupNames, groups])
+
+  useEffect(() => {
+    const retrieveGroups = async () => {
+      const getGroups = func.httpsCallable('group-findGroups');
+      try {
+        const res = await getGroups();
+        setGroups(res.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    retrieveGroups();
+  }, []);
 
   //Clear the form
   const clearSchedule = () => {
@@ -168,21 +198,30 @@ const OfficerSurveyDistribution = () => {
 
   return (
     <>
+    {loading ? 
+    <div>
+    <CommonLoading color='#323547'/>
+    </div> :
+    <>
+    <div className='main-wrapper'>
+      <h1 style={{textAlign:'center'}}>Distribute Task</h1>
+      <Divider />
       {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
       <div className='grid-layout'>
         <div className='select-display-s'>
           <h3>Select your profiling task</h3>
           <div className=' template input-field'>
             <HTMLSelect
+              multiple={false}
               value={selectedSurveys}
               onChange={e => {
                 setSelectedSurveys(e.target.value);
               }
               }
             >
-              <option value="" disabled selected>Select a task</option>
+              <option value="" disabled>Select a task</option>
               {allSurveys.map((o) =>
-                <option value={o.id}>
+                <option key={o.id} value={o.id}>
                   {o.title}
                 </option>)}
             </HTMLSelect>
@@ -191,33 +230,44 @@ const OfficerSurveyDistribution = () => {
             </label>
           </div>
 
-          <p>
-            <em>It may take a couple of seconds to load the tasks, please be patient.</em>
-          </p>
         </div>
 
         <div className='select-display-survey'>
-          <h3>Select your target groups</h3>
+          <h3>Select your target groups
+          <Tooltip2
+                                content={<span>Target group contains a group of teachers that the survey will be sent to. 
+                                  <br></br>
+                                  Manage your target groups in your admin page,
+                                  <br></br>or you can create a new target group by
+                                  clicking on the button below
+                                </span>}
+                                openOnTargetFocus={false}
+                                placement="top"
+                                usePortal={false}
+          >
+          <Button className={Classes.MINIMAL} icon={<Icon icon="help" style={{color:'white'}}/>}></Button>
+          </Tooltip2>
+          </h3>
           <div style={{textAlign: 'center'}}>
-            <p>Select a group of teachers that you want to send the survey to</p>
+            <p>Select a group of teachers that you want to send the survey to </p>
             {renderState()}
             <p> or </p>
             <button className='secondary-btn' onClick={() => navigate('/groups')}>Create a new target group</button>
           </div>
 
 
-          <div style={{backgroundColor: 'red', color: 'white', textAlign: 'center', padding: '10px'}}>
+          {/* <div>
             <p>This is an old feature. It will be left here for debugging...</p>
             <button onClick={() => setTeacherDisplay(!teacherDisplay)}>Select teachers</button>
-
-            {/* old feature */}
+            <div className='teacher-card'>
             {teacherDisplay &&
               allTeachers.map((o, index) =>
-                <div key={index}>
-                  <span> {index + 1} Teacher's Name: {o.firstName} {o.lastName} </span>
+                <div className='card' key={index}>
                   <input
+                    className='chk-btn'
                     type="checkbox"
                     value={o.id}
+                    id={o.id}
                     checked={selectedTeachers.includes(o.id)}
                     onChange={e => {
                       if (selectedTeachers.includes(e.target.value)) {
@@ -228,9 +278,11 @@ const OfficerSurveyDistribution = () => {
                     }
                     }
                   />
-                </div>)}
 
-          </div>
+                <label className='input-btn' for={o.id}>{o.firstName} {o.lastName} </label>
+                </div>)}
+                </div>
+          </div> */}
 
         </div>
         <div className='select-display-s'>
@@ -271,6 +323,10 @@ const OfficerSurveyDistribution = () => {
             {confirmation}
           </p>
         </Dialog>}
+    </div>
+    <Footer/>
+    </>
+    }
     </>
   )
 }

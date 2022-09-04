@@ -110,7 +110,16 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink activeclassname='active' to="/delete-account">
+                        <NavLink activeclassname='active' to="/task-overview">
+                            <Button className={Classes.MINIMAL} 
+                            icon={<Icon icon="history" style={{color:'white'}}/>}
+                            style={{color:'white'}}
+                            text="Task overview"
+                            onClick={openNavMenu}/>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeclassname='active' to="/admin">
                             <Button className={Classes.MINIMAL} text="Admin"
                             icon={<Icon icon="people" style={{color:'white'}}/>}
                             style={{color:'white'}}
@@ -162,7 +171,7 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
 
-            <span class="nav__toggle" aria-expanded="false">
+            <span className="nav__toggle" aria-expanded="false">
                     <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
             </span>
 
@@ -220,7 +229,7 @@ const NavBar = () => {
                     <Logo className='brand-logo'/>
             </button>
             <nav className='nav'>
-                <span class="nav__toggle" aria-expanded="false">
+                <span className="nav__toggle" aria-expanded="false">
                     <Button  icon={<Icon icon="menu" style={{color:'white'}}/>} className={Classes.MINIMAL} onClick={openNavMenu}/>
                 </span>
 
@@ -265,7 +274,20 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li className='nav__item'>
-                        <NavLink activeclassname='active' to="/delete-account">
+                        <NavLink activeclassname='active' to="/task-overview">
+                        <Tooltip2
+                                content={<span>Task overview</span>}
+                                openOnTargetFocus={false}
+                                placement="bottom"
+                                usePortal={false}
+                        >
+                            <Button className={Classes.MINIMAL} icon={<Icon icon="history" style={{color:'white'}}/>}
+                            onClick={()=>scrollToTop('/task-overview')}/>
+                        </Tooltip2>
+                        </NavLink>
+                    </li>
+                    <li className='nav__item'>
+                        <NavLink activeclassname='active' to="/admin">
                         <Tooltip2
                                 content={<span>Admin</span>}
                                 openOnTargetFocus={false}
