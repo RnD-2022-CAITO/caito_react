@@ -10,7 +10,6 @@ import { Title } from './Title';
 import { Questions } from './Questions';
 import { Tooltip2 } from '@blueprintjs/popover2';
 
-
 const OfficerSurveyMaking = () => {
   //Retrieve the addSurvey func from Authentication.js (connects to firebase)
   //const { addSurvey } = useAuth();

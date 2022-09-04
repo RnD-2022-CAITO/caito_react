@@ -8,7 +8,6 @@ import React, {useContext, useState, useEffect} from 'react'
 import app, {func, auth} from '../../../utils/firebase'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/app-check';
-
 const Authenciation = React.createContext();
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -32,8 +31,7 @@ export const AuthProvider = ({children}) => {
     }
 
     function signOut(){
-        auth.signOut();
-        setCurrentUser();
+        return auth.signOut();
     }
 
     function resetPassword(email){
@@ -74,6 +72,7 @@ export const AuthProvider = ({children}) => {
         resetPassword,
         updateEmail,
         updatePassword,
+        
     }
 
     return (
