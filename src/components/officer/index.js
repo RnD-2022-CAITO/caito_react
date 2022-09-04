@@ -64,7 +64,7 @@ export const LandingOfficer = () => {
                     <div className='grid-item-right'>
                         <h1>View your profiling tasks</h1>
                         <p>Keep track of all the tasks you have or have not sent out here</p>
-                        <button>View Tasks</button>
+                        <button onClick={()=>navigate('/task-overview')}>View Tasks</button>
                     </div>
                 </div>
             </section>

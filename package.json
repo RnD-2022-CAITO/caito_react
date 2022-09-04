@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^4.9.2",
-    "@blueprintjs/popover2": "^1.6.2",
+    "@blueprintjs/core": "^4.9.3",
+    "@blueprintjs/popover2": "^1.6.3",
     "@firebase/functions-compat": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
@@ -15,9 +15,11 @@
     "react-dom": "^18.2.0",
     "react-dotenv": "^0.1.3",
     "react-icons": "^4.4.0",
+    "react-loading": "^2.0.3",
     "react-loadingg": "^1.7.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "recharts": "^2.1.13",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
