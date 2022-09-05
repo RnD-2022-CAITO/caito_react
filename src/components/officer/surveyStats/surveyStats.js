@@ -23,7 +23,7 @@ function OfficerSurveyStats() {
 
   // the following block of consts are responsible for paginating the amount of surveys shown on page
   const [currentPage, setCurrentPage] = useState(1);
-  const [taskPerPage] = useState(2);
+  const [taskPerPage] = useState(5); // can change the amount of surveys present on page
   const indexOfLastTask = currentPage * taskPerPage;
   const indexOfFirstTask = indexOfLastTask - taskPerPage;
   const currentPageContent = content.slice(indexOfFirstTask, indexOfLastTask);
@@ -103,7 +103,6 @@ function OfficerSurveyStats() {
         teacher = o;
       }
     });
-
     if (condition === "all") {
       setTotalTasks(answers.length);
       answers.map((o) => renderAnswers(o, teacher));
@@ -319,7 +318,6 @@ function OfficerSurveyStats() {
 
   // UI
   function filterPageResults(condition) {
-    //index = 1;
     teachersID.map((id) => {
       renderTeachers(id, condition);
     });
