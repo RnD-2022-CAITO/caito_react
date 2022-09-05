@@ -4,13 +4,14 @@ import 'firebase/compat/app-check';
 import { db } from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import "./TaskOverview.css"
-
+import { Button, Classes, Icon } from '@blueprintjs/core'
+import { Pagination } from '../../teacher/landing/Pagination';
 const TaskOverview = () => {
 
     const navigate = useNavigate();
     const [questionID, setQuestionID] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [groups, setGroups] = useState([]);
     //Get surveys
     useEffect(() => {
         const retrieveQuestionID = async () => {
@@ -28,6 +29,33 @@ const TaskOverview = () => {
         }
 
         retrieveQuestionID();
+    }, []);
+
+    const renderGroups = () => {
+        return groups.map(group => {
+            return (
+                <Button
+                    style={{ margin: '10px' }} key={group.id}
+
+                >{group.name}
+                </Button>
+
+
+            )
+        })
+    }
+
+    useEffect(() => {
+        const retrieveGroups = async () => {
+            const getGroups = func.httpsCallable('group-findGroups');
+            try {
+                const res = await getGroups();
+                setGroups(res.data)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        retrieveGroups();
     }, []);
 
     //Get surveys
@@ -84,7 +112,20 @@ const TaskOverview = () => {
     const navigateCreateSurvey = () => {
         navigate('/survey-making');
     }
+  
+    const [currentPage, setCurrentPage] = useState(1);
+    const [taskPerPage] = useState(6);
+    
+    const indexOfLastTask = currentPage * taskPerPage;
+    const indexOfFirstTask = indexOfLastTask - taskPerPage;
+  
+    const renderQuestions = questionID
+    .slice(indexOfFirstTask, indexOfLastTask).map((question) => (
+        scheduledTask(question, clickButton)
+    ));
 
+    
+ 
     return (
         <>
             <h1>Your Profiling tasks</h1>
@@ -92,41 +133,41 @@ const TaskOverview = () => {
 
 
             <div className='grid-layout'>
-               
-                    <div className='select-display-s'>
-                        <h3>Target groups</h3>
-                        <div style={{ textAlign: 'center' }}>
-                            <p>Still developing...</p>
-                            <button onClick={1}>Still in developing</button>
-                        </div>
-                    </div>
 
-                
-               
+                <div className='select-display-s'>
+                    <h3>Target groups</h3>
+                    <div style={{ textAlign: 'center' }} >
+                        {renderGroups()}
+                    </div>
+                </div>
+
+
+
                 <div className='scheduled-tasks'>
                     <div className='select-display-s' >
                         <h3>Scheduled tasks summary</h3>
                         <div style={{ textAlign: 'left' }}>
-                            {questionID.map(question => (
-                                scheduledTask(question, clickButton)
-                            ))}
+        
+                            {renderQuestions}
+                            <Pagination 
+            taskPerPage={taskPerPage} 
+            totalTasks={questionID.length} 
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+        />
                         </div>
                     </div>
                 </div>
-                
-                    <div className='select-display-s'>
-                        <h3>Unscheduled tasks</h3>
-                        <div style={{ textAlign: 'left' }}>
-                            {questionID.map(question => (
-                                unscheduledTask(question, clickButtonSchedule)
-                            ))}
-                        </div>
-                    </div>
-            </div>
 
-             
-           
-          
+                <div className='select-display-s'>
+                    <h3>Unscheduled tasks</h3>
+                    <div style={{ textAlign: 'left' }}>
+                        {questionID.map(question => (
+                            unscheduledTask(question, clickButtonSchedule)
+                        ))}
+                    </div>
+                </div>
+            </div>
         </>
     )
 
@@ -135,6 +176,8 @@ const TaskOverview = () => {
 export default TaskOverview
 
 function scheduledTask(question, clickButton) {
+    var num=question.complete / question.total * 100.00;
+    num=num.toFixed(2);
     if (question.total != 0) {
         return <div key={question.id}>
             <div className='summary-view'>
@@ -142,7 +185,7 @@ function scheduledTask(question, clickButton) {
                 <p>Question ID: {question.id}</p>
                 <p>----------------------------------------------------------------</p>
                 <p>Total sent out: {question.total}</p>
-                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? num + " %" : "You haven't distribute this survey yet"}</p>
                 <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
             </div>
         </div>;

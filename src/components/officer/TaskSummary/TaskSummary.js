@@ -111,10 +111,12 @@ const TaskSummary = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const renderText = (props) => {
         const { cx, cy, endAngle, fill } = props;
+        var num = question.complete / question.total * 100.00;
+        num = num.toFixed(2);
         return (
             <g>
                 <text x={cx} y={cy} dy={8} textAnchor="middle" >
-                    {question.complete / question.total * 100 + " %"}
+                    {num + " %"}
                 </text>
                 <Sector>endAngle={endAngle}
                     fill={fill}
@@ -128,9 +130,6 @@ const TaskSummary = () => {
         navigate('/survey-stats/${question.id}', { state: { question: question } });
         console.log(question);
     }
-
-
-
 
     return (
         loading ?
