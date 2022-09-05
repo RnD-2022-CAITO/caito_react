@@ -14,7 +14,7 @@ const LogIn = () => {
 
   //Retrive the sign up from context
   const { signIn, currentUser } = useAuth();
-
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
   //Input validation
   const [error, setError] = useState('');
 
@@ -64,9 +64,11 @@ const LogIn = () => {
         </div>
 
         <div className='input-field'>
-          <input id='password' type = 'password' ref={passwordRef} required autoComplete='off'/>
-           <label htmlFor='password'>Password</label>
-        </div>
+          <input id='password' type = {isPasswordShown ? "password" : "txt"} ref={passwordRef}  required autoComplete='off'/>
+          <img className='eye-icon' id = 'eye-shown'src= {isPasswordShown? './closeEye.JPG': './eye.JPG'} alt = ""
+          onClick={() => setIsPasswordShown(!isPasswordShown)}/>
+          <label htmlFor='password'>Password</label>
+          </div>
         <div className='error'>{error}</div>
 
         <div className='btn-position'>
