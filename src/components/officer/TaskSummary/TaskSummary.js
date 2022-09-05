@@ -8,6 +8,8 @@ import ReactDOMServer from 'react-dom/server';
 import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
+import { Divider } from '@blueprintjs/core';
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
@@ -127,16 +129,23 @@ const TaskSummary = () => {
 
 
     const clickButton = (question) => {
-        navigate('/survey-stats/${question.id}', { state: { question: question } });
+        navigate(`/survey-stats/${question.id}`, { state: { question: question } });
         console.log(question);
     }
 
     return (
         loading ?
-            <p>Loading..</p>
+            <CommonLoading color='#323547'/>
             :
-            <div className='grid-layout'>
+            <div className='main-wrapper'>
+            <h1 style={{textAlign:'center'}}>Summary for <strong> {question.title} </strong></h1>
+            <Divider />
 
+            <div style={{textAlign:'center', padding:'15px 0'}}>
+            <button style={{ marginLeft: "auto" }} onClick={() => clickButton(question)}>View Teacher's Individual Progress</button>
+            </div>
+
+            <div className='grid-layout'>
                 <div className='select-display-s'>
                     <h3>Task summary</h3>
                     <div style={{ textAlign: 'left' }}>
@@ -160,31 +169,33 @@ const TaskSummary = () => {
 
                 <div className='task-questions'>
                     <div className='select-display-s'>
-                        <div className='select-display-questions'>
+                        <div className='select-display-question'>
                             <h3>Task Questions</h3>
                             <div style={{ textAlign: 'center' }}>
                                 <div style={{ textAlign: 'left' }}>
                                     {questions.map((q, index) =>
-                                        <div className='sur-question' key={index}>
-                                            <label>Question {index + 1}. {q.question}</label>
+                                        <div className='question-display' key={index}>
+                                            <label><strong>Question {index + 1}.</strong>  {q.question}</label>
                                             <br />
                                             <br />
+                                            {q.options.length>0 &&
+                                            <>
+                                            <p><strong>Answer Options</strong></p>
                                             {q.options.map((o) =>
                                                 <div>
                                                     <p for={o}>{o}</p>
                                                 </div>
                                             )}
+                                            </>}
+                                        <Divider />
                                         </div>)
                                     }
                                 </div>
                             </div>
-
-                            <div>
-                                <button style={{ marginLeft: "auto" }} onClick={() => clickButton(question)}>View Individual Progress</button>
-                            </div>
                         </div>
 
                     </div>
+                </div>
                 </div>
 
             </div>
@@ -202,7 +213,7 @@ const TaskSummary = () => {
             { name: 'Complete', value: complete }
         ];
         return <div key={question.id}>
-            <div className='summary-view'>
+            <div>
 
                 <PieChart width={300} height={300} style={{ textAlign: 'left' }}>
                     <Pie
@@ -214,7 +225,7 @@ const TaskSummary = () => {
                         cy={200}
                         innerRadius={60}
                         outerRadius={80}
-                        fill="#8884d8"
+                        fill={"var(--caito-blue)"}
                     />
                     <Tooltip />
                 </PieChart>

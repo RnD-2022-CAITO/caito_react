@@ -114,17 +114,15 @@ const TaskOverview = () => {
     }
   
     const [currentPage, setCurrentPage] = useState(1);
-    const [taskPerPage] = useState(6);
+    const [taskPerPage] = useState(5);
     
     const indexOfLastTask = currentPage * taskPerPage;
     const indexOfFirstTask = indexOfLastTask - taskPerPage;
   
     const renderQuestions = questionID
     .slice(indexOfFirstTask, indexOfLastTask).map((question) => (
-        scheduledTask(question, clickButton)
+      scheduledTask(question, clickButton)
     ));
-
-    
  
     return (
         <>
@@ -147,14 +145,13 @@ const TaskOverview = () => {
                     <div className='select-display-s' >
                         <h3>Scheduled tasks summary</h3>
                         <div style={{ textAlign: 'left' }}>
-        
-                            {renderQuestions}
-                            <Pagination 
+                        <Pagination 
             taskPerPage={taskPerPage} 
             totalTasks={questionID.length} 
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
         />
+                            {scheduledTask}
                         </div>
                     </div>
                 </div>
@@ -176,8 +173,6 @@ const TaskOverview = () => {
 export default TaskOverview
 
 function scheduledTask(question, clickButton) {
-    var num=question.complete / question.total * 100.00;
-    num=num.toFixed(2);
     if (question.total != 0) {
         return <div key={question.id}>
             <div className='summary-view'>
@@ -185,7 +180,7 @@ function scheduledTask(question, clickButton) {
                 <p>Question ID: {question.id}</p>
                 <p>----------------------------------------------------------------</p>
                 <p>Total sent out: {question.total}</p>
-                <p>Completion rate: {question.total !== 0 ? num + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
                 <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
             </div>
         </div>;
