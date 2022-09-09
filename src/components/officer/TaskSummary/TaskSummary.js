@@ -9,12 +9,14 @@ import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
-import { Divider } from '@blueprintjs/core';
+import { Button, Divider } from '@blueprintjs/core';
+
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
+    const [refreshData, setRefreshData] = useState(true);
     const { question } = state; // Read values passed on state
     const [loading, setLoading] = useState(true);
     const [answers, setAnswers] = useState([]);
@@ -22,10 +24,13 @@ const TaskSummary = () => {
     const [teachersID, setTeachersID] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [createdDate, setCreatedDate] = useState([]);
-
+    const [questionID, setQuestionID] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [name, setName] = useState([]);
     const [isFound, setFound] = useState(true);
     const [surveyTitle, setTitle] = useState('');
-
+    const [groupID, setGroupID] = useState('');
+    const [allTeachers, setAllTeachers] = useState([]);
     useEffect(() => {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
         const getAnswers = func.httpsCallable('officer-getAllCreatedSurveys_Answers');
@@ -83,6 +88,45 @@ const TaskSummary = () => {
         retrieveSurvey();
     }, []);
 
+    useEffect(() => {
+        const retrieveGroups = async () => {
+            app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+            const getGroups = func.httpsCallable('group-findGroups');
+            try {
+                const res = await getGroups();
+                setGroups(res.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        retrieveGroups();
+    }, [refreshData]);
+
+
+    async function deleteSurvey() {
+        deleteWholeSurvey(questionID)
+        alert('The survey \'' + question.title + '\' has been deleted!');
+        setTimeout(
+            () => window.location.replace(document.referrer), 500);
+
+        //
+    }
+
+    async function deleteWholeSurvey(questionID) {
+        app.appCheck().activate(site_key, true);
+        const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
+        try {
+            await deleteSurvey({
+                questionID: questionID,
+            });
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+
     async function getTeacher(teacherID, boolean) {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
         const getInfo = func.httpsCallable('officer-getTeacher');
@@ -135,67 +179,66 @@ const TaskSummary = () => {
 
     return (
         loading ?
-            <CommonLoading color='#323547'/>
+            <CommonLoading color='#323547' />
             :
             <div className='main-wrapper'>
-            <h1 style={{textAlign:'center'}}>Summary for <strong> {question.title} </strong></h1>
-            <Divider />
+                <h1 style={{ textAlign: 'center' }}>Summary for <strong> {question.title} </strong></h1>
+                <Divider />
 
-            <div style={{textAlign:'center', padding:'15px 0'}}>
-            <button style={{ marginLeft: "auto" }} onClick={() => clickButton(question)}>View Teacher's Individual Progress</button>
-            </div>
-
-            <div className='grid-layout'>
-                <div className='select-display-s'>
-                    <h3>Task summary</h3>
-                    <div style={{ textAlign: 'left' }}>
-                        <h4 >Description</h4>
-                        <p>Coming soon...</p>
-                        <h4>Target groups</h4>
-                        <p>Coming soon...</p>
-
-                    </div>
-
-
+                <div style={{ textAlign: 'center', padding: '15px 0' }}>
+                    <button style={{ marginLeft: "auto" }} onClick={() => clickButton(question)}>View Teacher's Individual Progress</button>
                 </div>
 
-
-                <div className='select-display-s'>
-                    <h3>Completion rate</h3>
-                    <div style={{ textAlign: 'center' }}>
-                        {renderQuestion(question)}
-                    </div>
-                </div>
-
-                <div className='task-questions'>
+                <div className='grid-layout'>
                     <div className='select-display-s'>
-                        <div className='select-display-question'>
-                            <h3>Task Questions</h3>
-                            <div style={{ textAlign: 'center' }}>
-                                <div style={{ textAlign: 'left' }}>
-                                    {questions.map((q, index) =>
-                                        <div className='question-display' key={index}>
-                                            <label><strong>Question {index + 1}.</strong>  {q.question}</label>
-                                            <br />
-                                            <br />
-                                            {q.options.length>0 &&
-                                            <>
-                                            <p><strong>Answer Options</strong></p>
-                                            {q.options.map((o) =>
-                                                <div>
-                                                    <p for={o}>{o}</p>
-                                                </div>
-                                            )}
-                                            </>}
-                                        <Divider />
-                                        </div>)
-                                    }
-                                </div>
-                            </div>
+                        <h3>Target Groups</h3>
+                        <div >
+                            {groups.map(group => {
+                                <div>{group.name}</div>
+                            })}
                         </div>
 
+
                     </div>
-                </div>
+
+
+                    <div className='select-display-s'>
+                        <h3>Completion rate</h3>
+                        <div style={{ textAlign: 'center' }}>
+                            {renderQuestion(question)}
+                        </div>
+                    </div>
+
+                    <div className='task-questions'>
+                        <div className='select-display-s'>
+                            <div className='select-display-question'>
+                                <h3>Task Questions</h3>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ textAlign: 'left' }}>
+                                        {questions.map((q, index) =>
+                                            <div className='question-display' key={index}>
+                                                <label><strong>Question {index + 1}.</strong>  {q.question}</label>
+                                                <br />
+                                                <br />
+                                                {q.options.length > 0 &&
+                                                    <>
+                                                        <p><strong>Answer Options</strong></p>
+                                                        {q.options.map((o) =>
+                                                            <div>
+                                                                <p for={o}>{o}</p>
+                                                            </div>
+                                                        )}
+                                                    </>}
+                                                <Divider />
+                                            </div>)
+                                        }
+                                    </div>
+                                    <button onClick={() => deleteSurvey()}>Delete Survey</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
