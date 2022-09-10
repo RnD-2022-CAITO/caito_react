@@ -28,6 +28,10 @@
     margin: 10px 0;
 }
 
+.input-field input{
+    margin-left: 10px;
+}
+
 .sign-in-form{
     min-width: 25vw;
     background-color: white;
