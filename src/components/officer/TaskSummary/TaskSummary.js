@@ -105,12 +105,10 @@ const TaskSummary = () => {
     }, [refreshData]);
 
     //delete survey function 
-    async function deleteSurvey(){
+    async function deleteSurvey(questionID){
         HandledeleteSurvey(questionID);  
         
-        alert('The survey \''+questions.name+ '\' has been deleted');
-        setTimeout(
-          () => window.location.replace(document.referrer), 500);
+        navigate("/task-overview");
         
         //
     }
