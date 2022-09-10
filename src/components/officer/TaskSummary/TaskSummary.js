@@ -104,25 +104,46 @@ const TaskSummary = () => {
         retrieveGroups();
     }, [refreshData]);
 
-
-
-    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-
-    const deleteSurvey = async (questionID) => {
-        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-        const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
-
-        setLoading(true);
-        try {
-            await deleteSurvey({
-                questionID: questionID
-            });
-            refreshData(!refreshData);
-            setLoading(false);
-        } catch (e) {
-            console.log(e);
-        }
+    //delete survey function 
+    async function deleteSurvey(){
+        HandledeleteSurvey(questionID);  
+        
+        alert('The survey \''+questions.name+ '\' has been deleted');
+        setTimeout(
+          () => window.location.replace(document.referrer), 500);
+        
+        //
     }
+
+    async function HandledeleteSurvey (questionID) {
+        app.appCheck().activate(site_key, true);
+        const deleteTeacherAccount = func.httpsCallable('officer-deleteSurvey');
+        try {
+          await deleteTeacherAccount({
+            questionID: questionID,
+          });
+      } catch (e) {
+          console.error(e);
+      }
+    }
+
+    
+//delete survey function
+    // const deleteSurvey = async (questionID) => {
+    //     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    //     const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
+
+    //     setLoading(true);
+    //     try {
+    //         await deleteSurvey({
+    //             questionID: questionID
+    //         });
+    //         refreshData(!refreshData);
+    //         setLoading(false);
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 
 
     async function getTeacher(teacherID, boolean) {
@@ -181,23 +202,6 @@ const TaskSummary = () => {
 
     const targetGroupButton = () => {
         navigate(`/survey-distribution`);
-    }
-
-    const renderGroups = () => {
-        const trs = groups.map((group, index) => {
-            return (
-                <div key={group.id}>
-                    <label>{index + 1}. </label>
-                    {group.name} </div>
-            )
-        });
-        return (
-            <div>
-                {trs}
-
-
-            </div>
-        )
     }
 
 
@@ -269,7 +273,7 @@ const TaskSummary = () => {
                                             </div>)
                                         }
                                     </div>
-                                    <button onClick={() => deleteSurvey(questions.id)}>Delete Survey</button>
+                                    <button onClick={() => deleteSurvey(question.id)}>Delete Survey</button>
 
                                 </div>
                             </div>
