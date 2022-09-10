@@ -108,3 +108,18 @@ input.chk-btn:checked + .input-btn {
         display: block;
     }
 }
+
+.edit-group-container {
+    padding: 20px;
+}
+.mt-5 {
+    margin-top: 20px;
+}
+.edit-group-label {
+    display: block;
+    font-weight: bolder;
+}
+.edit-group-input {
+    width: 100%;
+    padding: 10px;
+}

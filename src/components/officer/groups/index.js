@@ -26,6 +26,7 @@ function Groups() {
         description: groupDescription,
         teachers
       });
+      navigate(`/survey-distribution`)
       return;
     }
   }

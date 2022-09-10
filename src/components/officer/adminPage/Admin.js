@@ -148,6 +148,27 @@ export const Admin = () => {
         }
     }
 
+    const [editGroupDialogOpen, setEditGroupDialogOpen] = useState(false);
+    const handleEditSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const name = e.target.elements['group-name'].value;
+      const description = e.target.elements['group-description'].value;
+      const updateGroup = func.httpsCallable(`group-updateGroup`);
+      await updateGroup({
+        groupId: groupID.id,
+        name,
+        description
+      });
+      setGroupID({
+        ...groupID,
+        name: name,
+        description: description
+      })
+      setEditGroupDialogOpen(false);
+      setLoading(false);
+    }
+
     const renderTargetGroupDetail = (
         <div className="target-group-detail">
         {(targetGroupDetails===null || detailLoading) ? 
@@ -157,11 +178,30 @@ export const Admin = () => {
         {targetGroupDetails &&
         <>
         <h3>Group <strong>{groupID.name}</strong></h3>
+        <Dialog onClose={() => setEditGroupDialogOpen(false)} isOpen={editGroupDialogOpen}>
+          <form onSubmit={handleEditSubmit} className={'edit-group-container'}>
+            <h2>Edit Group</h2>
+            <div>
+              <label className={'edit-group-label'}>Set the name for the group</label>
+              <input name={'group-name'} required defaultValue={groupID.name} className={'edit-group-input'} placeholder={'Enter group name here...'} />
+            </div>
+            <div className={'mt-5'}>
+              <label className={'edit-group-label'}>Set the description for the group</label>
+              <input name={'group-description'} defaultValue={groupID.description} className={'edit-group-input'} placeholder={'Enter group description here...'} />
+            </div>
+            <div className={'mt-5'}>
+              <button>Submit</button>
+            </div>
+          </form>
+        </Dialog>
         <div className="target-group">
             <p><strong>Group name:</strong> {groupID.name}</p>
             <p><strong>Group bio:</strong> {groupID.description? groupID.description : 'This group has no description yet.'}</p>
-            {!groupID.description && <button>Add a description</button>}
+            {/*{!groupID.description && <button>Add a description</button>}*/}
+            <button onClick={() => setEditGroupDialogOpen(true)}>Edit</button>
         </div>
+
+
         <h3>Teachers in group <strong>{groupID.name}</strong></h3>
         <div className='target-group'>
         <ul>
@@ -251,6 +291,7 @@ export const Admin = () => {
     }
     return (
         <>
+
         {loading ?
         <CommonLoading color='#323547'/>
         :
