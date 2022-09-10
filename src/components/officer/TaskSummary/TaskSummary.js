@@ -9,7 +9,7 @@ import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
-import { Button, Divider } from '@blueprintjs/core';
+import { Button, Classes, Dialog, Icon, Tab, Tabs, Divider } from '@blueprintjs/core'
 
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
@@ -105,10 +105,15 @@ const TaskSummary = () => {
     }, [refreshData]);
 
 
+
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+
     const deleteSurvey = async (questionID) => {
+        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+        const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
+
         setLoading(true);
         try {
-            const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
             await deleteSurvey({
                 questionID: questionID
             });
@@ -170,6 +175,30 @@ const TaskSummary = () => {
         console.log(question);
     }
 
+    const openTargetGroup = (group) => {
+        setGroupID(group);
+    }
+
+    const targetGroupButton = () => {
+        navigate(`/survey-distribution`);
+    }
+
+    const renderGroups = () => {
+        const trs = groups.map((group, index) => {
+            return (
+                <div key={group.id}>
+                    <label>{index + 1}. </label>
+                    {group.name} </div>
+            )
+        });
+        return (
+            <div>
+                {trs}
+
+
+            </div>
+        )
+    }
 
 
     return (
@@ -189,9 +218,21 @@ const TaskSummary = () => {
                         <h3>Target Groups</h3>
                         <div >
                             {groups.map(group => {
-                                <div>{group.name}</div>
+                                return <Button
+                                    style={{ margin: '5px' }} key={group.id}
+                                    onClick={() => openTargetGroup(group)}
+                                >{group.name}
+                                </Button>
                             })}
+                            <Button className={Classes.MINIMAL}
+                                icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
+                                onClick={targetGroupButton}
+                            >
+                                Add more group
+                            </Button>
+
                         </div>
+
 
 
                     </div>
