@@ -23,8 +23,9 @@ const TaskSummary = () => {
     const [teachers, setTeachers] = useState([]);
     const [teachersID, setTeachersID] = useState([]);
     const [questions, setQuestions] = useState([]);
-    const [createdDate, setCreatedDate] = useState([]);
     const [questionID, setQuestionID] = useState([]);
+
+    const [createdDate, setCreatedDate] = useState([]);
     const [groups, setGroups] = useState([]);
     const [name, setName] = useState([]);
     const [isFound, setFound] = useState(true);
@@ -104,25 +105,17 @@ const TaskSummary = () => {
     }, [refreshData]);
 
 
-    async function deleteSurvey() {
-        deleteWholeSurvey(questionID)
-        alert('The survey \'' + question.title + '\' has been deleted!');
-        setTimeout(
-            () => window.location.replace(document.referrer), 500);
-
-        //
-    }
-
-    async function deleteWholeSurvey(questionID) {
-        app.appCheck().activate(site_key, true);
-        const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
+    const deleteSurvey = async (questionID) => {
+        setLoading(true);
         try {
+            const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
             await deleteSurvey({
-                questionID: questionID,
+                questionID: questionID
             });
-
+            refreshData(!refreshData);
+            setLoading(false);
         } catch (e) {
-            console.error(e);
+            console.log(e);
         }
     }
 
@@ -176,6 +169,8 @@ const TaskSummary = () => {
         navigate(`/survey-stats/${question.id}`, { state: { question: question } });
         console.log(question);
     }
+
+
 
     return (
         loading ?
@@ -233,7 +228,8 @@ const TaskSummary = () => {
                                             </div>)
                                         }
                                     </div>
-                                    <button onClick={() => deleteSurvey()}>Delete Survey</button>
+                                    <button onClick={() => deleteSurvey(questions.id)}>Delete Survey</button>
+
                                 </div>
                             </div>
 
