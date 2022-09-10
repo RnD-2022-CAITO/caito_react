@@ -26,7 +26,7 @@ export const LandingOfficer = () => {
             </section>
             <section className='container-hero'>
                 <div className='hero'>
-                    <h1>Welcome, <span style={{color:'var(--caito-purple)'}}>{userData.firstName} {userData.lastName}</span> </h1>
+                    <h1>Welcome,  <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>{userData.firstName} {userData.lastName}</span> </h1>
                     <p>Let's get started by creating a new profiling task.</p>
                     <button onClick={()=>navigate('/survey-making')}>Create a new Profiling task</button>
                 </div>

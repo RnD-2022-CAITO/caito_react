@@ -93,9 +93,10 @@
 }
 
 .hero>h1{
-    font-size: 4rem;
-    font-weight: 500;
+    font-size: 6rem;
+    font-weight: bolder;
     margin-bottom: 1rem;
+    letter-spacing: -8px;
 }
 
 .img{
