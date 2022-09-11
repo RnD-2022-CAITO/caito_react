@@ -178,18 +178,19 @@ export const Admin = () => {
         {targetGroupDetails &&
         <>
         <h3>Group <strong>{groupID.name}</strong></h3>
-        <Dialog onClose={() => setEditGroupDialogOpen(false)} isOpen={editGroupDialogOpen}>
+        <Dialog 
+        title="Edit Group"
+        onClose={() => setEditGroupDialogOpen(false)} isOpen={editGroupDialogOpen}>
           <form onSubmit={handleEditSubmit} className={'edit-group-container'}>
-            <h2>Edit Group</h2>
-            <div>
-              <label className={'edit-group-label'}>Set the name for the group</label>
-              <input name={'group-name'} required defaultValue={groupID.name} className={'edit-group-input'} placeholder={'Enter group name here...'} />
+            <div className='input-field'>
+              <input name={'group-name'} required defaultValue={groupID.name} placeholder={'Enter group name here...'} />
+              <label>Group name</label>
             </div>
-            <div className={'mt-5'}>
-              <label className={'edit-group-label'}>Set the description for the group</label>
-              <input name={'group-description'} defaultValue={groupID.description} className={'edit-group-input'} placeholder={'Enter group description here...'} />
+            <div className='input-field'>
+              <input name={'group-description'} defaultValue={groupID.description} placeholder={'Enter group description here...'} />
+              <label>Group Description</label>
             </div>
-            <div className={'mt-5'}>
+            <div style={{textAlign:'center'}}>
               <button>Submit</button>
             </div>
           </form>
