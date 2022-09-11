@@ -5,6 +5,7 @@ import { useAuth } from '../../global/auth/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 import { Dialog } from '@blueprintjs/core';
+import axios from 'axios'
 
 import "./survey.css";
 
@@ -36,6 +37,16 @@ const Survey = () => {
 
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState('');
+
+  const FileDownload = require('js-file-download');
+
+  axios({
+  url: 'http://localhost:3000/survey/' + questions,
+  method: 'GET',
+  responseType: 'blob', // Important
+}).then((response) => {
+    FileDownload(response.data, 'report.csv');
+});
 
 
   useEffect(() => {
@@ -272,6 +283,13 @@ const Survey = () => {
                 <button disabled={loading} style={{backgroundColor:'var(--tertiary-color)'}} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
                 </div>
+
+                <div className='download-btn-group'>
+                  
+                  <button disabled={loading} type='button' 
+                  onClick={FileDownload}
+                  >{loading? "Download..." : "Download"}</button>
+                  </div>
 
               </div>
        :             
