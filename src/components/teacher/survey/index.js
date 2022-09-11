@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import app, { db, func } from "../../../utils/firebase";
@@ -6,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as toxicity from "@tensorflow-models/toxicity";
 import { CommonLoading } from "react-loadingg";
 import { Dialog } from "@blueprintjs/core";
+
 
 import "./survey.css";
 
@@ -41,8 +43,10 @@ const Survey = () => {
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState("");
 
+
   //The minimum prediction confidence
   const threshold = 0.8;
+
 
   useEffect(() => {
     const retrieveSurvey = async () => {
@@ -394,6 +398,7 @@ const Survey = () => {
             </div>
           ))}
 
+
           <div className="class-btn-group">
             <button
               disabled={loading}
@@ -409,6 +414,7 @@ const Survey = () => {
           </div>
         </div>
       ) : (
+
         <div>
           <CommonLoading color="#323547" />
         </div>
