@@ -4,13 +4,11 @@ import app, { func } from '../../../utils/firebase';
 import { useLocation } from 'react-router-dom';
 import 'firebase/compat/app-check';
 import './TaskSummary.css';
-import ReactDOMServer from 'react-dom/server';
 import { PieChart, Pie, Tooltip, Sector } from 'recharts';
-import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 
-import { Button, Classes, Dialog, Icon, Tab, Tabs, Divider } from '@blueprintjs/core'
+import { Divider } from '@blueprintjs/core'
 
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
@@ -24,7 +22,6 @@ const TaskSummary = () => {
     const [teachers, setTeachers] = useState([]);
     const [teachersID, setTeachersID] = useState([]);
     const [questions, setQuestions] = useState([]);
-    const [questionID, setQuestionID] = useState([]);
 
     const [createdDate, setCreatedDate] = useState([]);
     const [groups, setGroups] = useState([]);
@@ -106,14 +103,14 @@ const TaskSummary = () => {
 
     //delete survey function 
     async function deleteSurvey(questionID){
-        HandledeleteSurvey(questionID);  
+        handledeleteSurvey(questionID);  
         
         navigate("/task-overview");
         
         //
     }
 
-    async function HandledeleteSurvey (questionID) {
+    async function handledeleteSurvey (questionID) {
         app.appCheck().activate(site_key, true);
         const deleteTeacherAccount = func.httpsCallable('officer-deleteSurvey');
         try {
@@ -219,7 +216,7 @@ const TaskSummary = () => {
                     <div className='select-display-s'>
                         <h3>Target Groups</h3>
                         <div >
-                            {groups.map(group => {
+                            {/* {groups.map(group => {
                                 return <Button
                                     style={{ margin: '5px' }} key={group.id}
                                     
@@ -231,8 +228,9 @@ const TaskSummary = () => {
                                 onClick={targetGroupButton}
                             >
                                 Add more group
-                            </Button>
+                            </Button> */}
 
+                            [In development...]
                         </div>
 
 
@@ -271,7 +269,7 @@ const TaskSummary = () => {
                                             </div>)
                                         }
                                     </div>
-                                    <button onClick={() => deleteSurvey(question.id)}>Delete Survey</button>
+                                    <button style={{backgroundColor:'var(--warning)'}} onClick={() => deleteSurvey(question.id)}>Delete Survey</button>
 
                                 </div>
                             </div>
@@ -312,7 +310,7 @@ const TaskSummary = () => {
                     <Tooltip />
                 </PieChart>
                 <div style={{ textAlign: 'right' }}>
-                    <p>Scheduled date: {createdDate.getFullYear() + '-' + (createdDate.getMonth() + 1) + '-' + createdDate.getDate()}</p>
+                    <p>Scheduled date: [In development..]</p>
                     <p>Total sent out: {question.total}</p>
                     <p>Received: {question.complete}</p>
                 </div>
