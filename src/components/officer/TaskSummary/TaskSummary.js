@@ -9,6 +9,7 @@ import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { serverTimestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
+
 import { Button, Classes, Dialog, Icon, Tab, Tabs, Divider } from '@blueprintjs/core'
 
 
@@ -31,7 +32,7 @@ const TaskSummary = () => {
     const [isFound, setFound] = useState(true);
     const [surveyTitle, setTitle] = useState('');
     const [groupID, setGroupID] = useState('');
-    const [allTeachers, setAllTeachers] = useState([]);
+
     useEffect(() => {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
         const getAnswers = func.httpsCallable('officer-getAllCreatedSurveys_Answers');
@@ -60,7 +61,6 @@ const TaskSummary = () => {
     }, []);
 
     useEffect(() => {
-
         const retrieveSurvey = async () => {
             app.appCheck().activate(site_key, true);
             const getSurvey = func.httpsCallable('teacher-getAssignedSurvey_Questions');
@@ -222,7 +222,7 @@ const TaskSummary = () => {
                             {groups.map(group => {
                                 return <Button
                                     style={{ margin: '5px' }} key={group.id}
-                                    onClick={() => openTargetGroup(group)}
+                                    
                                 >{group.name}
                                 </Button>
                             })}
