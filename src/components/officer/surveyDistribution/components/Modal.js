@@ -1,7 +1,8 @@
 import style from './style.module.css';
 import {createRef, useEffect, useState} from "react";
 import {func} from "../../../../utils/firebase";
-function Modal({onClose, onConfirm, defaultGroups = []}) {
+import {Dialog} from "@blueprintjs/core";
+function Modal({onClose, onConfirm, defaultGroups = [], visible = false}) {
   const ref = createRef();
   const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState(defaultGroups);
@@ -47,7 +48,7 @@ function Modal({onClose, onConfirm, defaultGroups = []}) {
     retrieveGroups();
   }, []);
   return (
-    <div ref={ref} onClick={handleClick} className={style.wrapper}>
+    <Dialog isOpen={visible} onClose={onClose}>
       <div className={style.content}>
         <div className={style.contentHeader}>
           <h2>YOUR TARGET GROUP</h2>
@@ -60,7 +61,7 @@ function Modal({onClose, onConfirm, defaultGroups = []}) {
           <div onClick={handleConfirm} className={style.confirm}>CONTINUE</div>
         </div>
       </div>
-    </div>
+    </Dialog>
   )
 }
 

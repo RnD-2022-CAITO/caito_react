@@ -206,7 +206,7 @@ const OfficerSurveyDistribution = () => {
     <div className='main-wrapper'>
       <h1 style={{textAlign:'center'}}>Distribute Task</h1>
       <Divider />
-      {selectGroupsVisible && <Modal defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>}
+      <Modal visible={selectGroupsVisible} defaultGroups={selectedGroupNames} onConfirm={handleConfirmSelectGroups} onClose={() => setSelectGroupsVisible(false)}/>
       <div className='grid-layout'>
         <div className='select-display-s'>
           <h3>Select your profiling task</h3>
