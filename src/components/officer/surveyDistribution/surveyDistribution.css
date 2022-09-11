@@ -73,3 +73,10 @@ input.chk-btn:checked + .input-btn {
     background: var(--primary-dark);
     color: white;
 }
+.group-label {
+    padding: 5px 10px;
+    border-radius: 50px;
+    margin: 5px;
+    background: #476b84;
+    color: white;
+}

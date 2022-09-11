@@ -58,8 +58,10 @@ const OfficerSurveyDistribution = () => {
     }
     else if (distributeToGroupsState === DistributeToGroupsSteps.ADD_MORE_TEACHERS) {
       return (
-        <div>
-          <h4>{selectedGroupNames.join(', ')}</h4>
+        <div >
+          <h4 style={{marginBottom: '20px'}}>{selectedGroupNames.map(name => {
+            return <label className={'group-label'} key={name}>{name}</label>
+          })}</h4>
           <button onClick={() => setSelectGroupsVisible(true)}>ADD MORE TARGET GROUPS</button>
         </div>
       )
