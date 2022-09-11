@@ -1,5 +1,5 @@
 //Sign up page
-import {React, useRef, useState} from 'react' 
+import {React, useEffect, useRef, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import ErrorRoute from '../routes/ErrorRoute';
@@ -9,9 +9,11 @@ import app, {func, auth} from '../../../utils/firebase'
 
 import './SignUp.css'
 import { Divider } from '@blueprintjs/core';
-
+let timer = null;
+let sendEmailSecond = 60;
 const SignUp = () => {
   const emailRef = useRef();
+  const emailValidRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const firstNameRef = useRef();
@@ -27,6 +29,44 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const [sentValidEmail, setSentValidEmail] = useState(false);
+  const [second, setSecond] = useState(sendEmailSecond);
+  useEffect(() => {
+    if (sentValidEmail) {
+      timer = setInterval(() => {
+        sendEmailSecond --;
+        if (sendEmailSecond === 0) {
+          setSentValidEmail(false);
+          clearInterval(timer);
+          sendEmailSecond = 60;
+        }
+        setSecond(sendEmailSecond);
+
+      }, 1000);
+    }
+  }, [sentValidEmail]);
+  useEffect(() => {
+    return () => {
+      clearInterval(timer);
+    }
+  }, []);
+  const handleClickSendValidEmail = async () => {
+    if (!sentValidEmail) {
+      const re =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if (!emailRef.current.value || !re.test(emailRef.current.value)) {
+        return alert("Please enter a valid email!");
+      }
+      setSentValidEmail(true);
+      const sendEmail = func.httpsCallable('auth_triggers-sendEmailValidCode');
+      await sendEmail({
+        email: emailRef.current.value
+      });
+      alert("We have sent a email to you, please check!");
+    }
+
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -103,30 +143,42 @@ const SignUp = () => {
           <Logo style={{width:'5em'}}/>
         </h1>
         <h2>Sign Up</h2>
-        <div className='input-field'>
-          <input id="email" type="email" ref={emailRef} required autoComplete='off'/>
-          <label className='control-label' htmlFor='email'>Email</label>
+        <div className={'form-item'}>
+          <label className={'form-label'}  htmlFor='email'>Email</label>
+          <input className={'form-control'} style={{width: '65%'}} id="email" type="email" ref={emailRef} required autoComplete='off'/>
+          <button onClick={handleClickSendValidEmail} type={'button'} style={{width: '30%', marginLeft: '5%'}}>
+            {!sentValidEmail && ('Send Code')}
+            {sentValidEmail && (
+              second + 's'
+            )}
+          </button>
+
+        </div>
+        <div className={'form-item'}>
+          <label className={'form-label'}  htmlFor='email-valid'>Email Valid Code</label>
+          <input ref={emailValidRef} className={'form-control'} id={'email-valid'}  type="text"required autoComplete='off'/>
 
         </div>
 
-        <div className='input-field'>
-          <input id='password' type="password" ref={passwordRef} required autoComplete='off'/>
-          <label className='control-label' htmlFor='password'>Password</label>
+        <div className='form-item'>
+          <label className='form-label' htmlFor='password'>Password</label>
+          <input className={'form-control'} id='password' type="password" ref={passwordRef} required autoComplete='off'/>
         </div>
 
-        <div className='input-field'>
-          <input id='confirm-pass' type="password" ref={passwordConfirmRef} required autoComplete='off'/>
-          <label className='control-label' htmlFor='confirm-pass'> Confirm Password</label>
+        <div className='form-item'>
+          <label className='form-label' htmlFor='confirm-pass'> Confirm Password</label>
+          <input className={'form-control'} id='confirm-pass' type="password" ref={passwordConfirmRef} required autoComplete='off'/>
         </div>
 
-        <div className='input-field'>
-          <input id='first-name' type="text" ref={firstNameRef} required autoComplete='off'/>
-          <label className='control-label' htmlFor='first-name'>First name</label>
+        <div className='form-item'>
+          <label className='form-label' htmlFor='first-name'>First name</label>
+          <input className={'form-control'} id='first-name' type="text" ref={firstNameRef} required autoComplete='off'/>
         </div>
 
-        <div className='input-field'>
-          <input id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
-          <label className='control-label' htmlFor='last-name'>Last name</label>
+        <div className='form-item'>
+          <label className='form-label' htmlFor='last-name'>Last name</label>
+          <input className={'form-control'} id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
+
         </div>
 
         {error && <p className='error'>{error}</p>}
