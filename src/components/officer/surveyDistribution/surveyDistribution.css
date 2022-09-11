@@ -74,9 +74,9 @@ input.chk-btn:checked + .input-btn {
     color: white;
 }
 .group-label {
-    padding: 5px;
-    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 50px;
     margin: 5px;
-    background: #6e9beb;
+    background: #476b84;
     color: white;
 }
