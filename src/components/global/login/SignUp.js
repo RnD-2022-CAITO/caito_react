@@ -8,7 +8,7 @@ import app, {func, auth} from '../../../utils/firebase'
 
 
 import './SignUp.css'
-import { Divider } from '@blueprintjs/core';
+import { Divider, Icon } from '@blueprintjs/core';
 
 const SignUp = () => {
   const emailRef = useRef();
@@ -103,6 +103,15 @@ const SignUp = () => {
           <Logo style={{width:'5em'}}/>
         </h1>
         <h2>Sign Up</h2>
+        <Divider />
+        <h5 style={{textAlign:'center'}}>
+          <Icon icon = 'warning-sign' color='var(--caito-blue)'/> &nbsp;
+          If you're and officer in charge of creating profiling tasks, 
+          <br> 
+          </br>please &nbsp;
+          <a href = "mailto: bcis.caito@gmail.com">contact us</a> &nbsp;
+          or your administrator to provide you an account.</h5>
+        <Divider/>
         <div className='input-field'>
           <input id="email" type="email" ref={emailRef} required autoComplete='off'/>
           <label className='control-label' htmlFor='email'>Email</label>
@@ -136,12 +145,6 @@ const SignUp = () => {
 
           </button>
         </div>
-        <Divider />
-        <h5 style={{textAlign:'center'}}>If you're and officer in charge of creating profiling tasks, 
-          <br> 
-          </br>please &nbsp;
-          <a href = "mailto: bcis.caito@gmail.com">contact us</a> &nbsp;
-          or your administrator to provide you an account.</h5>
       </form>
 
       <div>

@@ -22,7 +22,7 @@ export const LandingOfficer = () => {
         <>
             <section className='instruction-banner'>
                 <h3>Want to know more on how enlight works?</h3>
-                <button>Click here</button>
+                <button onClick={()=>navigate('/about')} >Click here</button>
             </section>
             <section className='container-hero'>
                 <div className='hero'>
