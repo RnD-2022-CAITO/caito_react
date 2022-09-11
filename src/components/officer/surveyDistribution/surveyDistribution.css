@@ -4,13 +4,33 @@
 
 .grid-layout{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 0.5fr 1fr;
 }
 
 .select-display-survey{
     grid-row-start: 1;
     grid-row-end: 3;
     grid-column-start: 2;
+}
+
+
+.step-title{
+    font-weight: bolder;
+    font-size: 3rem;
+    letter-spacing: -3px;
+    word-spacing: 5px;
+    margin-top: 0;
+    padding-left: 10px;
+}
+
+.step-progress-btn{
+    border-radius: 30px;
+    padding: 20px;
+}
+
+.step-progress-icon{
+    padding: 5px;
+    border-radius: 50%;
 }
 
 @media screen and (max-width: 700px) {
