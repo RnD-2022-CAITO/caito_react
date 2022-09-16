@@ -1,0 +1,54 @@
+.survey {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form{
+    background-color: var(--tetriary-color);
+    padding: 10px;
+}
+
+.sur-question{
+    width: 70vw;
+    padding-bottom: 15px;
+    margin: 10px;
+    border: 0.2px solid rgba(0, 0, 0, 0.322);
+    border-radius: 2px;
+    background-color: var(--primary-light);
+}
+
+.question-label{
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--primary-light);
+    padding: 10px;
+}
+
+.task-input{
+    width: 95%;
+    margin-left: 10px
+}
+
+.class-btn-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+.download-btn-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 700px){
+    .sur-question{
+        width: 85vw;
+    }
+}
