@@ -38,17 +38,6 @@ const Survey = () => {
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState('');
 
-  const FileDownload = require('js-file-download');
-
-  axios({
-  url: 'http://localhost:3000/saved/' + questions,
-  method: 'GET',
-  responseType: 'blob', // Important
-}).then((response) => {
-    FileDownload(response.data, 'report.csv');
-});
-
-
   useEffect(() => {
     const retrieveSurvey = async  () => {
       app.appCheck().activate(site_key, true);
@@ -283,13 +272,6 @@ const Survey = () => {
                 <button disabled={loading} style={{backgroundColor:'var(--tertiary-color)'}} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
                 <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
                 </div>
-
-                <div className='download-btn-group'>
-                  
-                  <button disabled={loading} type='button' 
-                  onClick={FileDownload}
-                  >{loading? "Download..." : "Download"}</button>
-                  </div>
 
               </div>
        :             
