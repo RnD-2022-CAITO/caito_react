@@ -7,15 +7,14 @@ import { CommonLoading } from 'react-loadingg';
 import { Dialog } from '@blueprintjs/core';
 import axios from 'axios'
 
-import "./survey.css";
+import "./saveSurvey.css";
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
-const Survey = () => {
-  const {currentUser} = useAuth();
+const Saved = () => {
+  const {currentUser} =  useAuth();
   //Retrieve props from previous page
   const location = useLocation();
-
   const navigate = useNavigate();
 
   //Check if survey exists
@@ -25,7 +24,7 @@ const Survey = () => {
   const [surveyTitle, setTitle] = useState('');
   const [questions, setQuestions] = useState([]);
 
-  //Set answer
+  //Set answers
   const [answers, setAnswers] = useState([]);
   const [answerID, setAnswerID] = useState('');
 
@@ -41,7 +40,7 @@ const Survey = () => {
   const FileDownload = require('js-file-download');
 
   axios({
-  url: 'http://localhost:3000/saved/' + questions,
+  url: 'http://localhost:3000/survey/' + questions,
   method: 'GET',
   responseType: 'blob', // Important
 }).then((response) => {
@@ -94,16 +93,6 @@ const Survey = () => {
     // eslint-disable-next-line
   }, []);
 
-  //Update checkbox values
-  useEffect(() => {
-    if(index!==''){
-      let newArr = [...answers];
-      newArr[index] = Object.assign({}, checkboxVal);
-      setAnswers(newArr);
-    }
-    // eslint-disable-next-line
-  }, [checkboxVal])
-
   //populate existing answers upon page initialization
   const populateExistingAnswers = (id) => {
     app.appCheck().activate(site_key, true);
@@ -124,64 +113,6 @@ const Survey = () => {
     }
   }
 
-  //save the current answer to the answers array
-  const saveAnswer = (e, index, type) => {
-    //Create a new temporary array to store the answers
-    let newArr = [...answers];
-    setIndex(index);
-
-    //Assign the answer to its question
-    if(type==="checkbox"){
-      if(e.target.checked){
-        if(!(checkboxVal.indexOf(e.target.value) > -1)){
-          const newItem = e.target.value;
-          let newArray = [];
-          if (answers.at(index) !== checkboxVal){ // if initial saved answers and checkbox values are not the same
-            newArray.push(answers.at(index)); 
-            newArray.forEach((i) => {
-              if (i.length === undefined){
-                newArray = Object.keys(i).map((key) => i[key]);
-              }
-            });
-            let question = questions[index].question;
-            if (newArray.includes(question)){ // check if the actual question is in the answer[index]
-              setCheckboxVal([]);
-            } else {
-              setCheckboxVal(newArray);
-            }
-          }
-            setCheckboxVal(oldArr => ([...oldArr, newItem]));
-        }
-      } else {
-        //When user unchecks
-        let newArray = [];
-        if (answers.at(index) !== checkboxVal){ // if initial saved answers and checkbox values are not the same
-          newArray.push(answers.at(index));
-          newArray.forEach((i) => {
-          if (i.length === undefined){
-            newArray = Object.keys(i).map((key) => i[key]);
-          }
-        });
-          const item = e.target.value;
-          const removed = newArray.filter(e => e!==item);
-          setCheckboxVal(removed);
-        }else{
-          const item = e.target.value;
-          const removed = checkboxVal.filter(e => e!==item);
-          setCheckboxVal(removed);
-        }
-      }
-    }else{ // if type is radio
-      newArr[index] = e.target.value;
-
-      //Save to the answers array
-      setAnswers(newArr);
-      populateCheckboxAndRadio(e.target.value, index);
-    }
-  }
-
-  // uses the initial answers (if there are any saved ones from previous attempts) to populate 
-  // checkboxes and radios in the UI
   const populateCheckboxAndRadio = (o, index) => {
     let newArray = [];
     newArray.push(answers.at(index));
@@ -205,55 +136,10 @@ const Survey = () => {
       return answers.at(index);
     }
   }
-
-  //Set confirmation dialog state
-  const [dialog, setDialog] = useState("");
-
-  //Submit survey to the server 
-  const sendSurvey = async (e, boolean) => {
-    e.preventDefault();
-
-    updateSurvey(boolean);
-
-    if(boolean){
-      setDialog("You have successfully submitted your task!");
-    }else{
-      setDialog("Task has been saved! You can continue to submit your task any time.");
-    }
-  }
-
-  const updateSurvey = (boolean) => {
-    app.appCheck().activate(site_key, true);
-    const getSurveys = func.httpsCallable('teacher-updateAssignedSurvey_Answers');
-    try {
-        setLoading(true);
-        getSurveys({
-          answerID: answerID,
-          answers: answers,
-          isSubmitted: boolean
-        });
-        setLoading(false);
-    } catch (e) {
-        console.error(e);
-    }
-}
-
-  //Placeholder for the inputs
-  const displayPlaceHolder = (inputType ) => {
-    switch(inputType) {
-      case 'text':
-        return 'Type in your text...';
-      case 'number':
-        return 'Enter a number';
-      default:
-        return 'Enter your input here...'
-    }
-  }
   
-
   return (
     isFound ?
-    <form className='survey' onSubmit={e => sendSurvey(e, true)}> 
+    <form className='survey'> 
        {!formLoading ? 
               <div className='form'>
               <h1 style={{textAlign:'center'}}>{surveyTitle}</h1>
@@ -267,23 +153,18 @@ const Survey = () => {
                    <div >
                     { q.options.map((o) =>
                      <div key={o}>
-                     <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
+                     <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  ></input>
                      <label htmlFor={o}> &nbsp; {o}</label>
                      </div>
                      )}
                    </div>
                  : 
                  <div>
-                 <input className='task-input' required type={q.type} value={populateTextAndNum(index)} placeholder={displayPlaceHolder(q.type)} onChange={(e) => saveAnswer(e, index)}></input>
+                 <input className='task-input' required type={q.type} value={populateTextAndNum(index)} ></input>
                  </div>}
                </div>)
                }
                        
-                <div className='class-btn-group'>
-                <button disabled={loading} style={{backgroundColor:'var(--tertiary-color)'}} type='button' onClick={e => sendSurvey(e, false)}>{loading? "Saving..." : "Save And Continue Later"}</button>
-                <button disabled={loading} type='submit'>{loading? "Submitting..." : "Complete"}</button>
-                </div>
-
                 <div className='download-btn-group'>
                   
                   <button disabled={loading} type='button' 
@@ -297,18 +178,8 @@ const Survey = () => {
           <CommonLoading color='#323547' />
         </div> }
 
-    {dialog!=="" && 
-    <Dialog
-      title= "Confirmation"
-      isOpen={dialog !=="" ? true : false}
-      onClose={() => navigate('/')}
-    >
-      <p style={{padding:'10px'}}>
-       {dialog}
-      </p>
-    </Dialog>}
     </form> : <h1>Task not found</h1>
   )
 }
 
-export default Survey;
+export default Saved;

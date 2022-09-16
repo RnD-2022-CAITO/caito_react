@@ -31,6 +31,7 @@ import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
+import Saved from './components/teacher/saved'
 import DeleteAccount from './components/officer/deleteAccount'
 import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
@@ -65,6 +66,15 @@ const App = () => {
             <UserDataProvider>
               <PrivateRoute role={role.T}>
                 <Survey />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+
+          <Route exact path="/saved/:id" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <Saved />
               </PrivateRoute>
             </UserDataProvider>
           }
