@@ -34,6 +34,21 @@
     margin-bottom: 20px ;
 }
 
+.profile-tasks{
+    padding: 10px;
+    border: 0.2px solid rgba(0, 0, 0, 0.299);
+    border-radius: 2px;
+    margin: 10px;
+}
+
+.select-display h3{
+    border: 1px;
+    /* background-color: var(--secondary-color);
+    color: var(--primary-light); */
+    margin: -10px -10px 10px -10px;
+    padding: 10px;
+}
+
 @media screen and (max-width: 700px){
     .profile-container{
         display: block;
