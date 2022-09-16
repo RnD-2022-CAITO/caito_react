@@ -33,7 +33,6 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import Saved from './components/teacher/saved'
 import DeleteAccount from './components/officer/deleteAccount'
-import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
 import { Foooter } from './components/global/Footer';
 import TaskSummary from './components/officer/TaskSummary/TaskSummary';
@@ -98,7 +97,7 @@ const App = () => {
             </UserDataProvider>
           }
           />
-
+{/* 
           <Route exact path="/downLoad/downLoadSurvey" element={
             <UserDataProvider>
               <PrivateRoute role={role.T}>
@@ -106,7 +105,7 @@ const App = () => {
               </PrivateRoute>
             </UserDataProvider>
           }
-          />
+          /> */}
 
           <Route exact path="/delete-account" element={
             <UserDataProvider>

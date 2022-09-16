@@ -107,7 +107,7 @@ const currentTask = upcomingSurvey
 
                         <h3>Your profiling tasks</h3>
                         <div className='profile-tasks'>
-                          <div className='select-display-s' >
+                          <div className='select-display' >
                         <h3>Complete task
                         </h3>
                         <div>
