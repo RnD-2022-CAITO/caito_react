@@ -40,7 +40,9 @@ const TaskSummary = () => {
                     const res = await getGroupsOfSurvey({
                         survey_id: state.question.id
                     });
-                    setGroupsOfSurvey(res.data);
+                    if (res && Array.isArray(res.data)) {
+                        setGroupsOfSurvey(res.data);
+                    }
                 } catch (err) {
 
                 }
