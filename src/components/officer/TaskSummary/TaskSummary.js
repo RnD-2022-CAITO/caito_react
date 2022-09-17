@@ -8,13 +8,14 @@ import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 
-import { Divider } from '@blueprintjs/core'
+import {Button, Classes, Divider, Icon} from '@blueprintjs/core'
 
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
+    console.log('question', state)
     const [refreshData, setRefreshData] = useState(true);
     const { question } = state; // Read values passed on state
     const [loading, setLoading] = useState(true);
@@ -25,10 +26,28 @@ const TaskSummary = () => {
 
     const [createdDate, setCreatedDate] = useState([]);
     const [groups, setGroups] = useState([]);
+    const [groupsOfSurvey, setGroupsOfSurvey] = useState([]);
     const [name, setName] = useState([]);
     const [isFound, setFound] = useState(true);
     const [surveyTitle, setTitle] = useState('');
     const [groupID, setGroupID] = useState('');
+
+    useEffect(() => {
+        const fetchGroups = async () => {
+            if (state && state.question) {
+                const getGroupsOfSurvey = func.httpsCallable('group-getGroupsOfSurvey');
+                try {
+                    const res = await getGroupsOfSurvey({
+                        survey_id: state.question.id
+                    });
+                    setGroupsOfSurvey(res.data);
+                } catch (err) {
+
+                }
+            }
+        }
+        fetchGroups()
+    }, [state])
 
     useEffect(() => {
         app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -216,10 +235,23 @@ const TaskSummary = () => {
                     <div className='select-display-s'>
                         <h3>Target Groups</h3>
                         <div >
+                            { groupsOfSurvey.map(group => {
+                                return (
+                                  <button key={group.id}>{group.name}</button>
+                                )
+                            })
+
+                            }
+                            <Button className={Classes.MINIMAL}
+                                    icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
+                                    onClick={targetGroupButton}
+                            >
+                                Add more group
+                            </Button>
                             {/* {groups.map(group => {
                                 return <Button
                                     style={{ margin: '5px' }} key={group.id}
-                                    
+
                                 >{group.name}
                                 </Button>
                             })}
@@ -230,7 +262,6 @@ const TaskSummary = () => {
                                 Add more group
                             </Button> */}
 
-                            [In development...]
                         </div>
 
 
