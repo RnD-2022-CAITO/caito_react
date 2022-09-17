@@ -25,7 +25,7 @@ function SurveyDistributionToGroups() {
       const distributeSurveyToGroupTeachers = func.httpsCallable('officer-distributeSurveyToGroup');
       try {
         const res = await distributeSurveyToGroupTeachers({
-          teachers, surveys
+          teachers, surveys, group_id: group.id
         });
         console.log(res);
         alert('Distribute successfully!');
