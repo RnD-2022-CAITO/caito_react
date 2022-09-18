@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import app, {db, func} from '../../../utils/firebase';
-import { useAuth } from '../../global/auth/Authentication';
-import { useNavigate } from 'react-router-dom';
-import { CommonLoading } from 'react-loadingg';
-import { Dialog } from '@blueprintjs/core';
+import {useAuth} from '../../global/auth/Authentication';
+import {useNavigate} from 'react-router-dom';
+import {CommonLoading} from 'react-loadingg';
+import {Dialog} from '@blueprintjs/core';
 import axios from 'axios'
 
 import "./saveSurvey.css";
@@ -12,7 +12,7 @@ import "./saveSurvey.css";
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
 const Saved = () => {
-  const {currentUser} =  useAuth();
+  const {currentUser} = useAuth();
   //Retrieve props from previous page
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,54 +37,44 @@ const Saved = () => {
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState('');
 
-  const FileDownload = require('js-file-download');
-
-  axios({
-  url: 'http://localhost:3000/survey/' + questions,
-  method: 'GET',
-  responseType: 'blob', // Important
-}).then((response) => {
-    FileDownload(response.data, 'report.csv');
-});
-
 
   useEffect(() => {
-    const retrieveSurvey = async  () => {
+    const retrieveSurvey = async () => {
       app.appCheck().activate(site_key, true);
       const getSurvey = func.httpsCallable('teacher-getAssignedSurvey_Questions');
       try {
-          const response = await getSurvey({
-            questionID: location.state.questionID,
-          });
-          if(response.data == null){
-            setFound(false);
-          } else {
-            //Assign survey details to the variables
-            setTitle(response.data.title);
-            setQuestions(response.data.questions);
+        const response = await getSurvey({
+          questionID: location.state.questionID,
+        });
+        if (response.data == null) {
+          setFound(false);
+        } else {
+          //Assign survey details to the variables
+          setTitle(response.data.title);
+          setQuestions(response.data.questions);
 
-            //Clone the questions to the answers 
-            setAnswers(response.data.questions);
+          //Clone the questions to the answers
+          setAnswers(response.data.questions);
 
-            let targetAnswerID = "";
-            //Retrieve Answer ID
+          let targetAnswerID = "";
+          //Retrieve Answer ID
           await db.collection('survey-answer').where('questionID', '==', location.state.questionID).get()
-          .then((res) => {
+            .then((res) => {
               return res.docs.map(doc => {
-                  if(doc.data().teacherID === currentUser.uid){
-                    setAnswerID(doc.id);
-                    targetAnswerID = doc.id;
-                  }
-                  return doc.id;
+                if (doc.data().teacherID === currentUser.uid) {
+                  setAnswerID(doc.id);
+                  targetAnswerID = doc.id;
+                }
+                return doc.id;
               })
-          });
-            populateExistingAnswers(targetAnswerID); 
+            });
+          populateExistingAnswers(targetAnswerID);
 
-            setFormLoading(false);
-          }
-          
+          setFormLoading(false);
+        }
+
       } catch (e) {
-          console.error(e);
+        console.error(e);
       }
     }
 
@@ -98,18 +88,18 @@ const Saved = () => {
     app.appCheck().activate(site_key, true);
     const getAnswers = func.httpsCallable('teacher-getAssignedSurvey_Answers');
     try {
-        getAnswers({
+      getAnswers({
         answerID: id
       }).then((i) => {
         let newArr = [...i.data.answers];
-        if (newArr.length > 0){
+        if (newArr.length > 0) {
           setAnswers(newArr);
         }
       }).catch(e => {
         console.log(e);
       });
     } catch (e) {
-        console.error(e);
+      console.error(e);
     }
   }
 
@@ -117,14 +107,13 @@ const Saved = () => {
     let newArray = [];
     newArray.push(answers.at(index));
     newArray.forEach((i) => {
-      if (i.length === undefined){
+      if (i.length === undefined) {
         newArray = Object.keys(i).map((key) => i[key]);
       }
     });
-    if (newArray.includes(o)){
+    if (newArray.includes(o)) {
       return true;
-    }
-    else {
+    } else {
       return false
     }
   }
@@ -132,53 +121,91 @@ const Saved = () => {
   // uses the initial answers (if there are any saved ones from previous attempts) to populate 
   // texts and numbers in the UI
   const populateTextAndNum = (index) => {
-    if (answers.at(index) !== questions.at(index)){
+    if (answers.at(index) !== questions.at(index)) {
       return answers.at(index);
     }
   }
-  
+
+  // download survey
+  const handleDownload = async () => {
+    let fileContent = ``;
+    fileContent += `Title: ${surveyTitle}\n`;
+    for (let i = 0; i < questions.length; i ++) {
+      fileContent += `\nQ${i + 1}: ${questions[i].question}\n`;
+      let answersOfQuestion = answers[i];
+      const questionItem = questions[i];
+      if (questionItem.options.length === 0) {
+        fileContent += `Answer: ${answersOfQuestion}\n`;
+      } else {
+        const questionOptions = questionItem.options;
+        questionOptions.forEach((option, index) => {
+          fileContent += `${index + 1} ${option}\n`;
+        });
+        if (typeof answersOfQuestion === 'string') {
+          fileContent += `Answer: ${answersOfQuestion}\n`;
+        } else {
+          fileContent += `Answer: ${Object.values(answersOfQuestion).join(',')}\n`;
+        }
+      }
+
+
+      fileContent += '\n';
+    }
+    let link = document.createElement("a")
+    let exportContent = '\uFEFF'
+    let blob = new Blob([exportContent + fileContent],{
+      type:'text/plain;charset=utf-8'
+    })
+    link.id = "download-csv"
+    link.setAttribute("href", URL.createObjectURL(blob))
+    link.setAttribute('download', surveyTitle + ".csv")
+    document.body.appendChild(link)
+    link.click()
+  }
+
   return (
     isFound ?
-    <form className='survey'> 
-       {!formLoading ? 
-              <div className='form'>
-              <h1 style={{textAlign:'center'}}>{surveyTitle}</h1>
-               {questions.map((q, index) => 
-               <div className='sur-question' key={index}>
-              <div className='question-label'> 
-                <label>{index+1}. {q.question}</label>
-              </div>
-               <br/>
-                 {q.options.length > 1 ?
-                   <div >
-                    { q.options.map((o) =>
-                     <div key={o}>
-                     <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  ></input>
-                     <label htmlFor={o}> &nbsp; {o}</label>
-                     </div>
-                     )}
-                   </div>
-                 : 
-                 <div>
-                 <input className='task-input' required type={q.type} value={populateTextAndNum(index)} ></input>
-                 </div>}
-               </div>)
-               }
-                       
-                <div className='download-btn-group'>
-                  
-                  <button disabled={loading} type='button' 
-                  onClick={FileDownload}
-                  >{loading? "Download..." : "Download"}</button>
+      <form className='survey'>
+        {!formLoading ?
+          <div className='form'>
+            <h1 style={{textAlign: 'center'}}>{surveyTitle}</h1>
+            {questions.map((q, index) =>
+              <div className='sur-question' key={index}>
+                <div className='question-label'>
+                  <label>{index + 1}. {q.question}</label>
+                </div>
+                <br/>
+                {q.options.length > 1 ?
+                  <div>
+                    {q.options.map((o) =>
+                      <div key={o}>
+                        <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)}
+                               name={q.type === 'checkbox' ? o : q.question}></input>
+                        <label htmlFor={o}> &nbsp; {o}</label>
+                      </div>
+                    )}
                   </div>
+                  :
+                  <div>
+                    <input className='task-input' required type={q.type} value={populateTextAndNum(index)}></input>
+                  </div>}
+              </div>)
+            }
 
-              </div>
-       :             
-        <div>
-          <CommonLoading color='#323547' />
-        </div> }
+            <div className='download-btn-group'>
 
-    </form> : <h1>Task not found</h1>
+              <button disabled={loading} type='button'
+                      onClick={handleDownload}
+              >{loading ? "Download..." : "Download"}</button>
+            </div>
+
+          </div>
+          :
+          <div>
+            <CommonLoading color='#323547'/>
+          </div>}
+
+      </form> : <h1>Task not found</h1>
   )
 }
 
