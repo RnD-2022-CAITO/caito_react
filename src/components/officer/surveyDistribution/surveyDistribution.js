@@ -89,19 +89,20 @@ const OfficerSurveyDistribution = () => {
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     } else {
-      setError("Make sure your task and your target group should not be empty;   and your schedule date must be at least from today.");
+      setError("Make sure your task and your target group should not be empty; and your schedule date must be at least from today.");
     }
   }
 
   //assign one teacher to the survey
-  async function assignTeacher(questionID, title, teacherID) {
+  async function assignTeacher(questionID, title, teacher) {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const scheduleSurvey = func.httpsCallable('officer-scheduleSurvey');
     try {
       await scheduleSurvey({
         questionID: questionID,
         title: title,
-        teacherID: teacherID,
+        teacherID: teacher.teacher,
+        groupID:teacher.groupID,
         scheduledDate: scheduledDate,
       });
     } catch (e) {
@@ -171,10 +172,17 @@ const OfficerSurveyDistribution = () => {
   useEffect(() => {
     selectedGroupNames.forEach(groupName => {
       const group = groups.find(group => group.name === groupName);
-      setSelectedTeachers(oldArray => [...oldArray, ...group.teachers]);
+      const teachers=group.teachers.map(teacher=>{
+        return{
+          teacher:teacher,
+          groupID:group.id,
+        }
+      })
+      setSelectedTeachers(oldArray => [...oldArray, ...teachers]);
+
+    });
     });
 
-  }, [selectedGroupNames, groups])
 
   useEffect(() => {
     const retrieveGroups = async () => {

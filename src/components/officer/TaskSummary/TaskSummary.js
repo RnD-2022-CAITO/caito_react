@@ -217,7 +217,7 @@ const TaskSummary = () => {
     }
 
     const targetGroupButton = () => {
-        navigate(`/survey-distribution`);
+        navigate('/survey-distribution', { state: { question: question } });
     }
 
 
