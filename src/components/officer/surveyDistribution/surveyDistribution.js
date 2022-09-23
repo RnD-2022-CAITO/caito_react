@@ -85,25 +85,42 @@ const OfficerSurveyDistribution = () => {
         await assignTeacher(selectedSurveys, obj.title, teacher);
       })
 
+      groups.map(group=>{
+        updateGroupID(selectedSurveys,group.id);
+      })
+
 
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     } else {
-      setError("Make sure your task and your target group should not be empty; and your schedule date must be at least from today.");
+      setError("Make sure your task and your target group should not be empty;   and your schedule date must be at least from today.");
     }
   }
 
   //assign one teacher to the survey
-  async function assignTeacher(questionID, title, teacher) {
+  async function assignTeacher(questionID, title, teacherID) {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const scheduleSurvey = func.httpsCallable('officer-scheduleSurvey');
     try {
       await scheduleSurvey({
         questionID: questionID,
         title: title,
-        teacherID: teacher.teacher,
-        groupID:teacher.groupID,
+        teacherID: teacherID,
         scheduledDate: scheduledDate,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function updateGroupID(questionID,groupID){
+
+    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    const updateGroupID = func.httpsCallable('officer-updateTargetGroup');
+    try {
+      await updateGroupID({
+        id:questionID,
+        groupID:groupID,
       });
     } catch (e) {
       console.error(e);
@@ -172,17 +189,10 @@ const OfficerSurveyDistribution = () => {
   useEffect(() => {
     selectedGroupNames.forEach(groupName => {
       const group = groups.find(group => group.name === groupName);
-      const teachers=group.teachers.map(teacher=>{
-        return{
-          teacher:teacher,
-          groupID:group.id,
-        }
-      })
-      setSelectedTeachers(oldArray => [...oldArray, ...teachers]);
-
-    });
+      setSelectedTeachers(oldArray => [...oldArray, ...group.teachers]);
     });
 
+  }, [selectedGroupNames, groups])
 
   useEffect(() => {
     const retrieveGroups = async () => {
@@ -201,9 +211,10 @@ const OfficerSurveyDistribution = () => {
   const clearSchedule = () => {
     setSelectedSurveys("");
     setSelectedTeachers([]);
+    setSelectedGroupNames([]);
     setScheduledDate(today.substring(0, 10));
   }
-
+  
   return (
     <>
     {loading ? 
@@ -304,8 +315,8 @@ const OfficerSurveyDistribution = () => {
       </div>
 
       <div className='schedule-btns'>
-        <button onClick={() => assignTeachers()}>Start sending out survey invitation</button>
-
+        <button onClick={() => assignTeachers() 
+          }>Start sending out survey invitation</button>
         <button className='warning-btn' onClick={clearSchedule}>Discard changes</button>
       </div>
 
