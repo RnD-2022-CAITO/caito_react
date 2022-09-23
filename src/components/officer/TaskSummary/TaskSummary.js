@@ -43,6 +43,7 @@ const TaskSummary = () => {
                     if (res && Array.isArray(res.data)) {
                         setGroupsOfSurvey(res.data);
                     }
+                    console.log(groupsOfSurvey);
                 } catch (err) {
 
                 }
@@ -212,10 +213,6 @@ const TaskSummary = () => {
         console.log(question);
     }
 
-    const openTargetGroup = (group) => {
-        setGroupID(group);
-    }
-
     const targetGroupButton = () => {
         navigate('/survey-distribution', { state: { question: question } });
     }
@@ -250,20 +247,6 @@ const TaskSummary = () => {
                             >
                                 Add more group
                             </Button>
-                            {/* {groups.map(group => {
-                                return <Button
-                                    style={{ margin: '5px' }} key={group.id}
-
-                                >{group.name}
-                                </Button>
-                            })}
-                            <Button className={Classes.MINIMAL}
-                                icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
-                                onClick={targetGroupButton}
-                            >
-                                Add more group
-                            </Button> */}
-
                         </div>
 
 
