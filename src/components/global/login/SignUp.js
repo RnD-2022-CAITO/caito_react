@@ -29,7 +29,11 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  const Steps = {
+    ValidEmail: 'ValidEmail',
+    FillData: 'FillData'
+  }
+  const [step, setStep] = useState(Steps.ValidEmail);
   const [sentValidEmail, setSentValidEmail] = useState(false);
   const [second, setSecond] = useState(sendEmailSecond);
   useEffect(() => {
@@ -58,14 +62,31 @@ const SignUp = () => {
       if (!emailRef.current.value || !re.test(emailRef.current.value)) {
         return alert("Please enter a valid email!");
       }
-      setSentValidEmail(true);
+      app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
       const sendEmail = func.httpsCallable('auth_triggers-sendEmailValidCode');
-      await sendEmail({
+      const res = await sendEmail({
         email: emailRef.current.value
       });
+      console.log(res)
+      setSentValidEmail(true);
       alert("We have sent a email to you, please check!");
+
     }
 
+  }
+
+  const handleCheckEmailCode = async () => {
+    const emailValidCode = emailValidRef.current.value;
+    const email = emailRef.current.value;
+    const checkEmailCode = func.httpsCallable('auth_triggers-checkEmailValidCode');
+    const checkRes = await checkEmailCode({
+      code: emailValidCode,
+      email
+    });
+    if (!checkRes.data.emailValidPass) {
+     return alert('Email code is incorrect!');
+    }
+    setStep(Steps.FillData);
   }
 
   const handleSubmit = async e => {
@@ -143,51 +164,64 @@ const SignUp = () => {
           <Logo style={{width:'5em'}}/>
         </h1>
         <h2>Sign Up</h2>
-        <div className={'form-item'}>
-          <label className={'form-label'}  htmlFor='email'>Email</label>
-          <input className={'form-control'} style={{width: '65%'}} id="email" type="email" ref={emailRef} required autoComplete='off'/>
-          <button onClick={handleClickSendValidEmail} type={'button'} style={{width: '30%', marginLeft: '5%'}}>
-            {!sentValidEmail && ('Send Code')}
-            {sentValidEmail && (
-              second + 's'
-            )}
-          </button>
+        {step === Steps.ValidEmail && (
+          <>
+            <div className={'form-item'}>
+              <label className={'form-label'}  htmlFor='email'>Email</label>
+              <input className={'form-control'} style={{width: '65%'}} id="email" type="email" ref={emailRef} required autoComplete='off'/>
+              <button onClick={handleClickSendValidEmail} type={'button'} style={{width: '30%', marginLeft: '5%'}}>
+                {!sentValidEmail && ('Send Code')}
+                {sentValidEmail && (
+                  second + 's'
+                )}
+              </button>
 
-        </div>
-        <div className={'form-item'}>
-          <label className={'form-label'}  htmlFor='email-valid'>Email Valid Code</label>
-          <input ref={emailValidRef} className={'form-control'} id={'email-valid'}  type="text"required autoComplete='off'/>
+            </div>
+            <div className={'form-item'}>
+              <label className={'form-label'}  htmlFor='email-valid'>Email Valid Code</label>
+              <input ref={emailValidRef} className={'form-control'} id={'email-valid'}  type="text"required autoComplete='off'/>
 
-        </div>
+            </div>
+          </>
+        )}
 
-        <div className='form-item'>
-          <label className='form-label' htmlFor='password'>Password</label>
-          <input className={'form-control'} id='password' type="password" ref={passwordRef} required autoComplete='off'/>
-        </div>
+        {step === Steps.FillData && (
+          <>
+            <div className='form-item'>
+              <label className='form-label' htmlFor='password'>Password</label>
+              <input className={'form-control'} id='password' type="password" ref={passwordRef} required autoComplete='off'/>
+            </div>
 
-        <div className='form-item'>
-          <label className='form-label' htmlFor='confirm-pass'> Confirm Password</label>
-          <input className={'form-control'} id='confirm-pass' type="password" ref={passwordConfirmRef} required autoComplete='off'/>
-        </div>
+            <div className='form-item'>
+              <label className='form-label' htmlFor='confirm-pass'> Confirm Password</label>
+              <input className={'form-control'} id='confirm-pass' type="password" ref={passwordConfirmRef} required autoComplete='off'/>
+            </div>
 
-        <div className='form-item'>
-          <label className='form-label' htmlFor='first-name'>First name</label>
-          <input className={'form-control'} id='first-name' type="text" ref={firstNameRef} required autoComplete='off'/>
-        </div>
+            <div className='form-item'>
+              <label className='form-label' htmlFor='first-name'>First name</label>
+              <input className={'form-control'} id='first-name' type="text" ref={firstNameRef} required autoComplete='off'/>
+            </div>
 
-        <div className='form-item'>
-          <label className='form-label' htmlFor='last-name'>Last name</label>
-          <input className={'form-control'} id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
+            <div className='form-item'>
+              <label className='form-label' htmlFor='last-name'>Last name</label>
+              <input className={'form-control'} id='last-name' type="text" ref={lastNameRef} required autoComplete='off'/>
 
-        </div>
+            </div>
+          </>
+        )}
 
         {error && <p className='error'>{error}</p>}
-        <div className='btn-position'>
-          <button className='auth-btn' disabled={loading} type="submit">
-            {loading?<span>Creating user...</span> :<span>Sign up</span>}
+        {step === Steps.FillData && (
+          <div className='btn-position'>
+            <button className='auth-btn' disabled={loading} type="submit">
+              {loading?<span>Creating user...</span> :<span>Sign up</span>}
 
-          </button>
-        </div>
+            </button>
+          </div>
+        )}
+        {step === Steps.ValidEmail && (
+          <button type={'button'} onClick={handleCheckEmailCode}>NEXT</button>
+        )}
         <Divider />
         <h5 style={{textAlign:'center'}}>If you're and officer in charge of creating profiling tasks, 
           <br> 
