@@ -6,11 +6,11 @@ import {useNavigate} from 'react-router-dom';
 import {CommonLoading} from 'react-loadingg';
 import {Dialog} from '@blueprintjs/core';
 import axios from 'axios'
+import { jsPDF } from 'jspdf';
 
 import "./saveSurvey.css";
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
-
 const Saved = () => {
   const {currentUser} = useAuth();
   //Retrieve props from previous page
@@ -151,16 +151,14 @@ const Saved = () => {
 
       fileContent += '\n';
     }
-    let link = document.createElement("a")
-    let exportContent = '\uFEFF'
-    let blob = new Blob([exportContent + fileContent],{
-      type:'text/plain;charset=utf-8'
-    })
-    link.id = "download-csv"
-    link.setAttribute("href", URL.createObjectURL(blob))
-    link.setAttribute('download', surveyTitle + ".csv")
-    document.body.appendChild(link)
-    link.click()
+    console.log(fileContent)
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "in",
+    });
+
+    doc.text(fileContent, 1, 1);
+    doc.save(`${surveyTitle}.pdf`);
   }
 
   return (
