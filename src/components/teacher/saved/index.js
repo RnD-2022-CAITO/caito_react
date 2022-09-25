@@ -160,6 +160,8 @@ const Saved = () => {
     // link.setAttribute('download', `${surveyTitle}.csv`)
     // document.body.appendChild(link)
     // link.click()
+    //document.body.removeChild(link); // remove a
+    //URL.revokeObjectURL(link.href) // release url memory
 
     //export as pdf file
     console.log(fileContent)
