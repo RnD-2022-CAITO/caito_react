@@ -36,6 +36,8 @@ const SignUp = () => {
   const [step, setStep] = useState(Steps.ValidEmail);
   const [sentValidEmail, setSentValidEmail] = useState(false);
   const [second, setSecond] = useState(sendEmailSecond);
+  
+  //set timer to reuse the button
   useEffect(() => {
     if (sentValidEmail) {
       timer = setInterval(() => {
@@ -50,11 +52,14 @@ const SignUp = () => {
       }, 1000);
     }
   }, [sentValidEmail]);
+
   useEffect(() => {
     return () => {
       clearInterval(timer);
     }
   }, []);
+
+  //check and send the email
   const handleClickSendValidEmail = async () => {
     if (!sentValidEmail) {
       const re =
@@ -75,6 +80,7 @@ const SignUp = () => {
 
   }
 
+  //check the email vaild code
   const handleCheckEmailCode = async () => {
     const emailValidCode = emailValidRef.current.value;
     const email = emailRef.current.value;
@@ -84,7 +90,7 @@ const SignUp = () => {
       email
     });
     if (!checkRes.data.emailValidPass) {
-     return alert('Email code is incorrect!');
+     return alert('Email Valid code is incorrect!');
     }
     setStep(Steps.FillData);
   }
@@ -185,6 +191,10 @@ const SignUp = () => {
           </>
         )}
 
+        {step === Steps.ValidEmail && (
+          <button type={'button'} onClick={handleCheckEmailCode}>NEXT</button>
+        )}
+
         {step === Steps.FillData && (
           <>
             <div className='form-item'>
@@ -219,9 +229,7 @@ const SignUp = () => {
             </button>
           </div>
         )}
-        {step === Steps.ValidEmail && (
-          <button type={'button'} onClick={handleCheckEmailCode}>NEXT</button>
-        )}
+
         <Divider />
         <h5 style={{textAlign:'center'}}>If you're and officer in charge of creating profiling tasks, 
           <br> 
