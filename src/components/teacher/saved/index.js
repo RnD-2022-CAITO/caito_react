@@ -34,9 +34,6 @@ const Saved = () => {
   //Loading state when submit the form
   const [loading, setLoading] = useState(false);
 
-  const [checkboxVal, setCheckboxVal] = useState([]);
-  const [index, setIndex] = useState('');
-
 
   useEffect(() => {
     const retrieveSurvey = async () => {
@@ -128,6 +125,7 @@ const Saved = () => {
 
   // download survey
   const handleDownload = async () => {
+    //get the context 
     let fileContent = ``;
     fileContent += `Title: ${surveyTitle}\n`;
     for (let i = 0; i < questions.length; i ++) {
@@ -148,9 +146,22 @@ const Saved = () => {
         }
       }
 
-
       fileContent += '\n';
     }
+
+    //export the excel file
+    // let link = document.createElement("a")
+    // let exportContent = '\uFEFF'
+    // let blob = new Blob([exportContent+fileContent],{
+    //         type:'text/plain;charset=utrf-8'
+    // })
+    // link.id = "download-csv"
+    // link.setAttribute("href", URL.createObjectURL(blob))
+    // link.setAttribute('download', `${surveyTitle}.csv`)
+    // document.body.appendChild(link)
+    // link.click()
+
+    //export as pdf file
     console.log(fileContent)
     const doc = new jsPDF({
       orientation: "landscape",
@@ -207,4 +218,4 @@ const Saved = () => {
   )
 }
 
-export default Saved;
+export default Saved
