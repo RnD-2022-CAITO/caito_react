@@ -15,6 +15,7 @@ function GroupCreator({title, subTitle, required, placeholder, type, onChange}) 
           {required && <span style={{color: 'red'}}>*</span>}
         </h3>
         {type === 'input' && <input
+          aria-label="input"
           required={required}
           value={val}
           onChange={e => setVal(e.target.value)}
@@ -22,6 +23,7 @@ function GroupCreator({title, subTitle, required, placeholder, type, onChange}) 
           placeholder={placeholder} />}
         {type === 'textarea' && (
           <textarea
+            aria-label="input"
             name={'description'}
             rows={4}
             required={required}
