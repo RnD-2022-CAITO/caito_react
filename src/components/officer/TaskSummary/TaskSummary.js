@@ -43,7 +43,6 @@ const TaskSummary = () => {
                     if (res && Array.isArray(res.data)) {
                         setGroupsOfSurvey(res.data);
                     }
-                    console.log(groupsOfSurvey);
                 } catch (err) {
 
                 }
