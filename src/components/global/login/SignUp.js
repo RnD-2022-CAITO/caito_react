@@ -22,6 +22,8 @@ const SignUp = () => {
   //Retrive the sign up from context
   const { signUp, currentUser } = useAuth();
 
+  const [emailSave, setemailSave] = useState('');
+
   //Input validation
   const [error, setError] = useState('');
 
@@ -89,6 +91,7 @@ const SignUp = () => {
       code: emailValidCode,
       email
     });
+    setemailSave(email);
     if (!checkRes.data.emailValidPass) {
      return alert('Email Valid code is incorrect!');
     }
@@ -121,12 +124,16 @@ const SignUp = () => {
 
     setLoading(true);
 
-    const user = {
-      email: emailRef.current.value,
+    // const emailSave = func.httpsCallable('auth_triggers-checkEmailValidCode');
+    // const email = emailRef.current.value;
+    // const emailRes = await emailSave({email});
+    const user = {      
+      email: emailSave,
       password: passwordRef.current.value,
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value
     }
+
     try{
       await signUp(user);
     }catch(err){ 

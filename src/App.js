@@ -32,7 +32,7 @@ import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRo
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import DeleteAccount from './components/officer/deleteAccount'
-import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
+// import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
 import { Foooter } from './components/global/Footer';
 import TaskSummary from './components/officer/TaskSummary/TaskSummary';
@@ -88,14 +88,14 @@ const App = () => {
           }
           />
 
-          <Route exact path="/downLoad/downLoadSurvey" element={
+          {/* <Route exact path="/downLoad/downLoadSurvey" element={
             <UserDataProvider>
               <PrivateRoute role={role.T}>
                 <DownLoadSurvey />
               </PrivateRoute>
             </UserDataProvider>
           }
-          />
+          /> */}
 
           <Route exact path="/delete-account" element={
             <UserDataProvider>
