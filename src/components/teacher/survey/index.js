@@ -5,7 +5,6 @@ import { useAuth } from '../../global/auth/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 import { Dialog } from '@blueprintjs/core';
-import axios from 'axios'
 
 import "./survey.css";
 

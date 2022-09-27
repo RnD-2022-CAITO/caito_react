@@ -62,6 +62,9 @@ const [taskPerPage] = useState(5);
 const indexOfLastTask = currentPage * taskPerPage;
 const indexOfFirstTask = indexOfLastTask - taskPerPage;
 
+const nextClick = () => {setCurrentPage(currentPage + 1)};
+const prevClick = () => setCurrentPage(currentPage - 1);
+
 const currentTask = upcomingSurvey
     .slice(indexOfFirstTask, indexOfLastTask).map((sur, index) => (
             sur.isSubmitted === true &&
@@ -121,7 +124,10 @@ const currentTask = upcomingSurvey
                                   taskPerPage={taskPerPage} 
                                   totalTasks={upcomingSurvey.length} 
                                   setCurrentPage={setCurrentPage}
-                                  currentPage={currentPage}/>
+                                  currentPage={currentPage}
+                                  nextClick={nextClick}
+                                  prevClick={prevClick}
+                                  />
                             </div> 
                     </div>
                 </div>
