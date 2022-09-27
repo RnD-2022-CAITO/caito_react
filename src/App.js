@@ -37,6 +37,7 @@ import { Admin } from './components/officer/adminPage/Admin';
 import { Foooter } from './components/global/Footer';
 import TaskSummary from './components/officer/TaskSummary/TaskSummary';
 import TaskOverview from './components/officer/TaskOverview/TaskOverview';
+import About from './components/global/about';
 //Roles to access paths
 const role = {
   T: 'teacher',
@@ -199,9 +200,18 @@ const App = () => {
           />
 
 
+          <Route exact path="/about" element={
+            <PrivateLandingRoute>
+              <UserDataProvider>
+                <About />
+              </UserDataProvider>
+            </PrivateLandingRoute>
+          }
+          />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/error" element={<ErrorRoute />} />
+
         </Routes>
 
       </AuthProvider>

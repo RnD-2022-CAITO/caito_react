@@ -26,6 +26,7 @@ function Groups() {
         description: groupDescription,
         teachers
       });
+      navigate(`/survey-distribution`)
       return;
     }
   }
@@ -67,14 +68,15 @@ function Groups() {
   }
 
   return (
-    <div>
+    <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
       <form onSubmit={handleCreate}>
+        <h1 >Create Group</h1>
         <div style={{marginBottom: '20px'}}>
           <GroupCreator
             onChange={val => setGroupName(val)}
             required
             type={'input'}
-            placeholder={'Lorem ipsum...'}
+            placeholder={'Enter name here...'}
             subTitle={'Set the name for the group'}
             title={'Group Name'}/>
         </div>
@@ -82,7 +84,7 @@ function Groups() {
           <GroupCreator
             onChange={val => setGroupDescription(val)}
             type={'textarea'}
-            placeholder={'Lorem ipsum...'}
+            placeholder={'Enter description here...'}
             subTitle={'Set the group description'}
             title={'Group Description'}/>
         </div>

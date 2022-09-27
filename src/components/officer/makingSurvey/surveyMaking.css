@@ -106,6 +106,10 @@
     gap: 10px;
 }
 
+.arrow-bottom{
+    margin-top: 10vh;
+}
+
 @media screen and (max-width: 700px) {
     .creator{
         width: 80vw;

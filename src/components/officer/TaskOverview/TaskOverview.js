@@ -151,12 +151,12 @@ const TaskOverview = () => {
                 <p>Question ID: {question.id}</p>
                 <Divider />
                 <p>Total sent out: {question.total}</p>
-                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? (question.complete / question.total * 100).toFixed(2) + " %" : "You haven't distribute this survey yet"}</p>
                 <div style={{textAlign:'right'}}>
                 <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
                 </div>
             </div>
-        </div>;
+        </div>; 
     });
 
     //Collapse the unschedule task
@@ -246,4 +246,3 @@ const TaskOverview = () => {
 }
 
 export default TaskOverview
-

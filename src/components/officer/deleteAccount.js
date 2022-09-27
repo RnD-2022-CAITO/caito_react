@@ -20,7 +20,7 @@ const DeleteAccount =() =>{
       selectedTeachers.map((o) => {
       deleteteacherAccount(o);  
       })
-      alert('you selected has been delet and pleas wait seconds to processing');
+      alert('Your selected has been deleted and please wait few seconds to processing');
       setTimeout(
         () => window.location.replace(document.referrer), 2000);
       

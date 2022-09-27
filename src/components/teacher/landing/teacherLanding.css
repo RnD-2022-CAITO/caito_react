@@ -1,6 +1,6 @@
 .new-survey{
     border: 0.2px solid rgba(0, 0, 0, 0.505);
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 10px;
     margin: 10px;
     display: flex;
@@ -11,6 +11,7 @@
 
 .new-sur{
     color: var(--primary-dark);
+    font-weight: bolder;
 }
 
 .survey-display{
@@ -48,4 +49,9 @@
 .pagination .active{
     background-color: var(--primary-dark);
     color: var(--primary-light);
+}
+
+.title-display{
+    font-size: 2em;
+    font-weight: bolder;
 }
