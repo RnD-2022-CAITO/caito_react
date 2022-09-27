@@ -291,10 +291,35 @@ const OfficerSurveyDistribution = () => {
         {toggleStep()}  
       </div>
 
-      <div className='schedule-btns'>
-        <button onClick={() => assignTeachers() 
-          }>Start sending out survey invitation</button>
-        <button className='warning-btn' onClick={clearSchedule}>Discard changes</button>
+      {step === 4 && 
+      <Review 
+      selectedSurveysTitle={selectedSurveysTitle}
+      assignTeachers = {assignTeachers}
+      clearSchedule = {clearSchedule} />
+      }
+
+      <div className='steps-progress arrow-bottom'>
+        <button
+        className='step-progress-btn'
+        disabled={step === 1 ? true : false}
+        onClick={()=>setStep(step-1)}>
+          <Icon size={'20px'} icon="chevron-left" />
+        </button>
+
+        <button className='step-progress-icon' disabled={step === 1 ? false : true}></button>
+
+        <button className='step-progress-icon' disabled={step === 2 ? false : true}></button>
+
+        <button className='step-progress-icon' disabled={step === 3 ? false : true}></button>
+
+        <button className='step-progress-icon' disabled={step === 4 ? false : true}></button>
+
+        <button
+        className='step-progress-btn'
+        disabled={step === 4 ? true : false}
+        onClick={()=>setStep(step+1)}>
+          <Icon size={'20px'} icon="chevron-right" />
+        </button>
       </div>
 
       {error !== "" &&

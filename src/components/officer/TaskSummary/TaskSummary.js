@@ -31,7 +31,7 @@ const TaskSummary = () => {
     const [isFound, setFound] = useState(true);
     const [surveyTitle, setTitle] = useState('');
     const [groupID, setGroupID] = useState('');
-
+    const [groupName,setGroupName]=useState('');
     useEffect(() => {
         const fetchGroups = async () => {
             if (state && state.question) {
@@ -97,6 +97,7 @@ const TaskSummary = () => {
                     setTitle(response.data.title);
                     setQuestions(response.data.questions);
                     setAnswers(response.data.questions);
+                    setGroupID(response.data.groupID);
                 }
 
             } catch (e) {
@@ -232,10 +233,12 @@ const TaskSummary = () => {
                 <div className='grid-layout'>
                     <div className='select-display-s'>
                         <h3>Target Groups</h3>
-                        <div >
-                            { groupsOfSurvey.map(group => {
+                        <h4 >
+                            { groupID.map((group,index) => {
                                 return (
-                                  <button key={group.id}>{group.name}</button>
+                                    <label className={'group-label'} key={group.name}>
+                                         <label  key={index}>{group.name} </label>
+                                    </label>
                                 )
                             })
 
@@ -246,7 +249,7 @@ const TaskSummary = () => {
                             >
                                 Add more group
                             </Button>
-                        </div>
+                        </h4>
 
 
 
