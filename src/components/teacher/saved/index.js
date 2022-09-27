@@ -64,8 +64,6 @@ const Saved = () => {
               })
             });
           populateExistingAnswers(targetAnswerID);
-
-          setFormLoading(false);
         }
 
       } catch (e) {
@@ -90,6 +88,9 @@ const Saved = () => {
         if (newArr.length > 0) {
           setAnswers(newArr);
         }
+
+        setFormLoading(false);
+
       }).catch(e => {
         console.log(e);
       });
@@ -187,7 +188,7 @@ const Saved = () => {
                 {q.options.length > 1 ?
                   <div>
                     {q.options.map((o) =>
-                      <div key={o}>
+                      <div className='task-input'  key={o}>
                         <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)}
                                name={q.type === 'checkbox' ? o : q.question}></input>
                         <label htmlFor={o}> &nbsp; {o}</label>
@@ -202,10 +203,9 @@ const Saved = () => {
             }
 
             <div className='download-btn-group'>
-
               <button disabled={loading} type='button'
                       onClick={handleDownload}
-              >{loading ? "Download..." : "Download"}</button>
+              >{loading ? "Download..." : "Export as PDF"}</button>
             </div>
 
           </div>

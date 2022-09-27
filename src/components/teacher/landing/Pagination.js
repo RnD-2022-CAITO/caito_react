@@ -17,6 +17,7 @@ export const Pagination = ({
 
   return (
     <nav>
+      {pageNumbers.length > 0 &&
       <ul className="pagination">
         { currentPage > 1 &&
         <button 
@@ -44,7 +45,7 @@ export const Pagination = ({
             {number}
           </button>
         ))} */}
-      </ul>
+      </ul>}
     </nav>
   );
 };

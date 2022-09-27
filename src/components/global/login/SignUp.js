@@ -2,9 +2,8 @@
 import {React, useRef, useState} from 'react' 
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
-import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
-import app, {func, auth} from '../../../utils/firebase'
+import app, {func} from '../../../utils/firebase'
 
 
 import './SignUp.css'
@@ -18,7 +17,7 @@ const SignUp = () => {
   const lastNameRef = useRef();
 
   //Retrive the sign up from context
-  const { signUp, currentUser } = useAuth();
+  const { signUp } = useAuth();
 
   //Input validation
   const [error, setError] = useState('');

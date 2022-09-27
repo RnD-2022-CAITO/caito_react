@@ -23,7 +23,7 @@ const LogIn = () => {
 
   //Get the routes
   const navigate = useNavigate();
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
 
 
   const handleSubmit = async e => {
