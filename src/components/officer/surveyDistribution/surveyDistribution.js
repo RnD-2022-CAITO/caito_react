@@ -85,11 +85,7 @@ const OfficerSurveyDistribution = () => {
         await assignTeacher(selectedSurveys, obj.title, teacher);
       })
 
-      groups.map(group=>{
-        updateGroupID(selectedSurveys,group.id);
-      })
-
-
+      updateGroupID(selectedSurveys,groups);
       setConfirmation('Successfully sent out the invitation to fill in the task!');
 
     } else {
@@ -122,6 +118,7 @@ const OfficerSurveyDistribution = () => {
         id:questionID,
         groupID:groupID,
       });
+      console.log("teacher: " + JSON.stringify(groups));
     } catch (e) {
       console.error(e);
     }
