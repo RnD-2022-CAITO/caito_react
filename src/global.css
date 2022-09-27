@@ -3,6 +3,12 @@ Global styling for the application
 Styles that can be applied globally to all elements with the same type are written here
 */
 
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
+}
+
 :root {
     --primary-color: 	#212129;
     --secondary-color: #7cafd1;
@@ -22,7 +28,7 @@ body{
 }
 
 *{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     margin: 0;
 
@@ -72,12 +78,6 @@ button:disabled{
     color: var(--primary-light);
 }
 
-.logo{
-    font-family: 'Orelega One', cursive;
-    font-size: 3em;
-    color: var(--primary-white);
-    cursor: none;
-}
 
 a{
     text-decoration: none;
@@ -140,4 +140,8 @@ input:focus + label{
 
 .main-wrapper{
     margin: 3.5em;
+}
+
+h1{
+    letter-spacing: -1px;
 }

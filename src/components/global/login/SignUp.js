@@ -8,7 +8,7 @@ import app, {func, auth} from '../../../utils/firebase'
 
 
 import './SignUp.css'
-import { Divider } from '@blueprintjs/core';
+import { Divider, Icon } from '@blueprintjs/core';
 
 const SignUp = () => {
   const emailRef = useRef();
@@ -51,6 +51,9 @@ const SignUp = () => {
       return setError('Last name should contain alphabetical letters only.');
     }
 
+
+    setLoading(true);
+
     const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -80,9 +83,13 @@ const SignUp = () => {
             lastName: user.lastName,
         });
 
-        navigate('/');
+        setLoading(false);
 
-        window.location.reload();
+        if(!loading){
+          navigate('/');
+        }
+
+        // window.location.reload();
 
     } catch (e) {
         console.error(e);
@@ -90,13 +97,21 @@ const SignUp = () => {
   }
 
   return (
-  !currentUser ?
   <div className='container'>
       <form className='sign-up-form' onSubmit={handleSubmit}>
         <h1 className='logo'>
           <Logo style={{width:'5em'}}/>
         </h1>
         <h2>Sign Up</h2>
+        <Divider />
+        <h5 style={{textAlign:'center'}}>
+          <Icon icon = 'warning-sign' color='var(--caito-blue)'/> &nbsp;
+          If you're and officer in charge of creating profiling tasks, 
+          <br> 
+          </br>please &nbsp;
+          <a href = "mailto: bcis.caito@gmail.com">contact us</a> &nbsp;
+          or your administrator to provide you an account.</h5>
+        <Divider/>
         <div className='input-field'>
           <input id="email" type="email" ref={emailRef} required autoComplete='off'/>
           <label className='control-label' htmlFor='email'>Email</label>
@@ -130,12 +145,6 @@ const SignUp = () => {
 
           </button>
         </div>
-        <Divider />
-        <h5 style={{textAlign:'center'}}>If you're and officer in charge of creating profiling tasks, 
-          <br> 
-          </br>please &nbsp;
-          <a href = "mailto: bcis.caito@gmail.com">contact us</a> &nbsp;
-          or your administrator to provide you an account.</h5>
       </form>
 
       <div>
@@ -147,7 +156,6 @@ const SignUp = () => {
         </p>
       </div>
     </div>
-    : <ErrorRoute err='already-login'/>
   )
 }
 

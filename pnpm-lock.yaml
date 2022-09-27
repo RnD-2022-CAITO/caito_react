@@ -2,7 +2,6 @@ lockfileVersion: 5.3
 
 specifiers:
   '@blueprintjs/core': ^4.9.3
-  '@blueprintjs/icons': ^4.5.0
   '@blueprintjs/popover2': ^1.6.3
   '@firebase/functions-compat': ^0.2.0
   '@testing-library/jest-dom': ^5.16.4
@@ -15,7 +14,6 @@ specifiers:
   eslint-plugin-react-hooks: ^4.6.0
   firebase: ^9.6.11
   nodemailer: ^6.7.4
-  normalize.css: ^8.0.1
   react: ^18.2.0
   react-dom: ^18.2.0
   react-dotenv: ^0.1.3
@@ -24,20 +22,18 @@ specifiers:
   react-loadingg: ^1.7.2
   react-router-dom: ^6.3.0
   react-scripts: ^5.0.1
-  recharts: ^2.1.13
+  recharts: ^2.1.14
   web-vitals: ^2.1.4
 
 dependencies:
-  '@blueprintjs/core': 4.10.1_react-dom@18.2.0+react@18.2.0
-  '@blueprintjs/icons': 4.5.0
-  '@blueprintjs/popover2': 1.6.6_react-dom@18.2.0+react@18.2.0
+  '@blueprintjs/core': 4.9.4_react-dom@18.2.0+react@18.2.0
+  '@blueprintjs/popover2': 1.6.4_react-dom@18.2.0+react@18.2.0
   '@firebase/functions-compat': 0.2.4
   '@testing-library/jest-dom': 5.16.4
   '@testing-library/react': 13.3.0_react-dom@18.2.0+react@18.2.0
   '@testing-library/user-event': 13.5.0
   firebase: 9.9.1
   nodemailer: 6.7.7
-  normalize.css: 8.0.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-dotenv: 0.1.3
@@ -1457,8 +1453,8 @@ packages:
     resolution: {integrity: sha512-3/kahUWyvgQUV9NtCMeeJgTFHziM2Z3f4hjDfnl03X4MW0onUeZfa2Mu4ZsRn2IAK7AmfLNkZe8vp8mxX9pDRg==}
     dev: false
 
-  /@blueprintjs/core/4.10.1_react-dom@18.2.0+react@18.2.0:
-    resolution: {integrity: sha512-yXvbIP1P2GaX8ksrmZIX775W8nemdGfkKDnQehmCyW48Nm61xKrWeMFd8dUWCIQ8ok/xLlr3X5jAyW7YYfzzmg==}
+  /@blueprintjs/core/4.9.4_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-aEhhXAzDGHNyC4BTn6AvkJBbS3AYofHzlNcqOvyNdU5SBVv+UabKs8Q8xMOhr0K6sn1BEEhtLvsW8IfhrSli3g==}
     hasBin: true
     peerDependencies:
       '@types/react': ^16.14.2 || 17 || 18
@@ -1469,10 +1465,10 @@ packages:
         optional: true
     dependencies:
       '@blueprintjs/colors': 4.1.6
-      '@blueprintjs/icons': 4.5.0
+      '@blueprintjs/icons': 4.4.2
       '@juggle/resize-observer': 3.4.0
       '@types/dom4': 2.0.2
-      classnames: 2.3.2
+      classnames: 2.3.1
       dom4: 2.1.6
       normalize.css: 8.0.1
       popper.js: 1.16.1
@@ -1483,16 +1479,16 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@blueprintjs/icons/4.5.0:
-    resolution: {integrity: sha512-IQCUrPfv6QxuLFkLT4h61COCxVyugAXQ1b+QhomJC8UukUjIFDQfG1YrbLRIuwngZMBH3JPov7ZM7wlp9x9REA==}
+  /@blueprintjs/icons/4.4.2:
+    resolution: {integrity: sha512-6oHWphGsRRYbz24IYBVI7Gz4jnxmO2AKeHNJUpghHg0GicKIjp4fNd+l6I+1q5N0CLDeY3sYjUnV7Cp+dq0+Sw==}
     dependencies:
       change-case: 4.1.2
-      classnames: 2.3.2
+      classnames: 2.3.1
       tslib: 2.3.1
     dev: false
 
-  /@blueprintjs/popover2/1.6.6_react-dom@18.2.0+react@18.2.0:
-    resolution: {integrity: sha512-ASZsvlcn5A42tDAgniu/fkBlUu8ebYWVcLb7oBH91Y4eLxW6I5HUL2BpMkhGhM3XYbjiLRUrLouT5n8hLIi13w==}
+  /@blueprintjs/popover2/1.6.4_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-W7+Swg7f7lY41LqViGIXpw6ehQD8Y6XoN7Z+PCS3yz1XGWYWFxr/o6s5TETpxd70qQt1ep//2xvSBxdTpHisTw==}
     peerDependencies:
       '@types/react': ^16.14.2 || 17 || 18
       react: ^16.8 || 17 || 18
@@ -1501,10 +1497,10 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@blueprintjs/core': 4.10.1_react-dom@18.2.0+react@18.2.0
+      '@blueprintjs/core': 4.9.4_react-dom@18.2.0+react@18.2.0
       '@juggle/resize-observer': 3.4.0
       '@popperjs/core': 2.11.6
-      classnames: 2.3.2
+      classnames: 2.3.1
       dom4: 2.1.6
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -3018,7 +3014,7 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.4.5
-      '@types/estree': 1.0.0
+      '@types/estree': 0.0.51
     dev: false
 
   /@types/eslint/8.4.5:
@@ -4257,8 +4253,8 @@ packages:
     resolution: {integrity: sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==}
     dev: false
 
-  /classnames/2.3.2:
-    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
     dev: false
 
   /clean-css/5.3.1:
@@ -9590,7 +9586,7 @@ packages:
       '@types/d3-interpolate': 3.0.1
       '@types/d3-scale': 4.0.2
       '@types/d3-shape': 3.1.0
-      classnames: 2.3.2
+      classnames: 2.3.1
       d3-interpolate: 3.0.1
       d3-scale: 4.0.2
       d3-shape: 3.1.0

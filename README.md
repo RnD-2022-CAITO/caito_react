@@ -29,7 +29,7 @@ The page will reload when you make changes.
 This project will be deployed on Firebase Web Hosting Service by the end of this year.
 
 ## Tools used
-- HTML, CSS, Javascript (React)
+- HTML, CSS, BlueprintJS, Javascript (React)
 - NodeJS, ExpressJS, Firebase Cloud Function & Firestore
 
 ## Authors

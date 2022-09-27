@@ -8,7 +8,7 @@ function GroupCreator({title, subTitle, required, placeholder, type, onChange}) 
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
-        <h1>{title}</h1>
+        <h2>{title}</h2>
       </div>
       <div className={style.content}>
         <h3>{subTitle}

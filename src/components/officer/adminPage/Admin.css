@@ -108,3 +108,7 @@ input.chk-btn:checked + .input-btn {
         display: block;
     }
 }
+
+.edit-group-container {
+    padding: 0 15px;
+}
