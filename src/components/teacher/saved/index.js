@@ -132,6 +132,7 @@ const Saved = () => {
       fileContent += `\nQ${i + 1}: ${questions[i].question}\n`;
       let answersOfQuestion = answers[i];
       const questionItem = questions[i];
+      //check the answer index
       if (questionItem.options.length === 0) {
         fileContent += `Answer: ${answersOfQuestion}\n`;
       } else {
@@ -139,6 +140,7 @@ const Saved = () => {
         questionOptions.forEach((option, index) => {
           fileContent += `${index + 1} ${option}\n`;
         });
+        //check the input answer
         if (typeof answersOfQuestion === 'string') {
           fileContent += `Answer: ${answersOfQuestion}\n`;
         } else {
