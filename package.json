@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^4.9.3",
-    "@blueprintjs/icons": "^4.5.0",
+    "@blueprintjs/icons": "^4.4.2",
     "@blueprintjs/popover2": "^1.6.3",
     "@firebase/functions-compat": "^0.2.0",
     "@tensorflow-models/toxicity": "^1.2.2",
