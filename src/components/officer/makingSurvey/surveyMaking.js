@@ -564,17 +564,22 @@ const OfficerSurveyMaking = () => {
       {togglePage()}
     </div>
 
-    <div className='steps-progress'>
-    <Button
-    icon="arrow-left"
-    disabled={page === 1 ? true : false}
-    onClick={()=>setPage(page-1)}/>
+    <div className='steps-progress arrow-bottom'>
+      <button
+      className='step-progress-btn'
+      disabled={page === 1 ? true : false}
+      onClick={()=>setPage(page-1)}>
+        <Icon size={'20px'} icon="chevron-left" />
+      </button>
 
-    <Button
+    <button
+    className='step-progress-btn'
     icon="arrow-right"
     disabled={page === 2 ? true : false}
     onClick={()=>setPage(page+1)}
-    />
+    >
+      <Icon size={'20px'} icon="chevron-right" />
+    </button>
     </div>
 
     </>

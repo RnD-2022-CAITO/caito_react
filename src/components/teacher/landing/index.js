@@ -8,6 +8,7 @@ import { Pagination  } from './Pagination';
 
 import "./teacherLanding.css";
 import { Footer } from '../../global/Footer';
+import { Divider } from '@blueprintjs/core';
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -81,6 +82,9 @@ const TeacherLanding = () => {
     
     const indexOfLastTask = currentPage * taskPerPage;
     const indexOfFirstTask = indexOfLastTask - taskPerPage;
+    
+    const nextClick = () => {setCurrentPage(currentPage + 1)};
+    const prevClick = () => setCurrentPage(currentPage - 1);
 
     
     const currentTask = upcomingSurvey
@@ -93,13 +97,14 @@ const TeacherLanding = () => {
     ));
         
     const renderSurveys = () => (
-        <div className='survey-display'>
-            <div>
-            <h2 style={{textAlign:'center'}}>Kia Ora, {userData.firstName}</h2>
-            <h2 style={{textAlign:'center'}}>You have <span className='new-sur'>{totalSurvey}</span> new 
-            {(totalSurvey < 1) ? <span> survey</span> : <span> surveys</span>}</h2>
+        <div id='survey-display' className='survey-display'>
+            <div className='title-display'>
+            <h1 style={{textAlign:'left', fontWeight:'bolder', letterSpacing:'-2px', wordSpacing:'4px'}}>You have...
+            <br>
+            </br> <span className='new-sur'>{totalSurvey}</span> new {''}
+            {(totalSurvey < 1) ?  ' survey' : ' surveys'}</h1>
             </div>
-
+            
             <div className='survey-box'>
             {//Render surveys
             currentTask
@@ -108,10 +113,17 @@ const TeacherLanding = () => {
             taskPerPage={taskPerPage} 
             totalTasks={upcomingSurvey.length} 
             setCurrentPage={setCurrentPage}
-            currentPage={currentPage}/>
+            currentPage={currentPage}
+            nextClick={nextClick}
+            prevClick={prevClick}
+            />
             </div>
         </div>
     )
+
+    const scrollToSurveys = () => {
+        window.scrollTo({top: document.getElementById('survey-display').offsetTop, behavior: 'smooth'});
+    }
 
     return (
         <div>
@@ -120,7 +132,16 @@ const TeacherLanding = () => {
                 <CommonLoading color='#323547' />
             </div> : 
             <>
+            <>
+            <section className='container-hero'>
+                <div className='hero'>
+                    <h1>Welcome,  <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>{userData.firstName} {userData.lastName}</span> </h1>
+                    <p>Let's help our TVET workforce planning process easier by completing your profiling tasks</p>
+                    <button onClick={scrollToSurveys}>View My New Profiling tasks</button>
+                </div>
+            </section>
            {renderSurveys()}
+            </>
            <Footer />
            </>}
         </div>

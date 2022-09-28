@@ -37,7 +37,6 @@ const Survey = () => {
   const [checkboxVal, setCheckboxVal] = useState([]);
   const [index, setIndex] = useState('');
 
-
   useEffect(() => {
     const retrieveSurvey = async  () => {
       app.appCheck().activate(site_key, true);
@@ -69,8 +68,6 @@ const Survey = () => {
               })
           });
             populateExistingAnswers(targetAnswerID); 
-
-            setFormLoading(false);
           }
           
       } catch (e) {
@@ -105,6 +102,8 @@ const Survey = () => {
         if (newArr.length > 0){
           setAnswers(newArr);
         }
+
+        setFormLoading(false);
       }).catch(e => {
         console.log(e);
       });
@@ -255,7 +254,7 @@ const Survey = () => {
                  {q.options.length > 1 ?
                    <div >
                     { q.options.map((o) =>
-                     <div key={o}>
+                     <div className='task-input' key={o}>
                      <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)} name={q.type === 'checkbox' ? o : q.question}  onChange={(e) => saveAnswer(e, index, q.type)}></input>
                      <label htmlFor={o}> &nbsp; {o}</label>
                      </div>

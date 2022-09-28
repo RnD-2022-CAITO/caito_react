@@ -100,6 +100,9 @@ const TaskOverview = () => {
     const indexOfLastTask = currentPage * taskPerPage;
     const indexOfFirstTask = indexOfLastTask - taskPerPage;
 
+    const nextClick = () => {setCurrentPage(currentPage + 1)};
+    const prevClick = () => setCurrentPage(currentPage - 1);
+
     const [unscheduledTask, setUnscheduledTask] = useState([]);
     const [scheduledTask, setScheduledTask] = useState([]);
     const [unscheduledLength, setUnscheduledLength] = useState(0);
@@ -142,6 +145,9 @@ const TaskOverview = () => {
     const [taskPerPage2] = useState(5);
     const indexOfLastTask2 = currentPage2 * taskPerPage2;
     const indexOfFirstTask2 = indexOfLastTask2 - taskPerPage2;
+
+    const nextClick2 = () => {setCurrentPage2(currentPage2 + 1)};
+    const prevClick2 = () => setCurrentPage2(currentPage2 - 1);
     
     const currentTask2 = scheduledTask
     .slice(indexOfFirstTask2, indexOfLastTask2).map((question) => {
@@ -151,12 +157,12 @@ const TaskOverview = () => {
                 <p>Question ID: {question.id}</p>
                 <Divider />
                 <p>Total sent out: {question.total}</p>
-                <p>Completion rate: {question.total !== 0 ? question.complete / question.total * 100 + " %" : "You haven't distribute this survey yet"}</p>
+                <p>Completion rate: {question.total !== 0 ? (question.complete / question.total * 100).toFixed(2) + " %" : "You haven't distribute this survey yet"}</p>
                 <div style={{textAlign:'right'}}>
                 <button className='summary-btn' style={{ marginRight: "auto" }} onClick={() => clickButton(question)}>Details</button>
                 </div>
             </div>
-        </div>;
+        </div>; 
     });
 
     //Collapse the unschedule task
@@ -204,7 +210,9 @@ const TaskOverview = () => {
                             taskPerPage={taskPerPage2} 
                             totalTasks={scheduledLenght} 
                             setCurrentPage={setCurrentPage2}
-                            currentPage={currentPage2}/>
+                            currentPage={currentPage2}
+                            nextClick={nextClick2}
+                            prevClick={prevClick2}/>
                             {currentTask2}
                             </div>:
                             <p>Click on <Icon icon="caret-down" /> to expand view</p>
@@ -226,7 +234,9 @@ const TaskOverview = () => {
                             taskPerPage={taskPerPage} 
                             totalTasks={unscheduledLength} 
                             setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}/>
+                            currentPage={currentPage}
+                            nextClick={nextClick}
+                            prevClick={prevClick}/>
                             {currentTask}
                             </div> :
                             <p>Click on <Icon icon="caret-down" /> to expand view</p>
@@ -246,4 +256,3 @@ const TaskOverview = () => {
 }
 
 export default TaskOverview
-

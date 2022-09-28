@@ -28,10 +28,22 @@
     margin: 10px 0;
 }
 
+.input-field input{
+    margin-left: 10px;
+}
+
 .sign-in-form{
     min-width: 25vw;
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.377) 0px 1px 24px;
+}
+
+#eye-shown{
+    height: 20px;
+    position: absolute;
+    margin-top: 2px;
+    margin-right: 2px; 
+    cursor: pointer;
 }
