@@ -42,7 +42,7 @@ export const LandingOfficer = () => {
                             {userData.firstName} {userData.lastName}</span> 
                     </h1>
                     <motion.div
-                    initial={{opacity: 0, y: '-10vh'}}
+                    initial={{opacity: 0, y: '10vh'}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 1, delay: 0.5}}
                     >
@@ -64,24 +64,32 @@ export const LandingOfficer = () => {
                         <h1>Schedule your tasks</h1>
                         <p>Don't forget to send an invitation to the targeted teachers to fill in your tasks</p>
                         <button onClick={()=>navigate('/survey-distribution')}>Distribute Task</button>
+
                     </div>
-                    <div className='grid-item-right'>
+                    <motion.div className='grid-item-right'
+                    initial={{opacity: 0, y: '-10vh'}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{duration: 4, type: 'spring', stiffness: 70}}
+                    >
                         <div style={{textAlign:'center'}}> 
                             <img className='img' src={schedule} alt='survey'
                             />
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             <section className='wrapper-hero'>
                 <div className='container-dark'>
-                    <div className='grid-item-left'>
+                    <motion.div className='grid-item-left'
+                    initial={{opacity: 0, y: '-10vh'}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{duration: 4, type: 'spring', stiffness: 70}}>
                         <div style={{textAlign:'center'}}> 
                             <img className='img' src={survey} alt='survey'
                             />
                         </div>
-                    </div>
+                    </motion.div>
                     <div className='grid-item-right'>
                         <h1>View your profiling tasks</h1>
                         <p>Keep track of all the tasks you have or have not sent out here</p>
@@ -101,12 +109,15 @@ export const LandingOfficer = () => {
                         onClick={openDialog}
                         >What is a target group?</p>
                     </div>
-                    <div className='grid-item-right'>
+                    <motion.div className='grid-item-right'
+                    initial={{opacity: 0, y: '10vh'}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{duration: 4, type: 'spring', stiffness: 70}}>
                         <div style={{textAlign:'center'}}> 
                             <img className='img' src={targetGroup} alt='target group'
                             />
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
             <TargetGroupDialog isOpen={isOpen} openDialog={openDialog} />

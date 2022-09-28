@@ -7,22 +7,22 @@ export const StepFive = ({toggleStep}) => {
     <>
     <div className={styles.finalStep}>
       <motion.h1
-      initial={{opacity: 0, x: '100vw'}}
-      animate={{opacity: 1, x: 0}}
-      transition={{duration: 0.5, delay: 0}}
+      initial={{opacity: 0, y: '10vh'}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 1, delay: 0, type: 'spring', stiffness: 100, bounce: 0.5}}
       className={styles.title}>Create profiling tasks</motion.h1>
       
       <motion.h1
-      initial={{opacity: 0, x: '-100vw'}}
-      animate={{opacity: 1, x: 0}}
-      transition={{duration: 0.5, delay: 0.5}}
+      initial={{opacity: 0, y: '-10vh'}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 1, delay: 0.5, type: 'spring', stiffness: 100, bounce: 0.5}}
       style={{textAlign:'right', color:'var(--caito-blue)'}}
       className={styles.title}>Send out tasks</motion.h1>
 
       <motion.h1 
-      initial={{opacity: 0, x: '100vw'}}
-      animate={{opacity: 1, x: 0}}
-      transition={{duration: 0.5, delay: 1}}
+      initial={{opacity: 0, y: '10vh'}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 1, delay: 1, type: 'spring', stiffness: 100, bounce: 0.5}}
       style={{ color:'var(--caito-purple)'}}
       className={styles.title}>Collect data</motion.h1>
 
@@ -30,7 +30,7 @@ export const StepFive = ({toggleStep}) => {
       style={{textAlign:'center', marginTop:'50px'}}
       initial={{opacity: 0}}
       animate={{opacity: 1}}
-      transition={{duration: 0.5, delay: 1.5}}>
+      transition={{duration: 3, delay: 1.5}}>
         Simple as that!
       </motion.p>
 
@@ -38,7 +38,7 @@ export const StepFive = ({toggleStep}) => {
       style={{textAlign:'center'}}
       initial={{opacity: 0}}
       animate={{opacity: 1}}
-      transition={{duration: 0.5, delay: 2}} 
+      transition={{duration: 3, delay: 2}} 
       >
         <button onClick={() => toggleStep(1)}>
             Restart the tutorial
