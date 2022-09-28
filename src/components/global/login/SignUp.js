@@ -2,13 +2,12 @@
 import {React, useEffect, useRef, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
-import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
-import app, {func, auth} from '../../../utils/firebase'
-
+import app, {func} from '../../../utils/firebase'
+import { Divider } from '@blueprintjs/core';
 
 import './SignUp.css'
-import { Divider } from '@blueprintjs/core';
+
 let timer = null;
 let sendEmailSecond = 60;
 const SignUp = () => {
@@ -20,7 +19,7 @@ const SignUp = () => {
   const lastNameRef = useRef();
 
   //Retrive the sign up from context
-  const { signUp, currentUser } = useAuth();
+  const { signUp } = useAuth();
 
   const [emailSave, setemailSave] = useState('');
 
@@ -46,6 +45,7 @@ const SignUp = () => {
         sendEmailSecond --;
         if (sendEmailSecond === 0) {
           setSentValidEmail(false);
+          setError('');
           clearInterval(timer);
           sendEmailSecond = 60;
         }
@@ -67,7 +67,7 @@ const SignUp = () => {
       const re =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
       if (!emailRef.current.value || !re.test(emailRef.current.value)) {
-        return alert("Please enter a valid email!");
+        return setError("Please enter a valid email!");
       }
       app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
       const sendEmail = func.httpsCallable('auth_triggers-sendEmailValidCode');
@@ -76,7 +76,7 @@ const SignUp = () => {
       });
       console.log(res)
       setSentValidEmail(true);
-      alert("We have sent a email to you, please check!");
+      setError("We have sent a email to you, please check!");
 
     }
 
@@ -91,9 +91,10 @@ const SignUp = () => {
       code: emailValidCode,
       email
     });
+    setError('');
     setemailSave(email);
     if (!checkRes.data.emailValidPass) {
-     return alert('Email Valid code is incorrect!');
+     return setError('Email validation code is incorrect!');
     }
     setStep(Steps.FillData);
   }
@@ -124,9 +125,6 @@ const SignUp = () => {
 
     setLoading(true);
 
-    // const emailSave = func.httpsCallable('auth_triggers-checkEmailValidCode');
-    // const email = emailRef.current.value;
-    // const emailRes = await emailSave({email});
     const user = {      
       email: emailSave,
       password: passwordRef.current.value,
@@ -141,6 +139,7 @@ const SignUp = () => {
       console.log(err.code);
       switch(err.code){
         case 'auth/email-already-in-use':
+          setStep(Steps.ValidEmail);
           return setError('Email has been used, try another one');
         case 'auth/weak-password':
           return setError('Password is too weak. Try adding more characters!');
@@ -152,7 +151,7 @@ const SignUp = () => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const addTeacher = func.httpsCallable('teacher-addTeacher');
     try {
-        const response = await addTeacher({
+        await addTeacher({
             firstName: user.firstName,
             lastName: user.lastName,
         });
@@ -162,8 +161,6 @@ const SignUp = () => {
         if(!loading){
           navigate('/');
         }
-
-        // window.location.reload();
 
     } catch (e) {
         console.error(e);
