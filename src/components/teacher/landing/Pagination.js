@@ -6,6 +6,8 @@ export const Pagination = ({
   totalTasks,
   setCurrentPage,
   currentPage,
+  nextClick,
+  prevClick
 }) => {
   const pageNumbers = [];
 
@@ -15,8 +17,26 @@ export const Pagination = ({
 
   return (
     <nav>
+      {pageNumbers.length > 0 &&
       <ul className="pagination">
-        {pageNumbers.map((number) => (
+        { currentPage > 1 &&
+        <button 
+        className="page-btn"
+        onClick={prevClick}>
+            Previous
+        </button>
+        }
+
+        <p style={{paddingTop:'10px'}}>Page: {currentPage}/{pageNumbers.length}</p>
+        {currentPage < pageNumbers.length &&
+        <button 
+        className="page-btn"
+        onClick={nextClick}>
+            Next
+        </button>
+        }
+
+        {/* {pageNumbers.map((number) => (
           <button
             className={number === currentPage ? "active" : ""}
             key={number}
@@ -24,8 +44,8 @@ export const Pagination = ({
           >
             {number}
           </button>
-        ))}
-      </ul>
+        ))} */}
+      </ul>}
     </nav>
   );
 };

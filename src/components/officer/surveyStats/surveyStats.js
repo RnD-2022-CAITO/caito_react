@@ -30,7 +30,8 @@ function OfficerSurveyStats() {
   const [pageContent, setPageContent] = useState([]);
   const [totalTasks, setTotalTasks] = useState(0);
   const [resultsPresent, setResultsPresent] = useState(true);
-
+  const nextClick = () => setCurrentPage(currentPage + 1);
+  const prevClick = () => setCurrentPage(currentPage - 1);
   let pages = [];
   let currentPageIndex = 0;
   let index = 1;
@@ -376,6 +377,8 @@ function OfficerSurveyStats() {
             totalTasks={totalTasks}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            nextClick={nextClick}
+            prevClick={prevClick}
           />
         </div>
       ) : (

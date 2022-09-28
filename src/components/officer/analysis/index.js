@@ -102,6 +102,9 @@ const OfficerSummary = () => {
   const indexOfLastTask = currentPage * taskPerPage;
   const indexOfFirstTask = indexOfLastTask - taskPerPage;
 
+  const nextClick = () => {setCurrentPage(currentPage + 1)};
+  const prevClick = () => setCurrentPage(currentPage - 1);
+
   const renderQuestions = questionID
   .slice(indexOfFirstTask, indexOfLastTask).map((question) => (
     renderQuestion(question, clickButton)
@@ -132,6 +135,8 @@ const OfficerSummary = () => {
             totalTasks={questionID.length} 
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            nextClick={nextClick}
+            prevClick={prevClick}
         />
         {renderQuestions}
         </>

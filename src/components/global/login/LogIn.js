@@ -23,6 +23,7 @@ const LogIn = () => {
 
   //Get the routes
   const navigate = useNavigate();
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
 
 
   const handleSubmit = async e => {
@@ -64,9 +65,11 @@ const LogIn = () => {
         </div>
 
         <div className='input-field'>
-          <input id='password' type = 'password' ref={passwordRef} required autoComplete='off'/>
-           <label htmlFor='password'>Password</label>
-        </div>
+          <input id='password' type = {isPasswordShown ? "password" : "txt"} ref={passwordRef}  required autoComplete='off'/>
+          <img  className='eye-icon' id = 'eye-shown'src= {isPasswordShown? './closeEye.JPG': './eye.JPG'} alt = ""
+          onClick={() => setIsPasswordShown(!isPasswordShown)}/>
+          <label htmlFor='password'>Password</label>
+          </div>
         <div className='error'>{error}</div>
 
         <div className='btn-position'>
