@@ -63,7 +63,7 @@ li a{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 0;
+    padding: 0 3em;
     padding-bottom: 0; } }
     @media (min-width: 700px) {
     .nav__wrapper {

@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import targetGroup from '../../assets/targetGroup.svg';
 import survey from '../../assets/survey.svg';
 import schedule from '../../assets/schedule.svg'
-import './index.css'
 import { TargetGroupDialog } from './dialogs/TargetGroupDialog';
-import { Button, Classes } from '@blueprintjs/core';
+import { Classes } from '@blueprintjs/core';
 import { Footer } from '../global/Footer';
+import {motion} from 'framer-motion';
+
+import './index.css'
+
 
 export const LandingOfficer = () => {
     const {userData} = useUserData();
@@ -19,16 +22,34 @@ export const LandingOfficer = () => {
     const navigate = useNavigate();
 
     return (
-        <>
-            <section className='instruction-banner'>
+        <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.5}}
+        >
+            <motion.section 
+            initial={{opacity: 0, y: '-10vh'}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 1, delay: 1}}
+            className='instruction-banner'>
                 <h3>Want to know more on how enlight works?</h3>
                 <button onClick={()=>navigate('/about')} >Click here</button>
-            </section>
+            </motion.section>
             <section className='container-hero'>
                 <div className='hero'>
-                    <h1>Welcome,  <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>{userData.firstName} {userData.lastName}</span> </h1>
+                    <h1>Welcome,  
+                        <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>
+                            {userData.firstName} {userData.lastName}</span> 
+                    </h1>
+                    <motion.div
+                    initial={{opacity: 0, y: '-10vh'}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 1, delay: 0.5}}
+                    >
                     <p>Let's get started by creating a new profiling task.</p>
                     <button onClick={()=>navigate('/survey-making')}>Create a new Profiling task</button>
+                    </motion.div>
+
                 </div>
             </section>
 
@@ -91,6 +112,6 @@ export const LandingOfficer = () => {
             <TargetGroupDialog isOpen={isOpen} openDialog={openDialog} />
 
             <Footer />
-        </>
+        </motion.div>
   )
 }
