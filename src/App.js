@@ -31,8 +31,9 @@ import ErrorRoute from './components/global/routes/ErrorRoute'
 import { PrivateLandingRoute } from './components/global/routes/PrivateLandingRoute'
 import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
+import Saved from './components/teacher/saved'
 import DeleteAccount from './components/officer/deleteAccount'
-import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
+// import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
 import { Foooter } from './components/global/Footer';
 import TaskSummary from './components/officer/TaskSummary/TaskSummary';
@@ -71,6 +72,15 @@ const App = () => {
           }
           />
 
+          <Route exact path="/saved/:id" element={
+            <UserDataProvider>
+              <PrivateRoute role={role.T}>
+                <Saved />
+              </PrivateRoute>
+            </UserDataProvider>
+          }
+          />
+
           <Route exact path="/profile" element={
             <UserDataProvider>
               <PrivateRoute role={role.T}>
@@ -89,14 +99,14 @@ const App = () => {
           }
           />
 
-          <Route exact path="/downLoad/downLoadSurvey" element={
+          {/* <Route exact path="/downLoad/downLoadSurvey" element={
             <UserDataProvider>
               <PrivateRoute role={role.T}>
                 <DownLoadSurvey />
               </PrivateRoute>
             </UserDataProvider>
           }
-          />
+          /> */}
 
           <Route exact path="/delete-account" element={
             <UserDataProvider>

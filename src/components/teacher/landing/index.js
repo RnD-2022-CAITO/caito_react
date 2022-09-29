@@ -82,6 +82,9 @@ const TeacherLanding = () => {
     
     const indexOfLastTask = currentPage * taskPerPage;
     const indexOfFirstTask = indexOfLastTask - taskPerPage;
+    
+    const nextClick = () => {setCurrentPage(currentPage + 1)};
+    const prevClick = () => setCurrentPage(currentPage - 1);
 
     
     const currentTask = upcomingSurvey
@@ -110,7 +113,10 @@ const TeacherLanding = () => {
             taskPerPage={taskPerPage} 
             totalTasks={upcomingSurvey.length} 
             setCurrentPage={setCurrentPage}
-            currentPage={currentPage}/>
+            currentPage={currentPage}
+            nextClick={nextClick}
+            prevClick={prevClick}
+            />
             </div>
         </div>
     )
