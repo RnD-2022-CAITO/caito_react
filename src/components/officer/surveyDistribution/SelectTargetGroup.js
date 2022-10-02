@@ -1,10 +1,15 @@
 import { Button, Classes, Icon } from '@blueprintjs/core'
 import { Tooltip2 } from '@blueprintjs/popover2'
 import React from 'react'
+import {motion} from 'framer-motion'
 
 export const SelectTargetGroup = ({navigate, renderState}) => {
   return (
-    <div>
+    <motion.div
+    initial={{opacity: 0, x: '-10vw'}}
+    animate={{opacity: 1, x: 0}}
+    transition={{duration: 0.5, type: 'spring', stiffness: 100}}
+    >
         <div className='select-display-survey'>
           <h3>Target Groups
           <Tooltip2
@@ -29,6 +34,6 @@ export const SelectTargetGroup = ({navigate, renderState}) => {
           </div>
 
         </div>
-    </div>
+    </motion.div>
   )
 }

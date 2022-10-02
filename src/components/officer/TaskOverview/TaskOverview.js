@@ -28,7 +28,6 @@ const TaskOverview = () => {
 
                 setQuestionID(response.data);
 
-                setLoading(false);
             } catch (e) {
                 console.error(e);
             }
@@ -72,6 +71,9 @@ const TaskOverview = () => {
 
                 setQuestionID(newArr);
                 setGetAnswers(true);
+
+                setLoading(false);
+
             }
         }
 

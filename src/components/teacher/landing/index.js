@@ -5,10 +5,11 @@ import app, {func} from '../../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 import { Pagination  } from './Pagination';
+import { Footer } from '../../global/Footer';
+import {motion} from 'framer-motion'
 
 import "./teacherLanding.css";
-import { Footer } from '../../global/Footer';
-import { Divider } from '@blueprintjs/core';
+
 
 // const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 
@@ -126,25 +127,35 @@ const TeacherLanding = () => {
     }
 
     return (
-        <div>
+        <>
            {loading ? 
             <div>
                 <CommonLoading color='#323547' />
             </div> : 
-            <>
+            <motion.div
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 0.5}}>
             <>
             <section className='container-hero'>
                 <div className='hero'>
                     <h1>Welcome,  <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>{userData.firstName} {userData.lastName}</span> </h1>
+
+                    <motion.div
+                    initial={{opacity: 0, y: '-10vh'}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 1, delay: 0.5}}
+                    >
                     <p>Let's help our TVET workforce planning process easier by completing your profiling tasks</p>
                     <button onClick={scrollToSurveys}>View My New Profiling tasks</button>
+                    </motion.div>
                 </div>
             </section>
            {renderSurveys()}
             </>
            <Footer />
-           </>}
-        </div>
+           </motion.div>}
+        </>
 
     )
 }

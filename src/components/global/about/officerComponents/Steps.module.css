@@ -1,0 +1,23 @@
+.container{
+    margin: 5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.title{
+    font-size: 5em;
+    font-weight: 600;
+    letter-spacing: -0.3rem;
+    line-height: 1em;
+}
+
+.description{
+    grid-column-start: 2;
+    grid-row-start: 2;
+    font-size: 1.5em;
+}
+
+.finalStep{
+    padding: 10vh 20vw;
+}
