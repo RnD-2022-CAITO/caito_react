@@ -272,6 +272,9 @@ const TaskSummary = () => {
         >
           View Teacher's Individual Progress
         </button>
+      </div>
+
+      <div style={{ textAlign: "center", padding: "15px 0" }}>
         {csvData.length > 0 ? (
           <CSVLink data={csvData}>Download Data Collection</CSVLink>
         ) : (
