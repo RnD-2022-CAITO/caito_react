@@ -276,7 +276,9 @@ const TaskSummary = () => {
 
       <div style={{ textAlign: "center", padding: "15px 0" }}>
         {csvData.length > 0 ? (
-          <CSVLink data={csvData}>Download Data Collection</CSVLink>
+          <CSVLink 
+          filename={`${question.title}_${question.id}.csv`}
+          data={csvData}>Download Data Collection</CSVLink>
         ) : (
           ""
         )}
