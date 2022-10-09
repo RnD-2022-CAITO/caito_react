@@ -1,5 +1,6 @@
 import { Divider } from '@blueprintjs/core'
 import React from 'react'
+import CAITOLogo from '../../assets/CAITOLogo.svg'
 import {ReactComponent as Logo} from '../../assets/logo.svg';
 import './Footer.css'
 
@@ -13,9 +14,8 @@ export const Footer = () => {
                 <p>© 2022 enlight. All rights reserved.</p>
             </div>
             <div className='footer-right'>
-                <a href='#'>Terms of Service</a>
-                <a href='#'>Privacy Policy</a>
-                <a href='#'>Contact Us</a>
+                <p>Powered by <a href='https://www.caito.ai'>CAITO</a></p>
+                <img className='caito-logo' src={CAITOLogo} alt='CAITO logo'/>
             </div>
         </div>
     </footer>
