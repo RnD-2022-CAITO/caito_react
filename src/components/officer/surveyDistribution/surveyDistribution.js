@@ -101,18 +101,21 @@ const OfficerSurveyDistribution = () => {
 
   //assign one teacher to the survey
   async function assignTeacher(questionID, title, teacherID) {
-    app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-    const scheduleSurvey = func.httpsCallable('officer-scheduleSurvey');
-    try {
-      await scheduleSurvey({
-        questionID: questionID,
-        title: title,
-        teacherID: teacherID,
-        scheduledDate: scheduledDate,
-      });
-    } catch (e) {
-      console.error(e);
-    }
+    console.log('TeacherID: ',teacherID.teacher);
+    console.log('GroupID: ',teacherID.groupID);
+
+    // app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    // const scheduleSurvey = func.httpsCallable('officer-scheduleSurvey');
+    // try {
+    //   await scheduleSurvey({
+    //     questionID: questionID,
+    //     title: title,
+    //     teacherID: teacherID,
+    //     scheduledDate: scheduledDate,
+    //   });
+    // } catch (e) {
+    //   console.error(e);
+    // }
   }
 
   async function updateGroupID(questionID,groupID){
@@ -192,7 +195,17 @@ const OfficerSurveyDistribution = () => {
   useEffect(() => {
     selectedGroupNames.forEach(groupName => {
       const group = groups.find(group => group.name === groupName);
-      setSelectedTeachers(oldArray => [...oldArray, ...group.teachers]);
+
+      const teachers = group.teachers.map(teacher => {
+        return {
+          teacher: teacher,
+          groupID: group.id,
+        }
+        });
+
+
+      setSelectedTeachers(oldArray => [...oldArray, ...teachers]);
+
     });
 
   }, [selectedGroupNames, groups])

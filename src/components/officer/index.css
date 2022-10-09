@@ -22,9 +22,10 @@
 }
 
 .container-hero{
-    height: 50vh;
+    min-height: 50vh;
     background-image: url('../../assets/hero.svg');
     background-size: cover;
+    padding: 20px;
 }
 
 .container-light{
@@ -109,6 +110,13 @@
 }
 
 @media screen and (max-width: 700px){
+    .hero>h1{
+        font-size: 3em;
+        font-weight: bolder;
+        margin-bottom: 1rem;
+        letter-spacing: -5px;
+    }
+    
 
     .container-dark{
         display: block;

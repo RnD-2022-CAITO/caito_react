@@ -1,9 +1,14 @@
-import { HTMLSelect } from '@blueprintjs/core';
+import { HTMLSelect } from '@blueprintjs/core'
 import React from 'react'
+import {motion} from 'framer-motion'
 
 export const SelectTask = ({selectedSurveys, setSelectedSurveys, setSelectedSurveysTitle, allSurveys}) => {
   return (
-    <div>
+    <motion.div
+    initial={{opacity: 0, x: '-10vw'}}
+    animate={{opacity: 1, x: 0}}
+    transition={{duration: 0.5, type: 'spring', stiffness: 100}}
+    >
         <div className='select-display-s'>
           <h3>Profiling Task</h3>
           <div className=' template input-field'>
@@ -29,6 +34,6 @@ export const SelectTask = ({selectedSurveys, setSelectedSurveys, setSelectedSurv
           </div>
 
         </div>
-    </div>
+    </motion.div>
   )
 }

@@ -1,0 +1,14 @@
+.container{
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title{
+    font-size: 8em;
+    font-weight: 600;
+    letter-spacing: -0.7rem;
+}
