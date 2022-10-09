@@ -111,10 +111,10 @@
 
 @media screen and (max-width: 700px){
     .hero>h1{
-        font-size: 5.5em;
+        font-size: 3em;
         font-weight: bolder;
         margin-bottom: 1rem;
-        letter-spacing: -8px;
+        letter-spacing: -5px;
     }
     
 
