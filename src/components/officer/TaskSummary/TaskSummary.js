@@ -8,14 +8,14 @@ import { PieChart, Pie, Tooltip, Sector } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { CommonLoading } from 'react-loadingg';
 
-import {Button, Classes, Divider, Icon} from '@blueprintjs/core'
+import { Button, Classes, Divider, Icon } from '@blueprintjs/core'
 
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TaskSummary = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
-    console.log('question', state)
+    
     const [refreshData, setRefreshData] = useState(true);
     const { question } = state; // Read values passed on state
     const [loading, setLoading] = useState(true);
@@ -23,15 +23,19 @@ const TaskSummary = () => {
     const [teachers, setTeachers] = useState([]);
     const [teachersID, setTeachersID] = useState([]);
     const [questions, setQuestions] = useState([]);
-
-    const [createdDate, setCreatedDate] = useState([]);
     const [groups, setGroups] = useState([]);
     const [groupsOfSurvey, setGroupsOfSurvey] = useState([]);
     const [name, setName] = useState([]);
     const [isFound, setFound] = useState(true);
     const [surveyTitle, setTitle] = useState('');
-    const [groupID, setGroupID] = useState('');
-    const [groupName,setGroupName]=useState('');
+    const [groupID, setGroupID] = useState([]);
+    const [groupUI, setGroupUI] = useState([]);
+    const [groupName, setGroupName] = useState('');
+
+    const [createdDate, setCreatedDate] = useState(
+        question.createdDate.seconds * 1000 + question.createdDate.nanoseconds / 1000000
+    );
+
     useEffect(() => {
         const fetchGroups = async () => {
             if (state && state.question) {
@@ -51,32 +55,32 @@ const TaskSummary = () => {
         fetchGroups()
     }, [state])
 
-    useEffect(() => {
-        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-        const getAnswers = func.httpsCallable('officer-getAllCreatedSurveys_Answers');
-        try {
-            const response = getAnswers({
-                questionID: question.id,
+    // useEffect(() => {
+    //     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    //     const getAnswers = func.httpsCallable('officer-getAllCreatedSurveys_Answers');
+    //     try {
+    //         const response = getAnswers({
+    //             questionID: question.id,
 
-            }).then((i) => {
-                let newArr = [...i.data];
-                let index = 0;
-                newArr.map(o => {
-                    if ((newArr.length - 1) === index) {
-                        getTeacher(o.teacherID, true);
-                    } else {
-                        getTeacher(o.teacherID, false);
-                    }
-                    ++index;
-                })
-                setAnswers(newArr);
-            }).catch(e => {
-                console.log(e);
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    }, []);
+    //         }).then((i) => {
+    //             let newArr = [...i.data];
+    //             let index = 0;
+    //             newArr.map(o => {
+    //                 if ((newArr.length - 1) === index) {
+    //                     getTeacher(o.teacherID, true);
+    //                 } else {
+    //                     getTeacher(o.teacherID, false);
+    //                 }
+    //                 ++index;
+    //             })
+    //             setAnswers(newArr);
+    //         }).catch(e => {
+    //             console.log(e);
+    //         });
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    // }, []);
 
     useEffect(() => {
         const retrieveSurvey = async () => {
@@ -90,14 +94,14 @@ const TaskSummary = () => {
                 if (response.data == null) {
                     setFound(false);
                 } else {
-                    console.log(response.data.createdDate);
-                    setCreatedDate(new Date());
-                    console.log(response.data.questions);
-                    console.log(response.data.questions[0].options);
+                    setCreatedDate(response.data.createdDate);
+                    const date = new Date(response.data.createdDate._seconds * 1000);
+                    console.log(date);                    
                     setTitle(response.data.title);
+                    setGroupID(response.data.groupID);
                     setQuestions(response.data.questions);
                     setAnswers(response.data.questions);
-                    setGroupID(response.data.groupID);
+
                 }
 
             } catch (e) {
@@ -107,6 +111,10 @@ const TaskSummary = () => {
 
         retrieveSurvey();
     }, []);
+
+    useEffect(() => {
+        renderTargetGroup(groupID);
+    }, [groupID])
 
     useEffect(() => {
         const retrieveGroups = async () => {
@@ -124,28 +132,28 @@ const TaskSummary = () => {
     }, [refreshData]);
 
     //delete survey function 
-    async function deleteSurvey(questionID){
-        handledeleteSurvey(questionID);  
-        
+    async function deleteSurvey(questionID) {
+        handledeleteSurvey(questionID);
+
         navigate("/task-overview");
-        
+
         //
     }
 
-    async function handledeleteSurvey (questionID) {
+    async function handledeleteSurvey(questionID) {
         app.appCheck().activate(site_key, true);
         const deleteTeacherAccount = func.httpsCallable('officer-deleteSurvey');
         try {
-          await deleteTeacherAccount({
-            questionID: questionID,
-          });
-      } catch (e) {
-          console.error(e);
-      }
+            await deleteTeacherAccount({
+                questionID: questionID,
+            });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
-    
-//delete survey function
+
+    //delete survey function
     // const deleteSurvey = async (questionID) => {
     //     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     //     const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
@@ -163,31 +171,31 @@ const TaskSummary = () => {
     // }
 
 
-    async function getTeacher(teacherID, boolean) {
-        app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-        const getInfo = func.httpsCallable('officer-getTeacher');
-        try {
-            const response = await getInfo({
-                teacherID: teacherID,
-            }).then((i) => {
-                if (!teachersID.includes(teacherID)) {
-                    teachersID.push(teacherID);
-                    const newObj = {
-                        ...i.data,
-                        teacherID: teacherID,
-                    }
-                    teachers.push(newObj);
-                }
-                if (boolean === true) {
-                    setLoading(false);
-                }
-            }).catch(e => {
-                console.log(e);
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    }
+    // async function getTeacher(teacherID, boolean) {
+    //     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
+    //     const getInfo = func.httpsCallable('officer-getTeacher');
+    //     try {
+    //         const response = await getInfo({
+    //             teacherID: teacherID,
+    //         }).then((i) => {
+    //             if (!teachersID.includes(teacherID)) {
+    //                 teachersID.push(teacherID);
+    //                 const newObj = {
+    //                     ...i.data,
+    //                     teacherID: teacherID,
+    //                 }
+    //                 teachers.push(newObj);
+    //             }
+    //             if (boolean === true) {
+    //                 setLoading(false);
+    //             }
+    //         }).catch(e => {
+    //             console.log(e);
+    //         });
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    // }
 
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -207,10 +215,26 @@ const TaskSummary = () => {
         )
     }
 
+    const renderTargetGroup = (groupID) => {
+
+        let temp = [];
+
+        groupID.map((group, index) => {
+            temp.push(<>               <div key={index}>
+                <label>{index + 1}. {group.name}</label>
+
+            </div>
+            </>)
+
+        });
+        setGroupUI(temp);
+
+
+    }
 
     const clickButton = (question) => {
         navigate(`/survey-stats/${question.id}`, { state: { question: question } });
-        console.log(question);
+        
     }
 
     const targetGroupButton = () => {
@@ -233,26 +257,18 @@ const TaskSummary = () => {
                 <div className='grid-layout'>
                     <div className='select-display-s'>
                         <h3>Target Groups</h3>
-                        <h4 >
-                            { groupID.map((group,index) => {
-                                return (
-                                    <label className={'group-label'} key={group.name}>
-                                         <label  key={index}>{group.name} </label>
-                                    </label>
-                                )
-                            })
+                        <h4>
 
-                            }
+                            {groupUI}
+
+
                             <Button className={Classes.MINIMAL}
-                                    icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
-                                    onClick={targetGroupButton}
+                                icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
+                                onClick={targetGroupButton}
                             >
                                 Add more group
                             </Button>
                         </h4>
-
-
-
                     </div>
 
 
@@ -277,9 +293,9 @@ const TaskSummary = () => {
                                                 {q.options.length > 0 &&
                                                     <>
                                                         <p><strong>Answer Options</strong></p>
-                                                        {q.options.map((o) =>
-                                                            <div>
-                                                                <p for={o}>{o}</p>
+                                                        {q.options.map((o,index) =>
+                                                            <div key={index}>
+                                                                <p htmlFor={o}>{o}</p>
                                                             </div>
                                                         )}
                                                     </>}
@@ -287,7 +303,7 @@ const TaskSummary = () => {
                                             </div>)
                                         }
                                     </div>
-                                    <button style={{backgroundColor:'var(--warning)'}} onClick={() => deleteSurvey(question.id)}>Delete Survey</button>
+                                    <button style={{ backgroundColor: 'var(--warning)' }} onClick={() => deleteSurvey(question.id)}>Delete Survey</button>
 
                                 </div>
                             </div>
@@ -304,6 +320,7 @@ const TaskSummary = () => {
         const complete = question.complete;
         const total = question.total;
         const uncomplete = total - complete;
+        const date = new Date(createdDate._seconds * 1000);
         // createdDate.setDate(createdDate.getDate());
         //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
         const data = [
@@ -328,7 +345,7 @@ const TaskSummary = () => {
                     <Tooltip />
                 </PieChart>
                 <div style={{ textAlign: 'right' }}>
-                    <p>Scheduled date: [In development..]</p>
+                    <p>Scheduled date: {date.toString().substring(0, 15)}</p>
                     <p>Total sent out: {question.total}</p>
                     <p>Received: {question.complete}</p>
                 </div>
