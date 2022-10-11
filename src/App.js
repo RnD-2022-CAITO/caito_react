@@ -22,7 +22,6 @@ import { PrivateRoute } from './components/global/routes/PrivateRoute'
 import { UserDataProvider } from './components/global/auth/UserData'
 import TeacherProfile from './components/teacher/profile'
 import NavBar from './components/global/navigation'
-import SurveyDistributionToGroups from './components/officer/surveyDistributionToGroups';
 import Groups from './components/officer/groups';
 import OfficerSurveyMaking from './components/officer/makingSurvey/surveyMaking'
 import OfficerSurveyDistribution from './components/officer/surveyDistribution/surveyDistribution';
@@ -33,9 +32,7 @@ import EditAccount from './components/teacher/profile/EditProfile/EditAccount'
 import Survey from './components/teacher/survey'
 import Saved from './components/teacher/saved'
 import DeleteAccount from './components/officer/deleteAccount'
-// import DownLoadSurvey from './components/teacher/downLoad/downLoadSurvey'
 import { Admin } from './components/officer/adminPage/Admin';
-import { Foooter } from './components/global/Footer';
 import TaskSummary from './components/officer/TaskSummary/TaskSummary';
 import TaskOverview from './components/officer/TaskOverview/TaskOverview';
 import About from './components/global/about';
@@ -148,15 +145,6 @@ const App = () => {
             <UserDataProvider>
               <PrivateRoute role={role.O}>
                 <OfficerSurveyStats />
-              </PrivateRoute>
-            </UserDataProvider>
-          }
-          />
-
-          <Route exact path="/survey-distribution-group" element={
-            <UserDataProvider>
-              <PrivateRoute role={role.O}>
-                <SurveyDistributionToGroups />
               </PrivateRoute>
             </UserDataProvider>
           }
