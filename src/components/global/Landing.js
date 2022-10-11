@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { LandingOfficer } from '../officer';
 import TeacherLanding from '../teacher/landing';
-import { useUserData } from './auth/UserData'
+import { useUserData } from './auth/UserData';
 
 const Landing = () => {
   const {userData} = useUserData();

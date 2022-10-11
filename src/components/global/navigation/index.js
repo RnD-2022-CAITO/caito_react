@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useAuth } from '../auth/Authentication'
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../auth/Authentication';
 import { db } from '../../../utils/firebase';
-import './Nav.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {ReactComponent as Logo} from '../../../assets/logo-light.svg';
 import { Button, Classes, Icon, Navbar } from '@blueprintjs/core';
 import { Tooltip2 } from "@blueprintjs/popover2";
+
+import './Nav.css';
 
 const NavBar = () => {
     const {currentUser, signOut} = useAuth();

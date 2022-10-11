@@ -4,8 +4,8 @@ To get user's information such as email, username, userID,...
 import {useAuth} and deconstruct it:
     const {currentUser} = useAuth();
 */
-import React, {useContext, useState, useEffect} from 'react'
-import app, {func, auth} from '../../../utils/firebase'
+import React, {useContext, useState, useEffect} from 'react';
+import { auth } from '../../../utils/firebase';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/app-check';
 

@@ -1,8 +1,9 @@
-import { Divider } from '@blueprintjs/core'
-import React from 'react'
+import { Divider } from '@blueprintjs/core';
+import React from 'react';
 import CAITOLogo from '../../assets/CAITOLogo.svg'
 import {ReactComponent as Logo} from '../../assets/logo.svg';
-import './Footer.css'
+
+import './Footer.css';
 
 export const Footer = () => {
   return (

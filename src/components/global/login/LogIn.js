@@ -1,12 +1,11 @@
 //Log in page
-import {React, useRef, useState} from 'react' 
-import { useAuth } from '../auth/Authentication'
+import {React, useRef, useState} from 'react';
+import { useAuth } from '../auth/Authentication';
 import { Link, useNavigate } from 'react-router-dom';
 import ErrorRoute from '../routes/ErrorRoute';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
 
-import './Login.css'
-
+import './Login.css';
 
 const LogIn = () => {
   const emailRef = useRef();
@@ -25,10 +24,8 @@ const LogIn = () => {
   const navigate = useNavigate();
   const [isPasswordShown, setIsPasswordShown] = useState(true);
 
-
   const handleSubmit = async e => {
       e.preventDefault();
-
 
       try{
           setError(''); //All inputs are correct

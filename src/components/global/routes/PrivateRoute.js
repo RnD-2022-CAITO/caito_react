@@ -3,10 +3,10 @@ Private route only allows access if the user is allowed to access the route
 by checking their role
 */
 import React from 'react'
-import { Navigate } from 'react-router-dom'
-import { useAuth } from '../auth/Authentication'
-import { useUserData } from '../auth/UserData'
-import ErrorRoute from './ErrorRoute'
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../auth/Authentication';
+import { useUserData } from '../auth/UserData';
+import ErrorRoute from './ErrorRoute';
 
 export const PrivateRoute = ({children, role}) => {
     const {currentUser} = useAuth();

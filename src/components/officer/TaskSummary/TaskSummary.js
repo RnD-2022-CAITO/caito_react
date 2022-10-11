@@ -7,7 +7,7 @@ import "./TaskSummary.css";
 import { PieChart, Pie, Tooltip, Sector } from "recharts";
 import { useNavigate } from "react-router-dom";
 import { CommonLoading } from "react-loadingg";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 import { Divider } from "@blueprintjs/core";
 
@@ -22,20 +22,11 @@ const TaskSummary = () => {
   const [teachers, setTeachers] = useState([]);
   const [teachersID, setTeachersID] = useState([]);
   const [questions, setQuestions] = useState([]);
-
-  const [createdDate, setCreatedDate] = useState([]);
-  const [groups, setGroups] = useState([]);
-  const [name, setName] = useState([]);
-  const [isFound, setFound] = useState(true);
-  const [surveyTitle, setTitle] = useState("");
-  const [groupID, setGroupID] = useState("");
+  const [createdDate, setCreatedDate] = useState(
+    question.createdDate.seconds * 1000 + question.createdDate.nanoseconds / 1000000
+  );
 
   const [csvData, setCsvData] = useState([]);
-
-  /*["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]*/
 
   useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -126,14 +117,9 @@ const TaskSummary = () => {
         });
 
         if (response.data == null) {
-          setFound(false);
         } else {
-          //console.log(response.data.createdDate);
-          setCreatedDate(new Date());
-          //console.log(response.data.questions);
-          //console.log(response.data.questions[0].options);
-          setTitle(response.data.title);
           setQuestions(response.data.questions);
+          setCreatedDate(response.data.createdDate);
           //setAnswers(response.data.questions);
         }
       } catch (e) {
@@ -150,7 +136,6 @@ const TaskSummary = () => {
       const getGroups = func.httpsCallable("group-findGroups");
       try {
         const res = await getGroups();
-        setGroups(res.data);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -179,23 +164,6 @@ const TaskSummary = () => {
       console.error(e);
     }
   }
-
-  //delete survey function
-  // const deleteSurvey = async (questionID) => {
-  //     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-  //     const deleteSurvey = func.httpsCallable('officer-deleteSurvey');
-
-  //     setLoading(true);
-  //     try {
-  //         await deleteSurvey({
-  //             questionID: questionID
-  //         });
-  //         refreshData(!refreshData);
-  //         setLoading(false);
-  //     } catch (e) {
-  //         console.log(e);
-  //     }
-  // }
 
   async function getTeacher(teacherID, boolean) {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -248,14 +216,6 @@ const TaskSummary = () => {
     console.log(question);
   };
 
-  const openTargetGroup = (group) => {
-    setGroupID(group);
-  };
-
-  const targetGroupButton = () => {
-    navigate(`/survey-distribution`);
-  };
-
   return loading ? (
     <CommonLoading color="#323547" />
   ) : (
@@ -286,31 +246,9 @@ const TaskSummary = () => {
 
       <div className="grid-layout">
         <div className="select-display-s">
-          <h3>Target Groups</h3>
-          <div>
-            {/* {groups.map(group => {
-                                return <Button
-                                    style={{ margin: '5px' }} key={group.id}
-                                    
-                                >{group.name}
-                                </Button>
-                            })}
-                            <Button className={Classes.MINIMAL}
-                                icon={<Icon icon="add" style={{ color: 'var(--primary)' }} />}
-                                onClick={targetGroupButton}
-                            >
-                                Add more group
-                            </Button> */}
-            [In development...]
-          </div>
-        </div>
-
-        <div className="select-display-s">
           <h3>Completion rate</h3>
           <div style={{ textAlign: "center" }}>{renderQuestion(question)}</div>
         </div>
-
-        <div className="task-questions">
           <div className="select-display-s">
             <div className="select-display-question">
               <h3>Task Questions</h3>
@@ -349,7 +287,6 @@ const TaskSummary = () => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 
@@ -357,6 +294,7 @@ const TaskSummary = () => {
     const complete = question.complete;
     const total = question.total;
     const uncomplete = total - complete;
+    const date = new Date(createdDate._seconds * 1000);
     // createdDate.setDate(createdDate.getDate());
     //  createdDate=createdDate.toLocaleDateString('sv', { timeZone: 'Pacific/Auckland' });
     const data = [
@@ -381,7 +319,7 @@ const TaskSummary = () => {
             <Tooltip />
           </PieChart>
           <div style={{ textAlign: "right" }}>
-            <p>Scheduled date: [In development..]</p>
+            <p>Scheduled date: {date.toString().substring(0, 15)}</p>
             <p>Total sent out: {question.total}</p>
             <p>Received: {question.complete}</p>
           </div>

@@ -1,12 +1,12 @@
 //Sign up page
-import {React, useEffect, useRef, useState} from 'react'
+import {React, useEffect, useRef, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {useAuth} from '../auth/Authentication';
 import {ReactComponent as Logo} from '../../../assets/logo.svg';
 import app, {func} from '../../../utils/firebase'
 import { Divider } from '@blueprintjs/core';
 
-import './SignUp.css'
+import './SignUp.css';
 
 let timer = null;
 let sendEmailSecond = 60;

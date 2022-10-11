@@ -6,8 +6,8 @@ import {useUserData} and deconstruct it:
 */
 
 //Fetch user info from the database Firestore
-import React, {useContext, useState, useEffect} from 'react'
-import { db } from '../../../utils/firebase'
+import React, {useContext, useState, useEffect} from 'react';
+import { db } from '../../../utils/firebase';
 import { useAuth } from './Authentication';
 
 //Retrieve the  user data from the firestore database

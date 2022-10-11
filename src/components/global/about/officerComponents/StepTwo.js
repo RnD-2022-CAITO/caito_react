@@ -1,7 +1,7 @@
-import { Icon } from '@blueprintjs/core'
-import React from 'react'
-import {motion} from 'framer-motion'
-import styles from './Steps.module.css'
+import { Icon } from '@blueprintjs/core';
+import React from 'react';
+import {motion} from 'framer-motion';
+import styles from './Steps.module.css';
 
 export const StepTwo = ({step, toggleStep}) => {
   return (

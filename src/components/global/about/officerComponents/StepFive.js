@@ -1,6 +1,6 @@
-import React from 'react'
-import {motion} from 'framer-motion'
-import styles from './Steps.module.css'
+import React from 'react';
+import {motion} from 'framer-motion';
+import styles from './Steps.module.css';
 
 export const StepFive = ({toggleStep}) => {
   return (
