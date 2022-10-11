@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 import "./EditAccount.css"
 
+//change new password
 const EditAccount = () => {
     const oldPasswordRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-
     const { updatePassword } = useAuth();
 
     //Input validation
@@ -20,15 +20,14 @@ const EditAccount = () => {
     //Navigate the user 
     const navigate = useNavigate();
 
-
     const handleSubmit = e => {
         e.preventDefault();
         console.log(passwordRef);
         //Input validation
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
+        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
             return setError('Passwords don\'t match');
-            //exit the function
-        } else if(passwordRef.current.value.length < 6){
+        //exit the function
+        } else if (passwordRef.current.value.length < 6) {
             return setError('Weak password.');
         }
 
@@ -36,52 +35,53 @@ const EditAccount = () => {
         setLoading(true);
         setError("");
 
-        if(passwordRef.current.value){
-            promises.push(updatePassword(oldPasswordRef.current.value,passwordConfirmRef.current.value))
+        if (passwordRef.current.value) {
+            promises.push(updatePassword(oldPasswordRef.current.value, passwordConfirmRef.current.value))
         }
 
+        //input old password
         Promise.all(promises)
-        .then(()=>{
-            window.alert('Success');
-            navigate('/profile');
-        })
-        .catch((e) => {
-            console.log(e.code)
-            switch(e.code){
-                case 'auth/requires-recent-login':
-                    setError('Please log in and try again');
-                    break;
-                case 'auth/wrong-password':
-                    setError('Wrong old password.');
-                    break;
-                default:
-                    setError('Unable to update password')
-            }
-        })
-        .finally(() => {
-            setLoading(false)
-        });
+            .then(() => {
+                window.alert('Success');
+                navigate('/profile');
+            })
+            .catch((e) => {
+                console.log(e.code)
+                switch (e.code) {
+                    case 'auth/requires-recent-login':
+                        setError('Please log in and try again');
+                        break;
+                    case 'auth/wrong-password':
+                        setError('Wrong old password.');
+                        break;
+                    default:
+                        setError('Unable to update password')
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+            });
 
     }
 
     return (
         <div className='container light'>
             <form className='edit-acc-form' onSubmit={handleSubmit}>
-                <h1 style={{textAlign:'center'}}>Account Management</h1>
+                <h1 style={{ textAlign: 'center' }}>Account Management</h1>
 
                 <div className='input-field'>
-                    <input type='password' ref={oldPasswordRef} required/>
+                    <input type='password' ref={oldPasswordRef} required />
                     <label>Old Password</label>
                 </div>
 
 
                 <div className='input-field'>
-                    <input type='password' ref={passwordRef} required/>
+                    <input type='password' ref={passwordRef} required />
                     <label>New Password</label>
                 </div>
 
                 <div className='input-field'>
-                    <input type='password' ref={passwordConfirmRef} required/>
+                    <input type='password' ref={passwordConfirmRef} required />
                     <label>Confirm new password</label>
                 </div>
 
@@ -90,11 +90,10 @@ const EditAccount = () => {
                 </div>
 
                 <div>
-                    <button disabled = {loading } className='edit-submit' type="submit">Confirm</button>
+                    <button disabled={loading} className='edit-submit' type="submit">Confirm</button>
                 </div>
             </form>
         </div>
     )
 }
-
 export default EditAccount
