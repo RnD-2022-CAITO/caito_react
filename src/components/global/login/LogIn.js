@@ -76,10 +76,10 @@ const LogIn = () => {
 
       <div>
         <p style={{color:'white'}}>
-                Don't have an account? &nbsp;
-                <Link to="/signup">
-                     Sign Up
-                </Link>
+          Don't have an account? &nbsp;
+          <Link to="/signup">
+            Sign Up
+          </Link>
         </p>
       </div>
     </div> 
