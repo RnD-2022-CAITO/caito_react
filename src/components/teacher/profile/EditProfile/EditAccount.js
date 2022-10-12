@@ -22,7 +22,6 @@ const EditAccount = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(passwordRef);
     //Input validation
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords don't match");
@@ -51,7 +50,6 @@ const EditAccount = () => {
         navigate("/profile");
       })
       .catch((e) => {
-        console.log(e.code);
         switch (e.code) {
           case "auth/requires-recent-login":
             setError("Please log in and try again");

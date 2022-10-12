@@ -48,7 +48,6 @@ const TeacherProfile = () => {
         questionID: e.target.id,
       },
     });
-    console.log(e.target.id);
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -109,6 +108,7 @@ const TeacherProfile = () => {
                 Change password
               </button>
             </div>
+
             <div className="profile-item profile-actions">
               <h3>Role</h3>
               <div className="profile-section">
@@ -119,7 +119,6 @@ const TeacherProfile = () => {
                 <p>This section stores basic information from the user</p>
                 <p>Under development...</p>
               </div>
-
               <h3>Your profiling tasks</h3>
               <div className="profile-section">
                 <div className="survey-box">

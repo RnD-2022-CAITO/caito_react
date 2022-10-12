@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 
 import "./teacherLanding.css";
 
-// const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const TeacherLanding = () => {
   const { userData } = useUserData();
   const navigate = useNavigate();
