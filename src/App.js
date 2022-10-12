@@ -33,8 +33,8 @@ import Survey from './components/teacher/survey'
 import Saved from './components/teacher/saved'
 import DeleteAccount from './components/officer/deleteAccount'
 import { Admin } from './components/officer/adminPage/Admin';
-import TaskSummary from './components/officer/TaskSummary/TaskSummary';
-import TaskOverview from './components/officer/TaskOverview/TaskOverview';
+import TaskSummary from './components/officer/taskSummary/TaskSummary';
+import TaskOverview from './components/officer/taskOverview/TaskOverview';
 import About from './components/global/about';
 //Roles to access paths
 const role = {
