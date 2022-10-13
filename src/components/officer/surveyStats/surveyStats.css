@@ -1,8 +1,8 @@
-.summary-view{
-    padding: 10px;
-    margin: 10px;
-    border: 0.2px solid rgba(0, 0, 0, 0.285);
-    border-radius: 5px;
+.summary-view {
+  padding: 10px;
+  margin: 10px;
+  border: 0.2px solid rgba(0, 0, 0, 0.285);
+  border-radius: 5px;
 }
 
 .timeline {
@@ -12,49 +12,49 @@
 }
 
 .timeline-progress {
-	width: 0;
-	height: 100%;
-	background-color: var(--primary-color);
+  width: 0;
+  height: 100%;
+  background-color: var(--primary-color);
 }
 
 .timeline-items {
-	margin-left: -10px;
-	margin-right: -10px;
-	margin-top: -12px;
-	display: flex;
-	justify-content: space-between;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: -12px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .timeline-item {
-	position: relative;
+  position: relative;
 }
 
 .timeline-item::before {
-	content: '';
-	width: 20px;
-	height: 20px;
-	background-color: #ccc;
-	display: block;
-	border-radius: 100%;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #ccc;
+  display: block;
+  border-radius: 100%;
 }
 
-.timeline-item.active{
-	padding: 0.65em;
+.timeline-item.active {
+  padding: 0.65em;
 }
 
 .timeline-item.active::before {
-	background-color: var(--primary-color);
-	position: relative;
-	top: -10px;
+  background-color: var(--primary-color);
+  position: relative;
+  top: -10px;
 }
 
-.dialog{
-	background-color: var(--primary-dark);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+.dialog {
+  background-color: var(--primary-dark);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 700px) {
-	.dialog {
-		margin: 30px;
-	}
+  .dialog {
+    margin: 30px;
+  }
 }

@@ -4,7 +4,6 @@ import app, { func } from "../../../utils/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dialog, Divider, Icon } from "@blueprintjs/core";
 import "firebase/compat/app-check";
-import "./surveyDistribution.css";
 import Modal from "./components/Modal";
 import { CommonLoading } from "react-loadingg";
 import { Footer } from "../../global/Footer";
@@ -12,6 +11,7 @@ import { SelectTask } from "./SelectTask";
 import { SelectTargetGroup } from "./SelectTargetGroup";
 import { SelectDate } from "./SelectDate";
 import { Review } from "./Review";
+import "./SurveyDistribution.css";
 const DistributeToGroupsSteps = {
   SELECT_GROUPS: 0,
   ADD_MORE_TEACHERS: 1,
@@ -21,11 +21,8 @@ const OfficerSurveyDistribution = () => {
   // 2. select teacher(s)
   // 3. distribute
   const [allTeachers, setAllTeachers] = useState([]);
-  const [teacherDisplay, setTeacherDisplay] = useState(false);
-
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveyDisplay, setSurveyDisplay] = useState(false);
-
   const [selectedSurveys, setSelectedSurveys] = useState("");
   const [selectedSurveysTitle, setSelectedSurveysTitle] = useState("");
   const [selectedTeachers, setSelectedTeachers] = useState([]);
@@ -113,9 +110,6 @@ const OfficerSurveyDistribution = () => {
 
   //assign one teacher to the survey
   async function assignTeacher(questionID, title, teacherID) {
-    //console.log("TeacherID: ", teacherID.teacher);
-    //console.log("GroupID: ", teacherID.groupID);
-
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
     const scheduleSurvey = func.httpsCallable("officer-scheduleSurvey");
     try {
@@ -147,16 +141,13 @@ const OfficerSurveyDistribution = () => {
         console.error(e);
       }
     };
-
     retrieveSurveyInfo();
-
     setSurveyDisplay(true);
 
     //Check if the path has previous state (taskID) that is being passed through or not
     if (location.state !== null) {
       setSelectedSurveys(location.state.question.id);
     }
-
     // eslint-disable-next-line
   }, []);
 

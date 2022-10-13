@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import app, { func } from "../../../utils/firebase";
 import { useLocation } from "react-router-dom";
 import "firebase/compat/app-check";
-import "./surveyStats.css";
 import ReactDOMServer from "react-dom/server";
 import { Dialog, Divider, HTMLSelect } from "@blueprintjs/core";
 import { CommonLoading } from "react-loadingg";
 import { Pagination } from "../../teacher/landing/Pagination";
+import "./SurveyStats.css";
 // using node-style package resolution in a CSS file:
 // import "normalize.css";
 
@@ -35,7 +35,6 @@ function OfficerSurveyStats() {
   let pages = [];
   let currentPageIndex = 0;
   let index = 1;
-  let moreIndex = 0;
 
   useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
@@ -203,7 +202,6 @@ function OfficerSurveyStats() {
     currentPageIndex = 0;
     let pageIndex = 1;
     question.questions.map((i, index) => {
-      // console.log("i.question: " + i.question); //display question
       dialogContentTemp.push(
         <h1>
           {index + 1}.{i.question}
@@ -212,10 +210,8 @@ function OfficerSurveyStats() {
       if (answers[index] instanceof Object) {
         const j = Object.values(answers[index]);
         dialogContentTemp.push(<p>{j}</p>);
-        //console.log("answer: " + j); //display answer (array type)
       } else {
         dialogContentTemp.push(<p>{answers[index]}</p>);
-        //console.log("answer: " + answers[index]); //display answer (not array type)
       }
       if ((index + 1) % 2 === 0) {
         if (pages.length > 0) {
