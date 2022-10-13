@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import {useLocation} from 'react-router-dom'
-import app, {db, func} from '../../../utils/firebase';
-import {useAuth} from '../../global/auth/Authentication';
-import {useNavigate} from 'react-router-dom';
-import {CommonLoading} from 'react-loadingg';
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import app, { db, func } from '../../../utils/firebase';
+import { useAuth } from '../../global/auth/Authentication';
+import { useNavigate } from 'react-router-dom';
+import { CommonLoading } from 'react-loadingg';
 import { jsPDF } from 'jspdf';
-
 import "./saveSurvey.css";
 
 const site_key = '6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV';
 const Saved = () => {
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   //Retrieve props from previous page
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,7 +30,6 @@ const Saved = () => {
 
   //Loading state when submit the form
   const [loading, setLoading] = useState(false);
-
 
   useEffect(() => {
     const retrieveSurvey = async () => {
@@ -65,15 +63,11 @@ const Saved = () => {
             });
           populateExistingAnswers(targetAnswerID);
         }
-
       } catch (e) {
         console.error(e);
       }
     }
-
     retrieveSurvey();
-
-    // eslint-disable-next-line
   }, []);
 
   //populate existing answers upon page initialization
@@ -92,7 +86,7 @@ const Saved = () => {
         setFormLoading(false);
 
       }).catch(e => {
-        console.log(e);
+        console.error(e);
       });
     } catch (e) {
       console.error(e);
@@ -127,7 +121,7 @@ const Saved = () => {
     //get the context 
     let fileContent = ``;
     fileContent += `Title: ${surveyTitle}\n`;
-    for (let i = 0; i < questions.length; i ++) {
+    for (let i = 0; i < questions.length; i++) {
       fileContent += `\nQ${i + 1}: ${questions[i].question}\n`;
       let answersOfQuestion = answers[i];
       const questionItem = questions[i];
@@ -148,22 +142,7 @@ const Saved = () => {
       fileContent += '\n';
     }
 
-    //export the excel file
-    // let link = document.createElement("a")
-    // let exportContent = '\uFEFF'
-    // let blob = new Blob([exportContent+fileContent],{
-    //         type:'text/plain;charset=utrf-8'
-    // })
-    // link.id = "download-csv"
-    // link.setAttribute("href", URL.createObjectURL(blob))
-    // link.setAttribute('download', `${surveyTitle}.csv`)
-    // document.body.appendChild(link)
-    // link.click()
-    //document.body.removeChild(link); // remove a
-    //URL.revokeObjectURL(link.href) // release url memory
-
     //export as pdf file
-    console.log(fileContent)
     const doc = new jsPDF({
       orientation: "landscape",
       unit: "in",
@@ -178,19 +157,19 @@ const Saved = () => {
       <form className='survey'>
         {!formLoading ?
           <div className='form'>
-            <h1 style={{textAlign: 'center'}}>{surveyTitle}</h1>
+            <h1 style={{ textAlign: 'center' }}>{surveyTitle}</h1>
             {questions.map((q, index) =>
               <div className='sur-question' key={index}>
                 <div className='question-label'>
                   <label>{index + 1}. {q.question}</label>
                 </div>
-                <br/>
+                <br />
                 {q.options.length > 1 ?
                   <div>
                     {q.options.map((o) =>
-                      <div className='task-input'  key={o}>
+                      <div className='task-input' key={o}>
                         <input type={q.type} value={o} checked={populateCheckboxAndRadio(o, index)}
-                               name={q.type === 'checkbox' ? o : q.question}></input>
+                          name={q.type === 'checkbox' ? o : q.question}></input>
                         <label htmlFor={o}> &nbsp; {o}</label>
                       </div>
                     )}
@@ -204,16 +183,14 @@ const Saved = () => {
 
             <div className='download-btn-group'>
               <button disabled={loading} type='button'
-                      onClick={handleDownload}
+                onClick={handleDownload}
               >{loading ? "Download..." : "Export as PDF"}</button>
             </div>
-
           </div>
           :
           <div>
-            <CommonLoading color='#323547'/>
+            <CommonLoading color='#323547' />
           </div>}
-
       </form> : <h1>Task not found</h1>
   )
 }

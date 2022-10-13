@@ -1,17 +1,19 @@
-import app, {func} from "../../../utils/firebase";
-import {useState, useEffect} from 'react';
+import app, { func } from "../../../utils/firebase";
+import { useState, useEffect } from 'react';
 import GroupCreator from "./components/GroupCreator";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function Groups() {
   const navigate = useNavigate();
   //Set dates
-  const today = new Date().toLocaleDateString('sv', {timeZoneName: 'short'});
+  const today = new Date().toLocaleDateString('sv', { timeZoneName: 'short' });
 
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
   const [allTeachers, setAllTeachers] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [message, setMessage] = useState('');
+
   const handleCreate = async (e) => {
     e.preventDefault();
     if (groupName) {
@@ -33,12 +35,10 @@ function Groups() {
 
   useEffect(() => {
     app.appCheck().activate(process.env.REACT_APP_SITE_KEY, true);
-
     const retrieveTeachersInfo = async () => {
       const getTeachers = func.httpsCallable('officer-getAllTeachers');
       try {
         await getTeachers().then((result) => {
-          console.log(result.data)
           setAllTeachers(result.data);
         });
       } catch (e) {
@@ -48,10 +48,11 @@ function Groups() {
 
     retrieveTeachersInfo();
   }, [])
+  
   const renderTeachers = () => {
     return allTeachers.map(teacher => {
       return (
-        <div key={teacher.id} style={{margin: '10px 10px'}}>
+        <div key={teacher.id} style={{ margin: '10px 10px' }}>
           <input id={teacher.id} checked={teachers.includes(teacher.id)} onChange={e => {
             if (e.target.checked) {
               setTeachers([...teachers, teacher.id]);
@@ -60,7 +61,7 @@ function Groups() {
                 return t !== teacher.id;
               }));
             }
-          }} style={{marginRight: '10px'}} id={teacher.id} type={'checkbox'} />
+          }} style={{ marginRight: '10px' }} id={teacher.id} type={'checkbox'} />
           <label htmlFor={teacher.id}>{teacher.firstName} {teacher.lastName}</label>
         </div>
       )
@@ -68,31 +69,31 @@ function Groups() {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
       <form onSubmit={handleCreate}>
         <h1 >Create Group</h1>
-        <div style={{marginBottom: '20px'}}>
+        <div style={{ marginBottom: '20px' }}>
           <GroupCreator
             onChange={val => setGroupName(val)}
             required
             type={'input'}
             placeholder={'Enter name here...'}
             subTitle={'Set the name for the group'}
-            title={'Group Name'}/>
+            title={'Group Name'} />
         </div>
-        <div style={{marginBottom: '20px'}}>
+        <div style={{ marginBottom: '20px' }}>
           <GroupCreator
             onChange={val => setGroupDescription(val)}
             type={'textarea'}
             placeholder={'Enter description here...'}
             subTitle={'Set the group description'}
-            title={'Group Description'}/>
+            title={'Group Description'} />
         </div>
-        <div style={{marginBottom: '20px', display: 'flex', flexWrap: 'wrap', maxWidth: '600px'}}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexWrap: 'wrap', maxWidth: '600px' }}>
           {renderTeachers()}
         </div>
-        <p style={{color: 'red'}}>{message}</p>
-        <div style={{marginBottom: '20px'}}>
+        <p style={{ color: 'red' }}>{message}</p>
+        <div style={{ marginBottom: '20px' }}>
           <button>Submit</button>
         </div>
       </form>

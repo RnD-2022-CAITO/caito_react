@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import * as toxicity from "@tensorflow-models/toxicity";
 import { CommonLoading } from "react-loadingg";
 import { Dialog } from "@blueprintjs/core";
-
 import "./survey.css";
 
 const site_key = "6Lf6lbQfAAAAAIUBeOwON6WgRNQvcVVGfYqkkeMV";
@@ -80,17 +79,12 @@ const Survey = () => {
               });
             });
           populateExistingAnswers(targetAnswerID);
-
-          //setFormLoading(false);
         }
       } catch (e) {
         console.error(e);
       }
     };
-
     retrieveSurvey();
-
-    // eslint-disable-next-line
   }, []);
 
   //Update checkbox values
@@ -100,7 +94,6 @@ const Survey = () => {
       newArr[index] = Object.assign({}, checkboxVal);
       setAnswers(newArr);
     }
-    // eslint-disable-next-line
   }, [checkboxVal]);
 
   //populate existing answers upon page initialization
@@ -119,7 +112,7 @@ const Survey = () => {
           setFormLoading(false);
         })
         .catch((e) => {
-          console.log(e);
+          console.error(e);
         });
     } catch (e) {
       console.error(e);
@@ -217,20 +210,7 @@ const Survey = () => {
   //Submit survey to the server
   const sendSurvey = async (e, boolean) => {
     e.preventDefault();
-
     await checkToxicityPrediction(boolean);
-
-    //updateSurvey(boolean);
-
-    //alert('You have submitted/saved the survey!');
-
-    //navigate('/');
-
-    /*if(boolean){
-      setDialog("You have successfully submitted your task!");
-    }else{
-      setDialog("Task has been saved! You can continue to submit your task any time.");
-    }*/
   };
 
   // uses TensorflowJS to predict if the submitted answers are appropriate or not (filters out insults/profanities).
@@ -258,8 +238,8 @@ const Survey = () => {
                 setSubmissionLoading(false);
                 setDialog(
                   "Your " +
-                    index +
-                    "th answer is inappropriate. Please change it."
+                  index +
+                  "th answer is inappropriate. Please change it."
                 );
               }
               if (
@@ -276,8 +256,6 @@ const Survey = () => {
                   );
                 }
                 updateSurvey(boolean);
-                // alert('You have submitted/saved the survey!');
-                // navigate('/');
               }
             });
           });
@@ -293,8 +271,8 @@ const Survey = () => {
               setSubmissionLoading(false);
               setDialog(
                 "Your " +
-                  index +
-                  "th answer is inappropriate. Please change it."
+                index +
+                "th answer is inappropriate. Please change it."
               );
             }
             if (
@@ -311,9 +289,6 @@ const Survey = () => {
                   "Task has been saved! You can continue to submit your task any time."
                 );
               }
-              //alert('You have submitted/saved the survey!');
-
-              //navigate('/');
             }
           });
         }

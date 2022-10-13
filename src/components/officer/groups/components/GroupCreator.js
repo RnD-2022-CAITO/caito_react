@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import style from './style.module.css';
-import {useEffect, useState} from "react";
-function GroupCreator({title, subTitle, required, placeholder, type, onChange}) {
+
+function GroupCreator({ title, subTitle, required, placeholder, type, onChange }) {
   const [val, setVal] = useState('');
+
   useEffect(() => {
     onChange && onChange(val);
   }, [val]);
+
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
@@ -12,7 +15,7 @@ function GroupCreator({title, subTitle, required, placeholder, type, onChange}) 
       </div>
       <div className={style.content}>
         <h3>{subTitle}
-          {required && <span style={{color: 'red'}}>*</span>}
+          {required && <span style={{ color: 'red' }}>*</span>}
         </h3>
         {type === 'input' && <input
           required={required}
