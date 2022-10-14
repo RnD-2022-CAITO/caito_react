@@ -10,6 +10,11 @@ enlight is a full stack web application that helps collect data from the teacher
 <strong>Teacher</strong> is able to view and complete their upcoming surveys. They can also create their profile and connect with other teachers within their country. 
 During first state of this project, we will aim at one specific country, prefereably Nepal. 
 
+### About the application
+This application consists of 2 different type of users: Officer and Teacher. 
+- Officer: the ones who will be conducting profiling tasks, or surveys. They will create, send and distribute tasks that eventually be used to analyse and collect data for workforce planning process.
+- Teacher: the ones who will be using the application to fill in their upcoming tasks. Once a new task is created and assigned to the teachers, they will receive an email.
+
 ## How to use
 
 In the project directory, you can run:
@@ -26,6 +31,10 @@ The page will reload when you make changes.
 ### Deployment
 
 This project is run on Firebase hosting: <a href="http://caito-dev.web.app">Click here to launch the application</a>
+Notice: you cannot sign up to be an officer for security reasons. You can sign up to as a 'teacher'. 
+However, if you want to explore the functionalities of an officer, you can use the account below:
+**username:** bcis.caito@gmail.com
+**password:** 123123
 
 ## Tools used
 - ReactJS, CSS, BlueprintJS
