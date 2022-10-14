@@ -1,7 +1,6 @@
 # enlight - Teacher Profiling Web Application 
 
 This project was created for <a href="https://www.caito.ai">CAITO - Cognitive AI Solutions</a>.
-This project is in its final state of Sprint 1 (it has 5 Sprints in total).
 
 ## About the project
 enlight is a full stack web application that helps collect data from the teachers in the TVET system in Southeast Asia countries. It consists of two different type of user: <strong >officer </strong> and <strong>teacher</strong>. The user can sign up as a teacher, and the officers will be provided the account. 
@@ -26,10 +25,10 @@ The page will reload when you make changes.
 
 ### Deployment
 
-This project will be deployed on Firebase Web Hosting Service by the end of this year.
+This project is run on Firebase hosting: <a href="http://caito-dev.web.app">Click here to launch the application</a>
 
 ## Tools used
-- HTML, CSS, BlueprintJS, Javascript (React)
+- ReactJS, CSS, BlueprintJS
 - NodeJS, ExpressJS, Firebase Cloud Function & Firestore
 
 ## Authors
