@@ -179,7 +179,7 @@ const NavBar = () => {
             <nav className='nav'>
                 <ul className='nav__wrapper'>
                     <li className='nav__item'>
-                        <NavLink to="/" exact={true} activeclassname='active' end>
+                        <NavLink to="/" activeclassname='active' end>
                             <Tooltip2
                                     content={<span>Home</span>}
                                     openOnTargetFocus={false}
@@ -236,7 +236,7 @@ const NavBar = () => {
 
                 <ul className='nav__wrapper'>
                     <li className='nav__item'>
-                        <NavLink  to="/" exact={true} activeclassname='active' end>
+                        <NavLink  to="/" activeclassname='active' end>
                             <Tooltip2
                                 content={<span>Home</span>}
                                 openOnTargetFocus={false}
