@@ -38,8 +38,8 @@ export const LandingOfficer = () => {
             <section className='container-hero'>
                 <div className='hero'>
                     <h1>Welcome,  
-                        <span style={{color:'var(--caito-purple)', fontWeight:'bold', letterSpacing:'-8px'}}>
-                            {userData.firstName} {userData.lastName}</span> 
+                        <span className='name-hero'>
+                             {userData.firstName} {userData.lastName}</span> 
                     </h1>
                     <motion.div
                     initial={{opacity: 0, y: '10vh'}}
