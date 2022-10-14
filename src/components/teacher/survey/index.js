@@ -342,7 +342,7 @@ const Survey = () => {
               {q.options.length > 1 ? (
                 <div>
                   {q.options.map((o) => (
-                    <div key={o}>
+                    <div className='task-input' key={o}>
                       <input
                         type={q.type}
                         value={o}

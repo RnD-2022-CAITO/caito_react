@@ -22,7 +22,6 @@ export const SelectTask = ({
             value={selectedSurveys}
             onChange={(e) => {
               setSelectedSurveys(e.target.value);
-              console.log(e);
               setSelectedSurveysTitle(e.target.name);
             }}
           >

@@ -117,6 +117,9 @@
         letter-spacing: -5px;
     }
     
+    .grid-item-left h1, .grid-item-right h1{
+        white-space: normal; 
+    }
 
     .container-dark{
         display: block;

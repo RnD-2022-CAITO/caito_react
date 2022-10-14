@@ -178,8 +178,12 @@ const OfficerSurveyMaking = () => {
 
           {/* To be developed */}
           <div className="question-btns">
-            <button onClick={() => editQuestion(o, index)}>Edit</button>
-            <button onClick={() => deleteQuestion(o, index)}>Delete </button>
+            <button onClick={() => editQuestion(o, index)}>
+              <Icon icon="edit" />
+            </button>
+            <button onClick={() => deleteQuestion(o, index)}>
+              <Icon icon="trash" />
+            </button>
           </div>
         </div>
       ))
