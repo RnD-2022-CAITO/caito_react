@@ -32,8 +32,11 @@ The page will reload when you make changes.
 
 This project is run on Firebase hosting: <a href="http://caito-dev.web.app">Click here to launch the application</a>
 Notice: you cannot sign up to be an officer for security reasons. You can sign up to as a 'teacher'. 
+<br>
 However, if you want to explore the functionalities of an officer, you can use the account below:
+<br>
 **username:** bcis.caito@gmail.com
+<br>
 **password:** 123123
 
 ## Tools used
