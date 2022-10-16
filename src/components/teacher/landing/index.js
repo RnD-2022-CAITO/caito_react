@@ -157,11 +157,7 @@ const TeacherLanding = () => {
                 <h1>
                   Welcome,{" "}
                   <span
-                    style={{
-                      color: "var(--caito-purple)",
-                      fontWeight: "bold",
-                      letterSpacing: "-8px",
-                    }}
+                    className="name-hero"
                   >
                     {userData.firstName} {userData.lastName}
                   </span>{" "}

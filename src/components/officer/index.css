@@ -49,6 +49,12 @@
     font-weight: 400;
 }
 
+.name-hero{
+    color: var(--caito-purple);
+    font-weight: bold;
+    letter-spacing: -8px;
+}
+
 .explore{
     padding: 20px;
 }
@@ -115,6 +121,10 @@
         font-weight: bolder;
         margin-bottom: 1rem;
         letter-spacing: -5px;
+    }
+
+    .name-hero{
+        letter-spacing: -1px;
     }
     
     .grid-item-left h1, .grid-item-right h1{
