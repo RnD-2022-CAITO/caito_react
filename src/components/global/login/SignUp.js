@@ -65,6 +65,7 @@ const SignUp = () => {
   const handleClickSendValidEmail = async () => {
     if (!sentValidEmail) {
       const re =
+        // eslint-disable-next-line no-useless-escape
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
       if (!emailRef.current.value || !re.test(emailRef.current.value)) {
         return setError("Please enter a valid email!");
@@ -160,10 +161,12 @@ const SignUp = () => {
 
         if(!loading){
           navigate('/');
+
+          //reload the window
+          window.location.reload();
         }
 
     } catch (e) {
-        console.error(e);
     }
   }
 
@@ -188,7 +191,7 @@ const SignUp = () => {
 
             </div>
             <div className={'form-item'}>
-              <label className={'form-label'}  htmlFor='email-valid'>Email Valid Code</label>
+              <label className={'form-label'}  htmlFor='email-valid'>Email Validation Code</label>
               <input ref={emailValidRef} className={'form-control'} id={'email-valid'}  type="text"required autoComplete='off'/>
 
             </div>
